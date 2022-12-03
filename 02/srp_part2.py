@@ -8,7 +8,6 @@ def main():
     """
     the main function of the module
     """
-    # code the result
     p_base = ["A", "B", "C"]  # Rock, Paper, Scissor
 
     t_base = {
