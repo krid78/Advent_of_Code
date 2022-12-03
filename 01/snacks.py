@@ -20,6 +20,9 @@ def main():
             cal[-1] += int(item)
 
     print(f"Max calories is {max(cal)}")
+    cal.sort(reverse=True)
+    print(f"Top Three: {cal[:3]}")
+    print(f"Top Three: {sum(cal[:3])}")
 
 
 if __name__ == "__main__":
