@@ -10,29 +10,33 @@ def main():
     """
     # code the result
     rate = {
-        -2: "",  # player1 wins
+        -2: "",  # player1 wins 
         -1: "",  # player2 wins
         0: "",  # draw
         1: "",  # player1 wins
         2: "",  # player two wins
     }
 
-    p1_base = ["A", "B", "C"]
-    p2_base = ["X", "Y", "Z"]
+    p1_base = ["A", "B", "C"] # Rock, Paper, Scissor
+    p2_base = ["R", "P", "S"] # Rock, Paper, Scissor
+    t_base = ["X", "Y", "Z"] # loose; draw; win
     score = {-2: 0, -1: 6, 0: 3, 1: 0, 2: 6, }
     total = 0
 
-    with open("data.txt", "r") as in_file:
+    with open("data_test.txt", "r") as in_file:
         rounds = [line.strip() for line in in_file]
 
     for choices in rounds:
         choice_p1 = p1_base.index(choices.split()[0])
-        choice_p2 = p2_base.index(choices.split()[1])
-        result = choice_p1 - choice_p2
-        total += choice_p2 + 1 + score[result]
-        print(f"P1: {p1_base[choice_p1]}; P2: {p2_base[choice_p2]}: {result}")
+        target = t_base.index(choices.split()[1])
+        # choice_p2 = p2_base.index(choices.split()[1])
+        choice_p2 = choice_p1 - target
+        # total += choice_p2 + 1 + score[result]
+        # print(f"P1: {p1_base[choice_p1]}; P2: {p2_base[choice_p2]}: {result}")
         # print(f"Score: {choice_p2+1} + {score[result]} == {choice_p2 + 1 + score[result]}")
         # print(f"Total: {total}")
+        print(f"P1: {choice_p1}; P2: {choice_p2}; {target}")
+        # print(f"P1: {p1_base[choice_p1]}; Target: {target[choices.split()[1]]}: {result}")
 
     print(f"Total: {total}")
 
