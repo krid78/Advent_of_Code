@@ -9,34 +9,27 @@ def main():
     the main function of the module
     """
     # code the result
-    rate = {
-        -2: "",  # player1 wins 
-        -1: "",  # player2 wins
-        0: "",  # draw
-        1: "",  # player1 wins
-        2: "",  # player two wins
-    }
+    p_base = ["A", "B", "C"]  # Rock, Paper, Scissor
 
-    p1_base = ["A", "B", "C"] # Rock, Paper, Scissor
-    p2_base = ["R", "P", "S"] # Rock, Paper, Scissor
-    t_base = ["X", "Y", "Z"] # loose; draw; win
-    score = {-2: 0, -1: 6, 0: 3, 1: 0, 2: 6, }
+    t_base = {
+        "X": (-1, 0),  # P2 loose
+        "Y": (0, 3),  # draw
+        "Z": (-2, 6),  # P2 win
+    }
     total = 0
 
-    with open("data_test.txt", "r") as in_file:
+    with open("data.txt", "r") as in_file:
         rounds = [line.strip() for line in in_file]
 
     for choices in rounds:
-        choice_p1 = p1_base.index(choices.split()[0])
-        target = t_base.index(choices.split()[1])
-        # choice_p2 = p2_base.index(choices.split()[1])
-        choice_p2 = choice_p1 - target
-        # total += choice_p2 + 1 + score[result]
-        # print(f"P1: {p1_base[choice_p1]}; P2: {p2_base[choice_p2]}: {result}")
-        # print(f"Score: {choice_p2+1} + {score[result]} == {choice_p2 + 1 + score[result]}")
-        # print(f"Total: {total}")
-        print(f"P1: {choice_p1}; P2: {choice_p2}; {target}")
-        # print(f"P1: {p1_base[choice_p1]}; Target: {target[choices.split()[1]]}: {result}")
+        choice_p1 = p_base.index(choices.split()[0])
+        target = t_base[choices.split()[1]][0]
+        choice_p2 = p_base[choice_p1 + target]
+        print(
+            f"Strategy {choices.split()[1]}, P1 chooses {choices.split()[0]}, "
+            "we choose {choice_p2}"
+        )
+        total += t_base[choices.split()[1]][1] + p_base.index(choice_p2) + 1
 
     print(f"Total: {total}")
 
