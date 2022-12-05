@@ -13,3 +13,5 @@ the time, I will achieve some golang skills, too.
 - [Day 3/Part 2](03/rucksacks_part2.py)
 - [Day 4/Part 1](04/cleanup_part1.py)
 - [Day 4/Part 2](04/cleanup_part2.py)
+- [Day 5/Part 1](05/crates_part1.py)
+- [Day 5/Part 2](05/crates_part2.py)
