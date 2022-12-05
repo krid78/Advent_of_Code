@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-""" Advent of Code 2022/12/03
-https://adventofcode.com/2022/day/3
+""" Advent of Code 2022/12/04
+https://adventofcode.com/2022/day/4
 """
-import string
 
 
 def main():
