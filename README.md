@@ -15,3 +15,13 @@ the time, I will achieve some golang skills, too.
 - [Day 4/Part 2](04/cleanup_part2.py)
 - [Day 5/Part 1](05/crates_part1.py)
 - [Day 5/Part 2](05/crates_part2.py)
+- [Day 6/Part 1](05/communication_part1.py)
+- [Day 6/Part 2](05/communication_part2.py)
+
+## Links to Remember
+
+- [lynerist/Advent-of-code-2022-golang: 2022 golang solutions of Advent Of Code](https://github.com/lynerist/Advent-of-code-2022-golang)
+  - very pragmatic solutions in GoLang
+- [kantai / Advent of Code / 2022 · GitLab](https://gitlab.com/kantai/adventofcode/2022)
+  - Streamed programming and solution in GoLang
+  - More explicit
