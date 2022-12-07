@@ -60,8 +60,8 @@ class Dir(object):
 
 
 def main():
-    # the_data = get_data("data_test.txt")
-    the_data = get_data("data.txt")
+    the_data = get_data("data_test.txt")
+    # the_data = get_data("data.txt")
     cur_dir = None
     dir_list = [cur_dir]
 

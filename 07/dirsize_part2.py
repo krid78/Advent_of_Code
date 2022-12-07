@@ -78,7 +78,6 @@ def main():
             case _:
                 pass
 
-    print(f"{dir_list=}")
     free_space = 70000000 - dir_list[0].get_size()
     needed_space = 30000000 - free_space
     print(f"{needed_space=}")
