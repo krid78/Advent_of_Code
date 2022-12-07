@@ -15,8 +15,10 @@ the time, I will achieve some golang skills, too.
 - [Day 4/Part 2](04/cleanup_part2.py)
 - [Day 5/Part 1](05/crates_part1.py)
 - [Day 5/Part 2](05/crates_part2.py)
-- [Day 6/Part 1](05/communication_part1.py)
-- [Day 6/Part 2](05/communication_part2.py)
+- [Day 6/Part 1](06/communication_part1.py)
+- [Day 6/Part 2](06/communication_part2.py)
+- [Day 6/Part 1](07/dirsize_part1.py)
+- [Day 6/Part 2](07/dirsize_part2.py)
 
 ## Links to Remember
 
