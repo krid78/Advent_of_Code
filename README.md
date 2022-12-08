@@ -17,8 +17,16 @@ the time, I will achieve some golang skills, too.
 - [Day 5/Part 2](05/crates_part2.py)
 - [Day 6/Part 1](06/communication_part1.py)
 - [Day 6/Part 2](06/communication_part2.py)
-- [Day 6/Part 1](07/dirsize_part1.py)
-- [Day 6/Part 2](07/dirsize_part2.py)
+- [Day 7/Part 1](07/dirsize_part1.py)
+  - Implementation using classes
+- [Day 7/Part 2](07/dirsize_part2.py)
+  - Implementation using classes
+- [Day 7/Part 1](07/dirsize_map_part1.py)
+  - Implementation using a map
+- [Day 7/Part 2](07/dirsize_map_part2.py)
+  - Implementation using a map and recursion
+- [Day 8/Part 1](08/tree_house_part1.py)
+- [Day 8/Part 2](08/tree_house_part2.py)
 
 ## Links to Remember
 
