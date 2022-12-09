@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """ Advent of Code 2022/12/09
 https://adventofcode.com/2022/day/9
+
+Solution: 2562
 """
 
 
