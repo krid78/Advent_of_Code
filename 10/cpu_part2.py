@@ -16,7 +16,7 @@ def get_data(filename: str) -> list:
 
 def main():
     """code if module is called directly"""
-    #the_data = get_data("data_test2.txt")
+    # the_data = get_data("data_test2.txt")
     the_data = get_data("data.txt")
 
     # value of x at cycle 0 and 1 is 1
@@ -50,23 +50,18 @@ def main():
     print(f"Part 1: {total=}")
 
     crt = ["."] * 40 * 6
-    sprite = "###"
-
-    for pos, pixel in enumerate(crt):
-        print(f"{pixel}", end="")
-        if (pos + 1) % 40 == 0:
-            print()
 
     for cycle in range(1, len(signal_strength)):
-        print(
-            f"Sprite-Pos is {signal_strength[cycle]-1}, {signal_strength[cycle]}, {signal_strength[cycle]+1}"
+        s1, s2, s3 = (
+            signal_strength[cycle] - 1,
+            signal_strength[cycle],
+            signal_strength[cycle] + 1,
         )
-        s1, s2, s3 = (signal_strength[cycle]-1, signal_strength[cycle], signal_strength[cycle]+1)
         s1 += 40 * (cycle // 40)
         s2 += 40 * (cycle // 40)
         s3 += 40 * (cycle // 40)
         pos = cycle - 1
-        print(f"Pos = {pos}; {s1}, {s2}, {s3}")
+        # print(f"Pos = {pos}; {s1}, {s2}, {s3}")
         if pos == s1:
             crt[pos] = "#"
         elif pos == s2:
@@ -78,6 +73,30 @@ def main():
         print(f"{pixel}", end="")
         if (pos + 1) % 40 == 0:
             print()
+
+    crt = []
+    for pos_y in range(6):
+        crt.append(["."] * 40)
+
+    for cycle in range(1, len(signal_strength)-1):
+        s1, s2, s3 = (
+            signal_strength[cycle] - 1,
+            signal_strength[cycle],
+            signal_strength[cycle] + 1,
+        )
+        pos_x = (cycle - 1) % 40
+        pos_y = (cycle - 1) // 40
+        # print(f"Pos = {pos_x}, {pos_y} and {s1=}, {s2=}, {s3=}")
+        if pos_x == s1:
+            crt[pos_y][pos_x] = "#"
+        elif pos_x == s2:
+            crt[pos_y][pos_x] = "#"
+        elif pos_x == s3:
+            crt[pos_y][pos_x] = "#"
+
+    for idx in range(len(crt)):
+        print(f"{idx=}: ", end="")
+        print("".join(crt[idx]))
 
 
 if __name__ == "__main__":
