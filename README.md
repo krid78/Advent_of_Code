@@ -27,6 +27,10 @@ the time, I will achieve some golang skills, too.
   - Implementation using a map and recursion
 - [Day 8/Part 1](08/tree_house_part1.py)
 - [Day 8/Part 2](08/tree_house_part2.py)
+- [Day 9/Part 1](09/rope_part1.py)
+- [Day 9/Part 2](09/rope_part2.py)
+- [Day 10/Part 1](10/cpu_part1.py)
+- [Day 10/Part 2](10/cpu_part2.py)
 
 ## Links to Remember
 
