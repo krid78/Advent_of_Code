@@ -46,6 +46,7 @@ def main():
             dx, dy = directions[direction]
             knots[0][0] += dx
             knots[0][1] += dy
+
             for idx in range(1, len(knots)):
                 dx = knots[idx - 1][0] - knots[idx][0]
                 dy = knots[idx - 1][1] - knots[idx][1]
