@@ -31,6 +31,8 @@ the time, I will achieve some golang skills, too.
 - [Day 9/Part 2](09/rope_part2.py)
 - [Day 10/Part 1](10/cpu_part1.py)
 - [Day 10/Part 2](10/cpu_part2.py)
+- [Day 11/Part 1](11/monkeys_part1.py)
+- [Day 11/Part 2](11/monkeys_part2.py)
 
 ## Links to Remember
 
