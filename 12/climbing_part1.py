@@ -8,10 +8,15 @@ Unfortunately, creating a tree is a pain
 A simple approach seems to iterate over the data and create a map holding the
 point and it's neighbors.
 {
-    (x, y): [(xn, yn), (xn, yn), ...] 
+    (x, y): [(xn, yn), (xn, yn), ...]
 }
 With this base, we could implement something like
 https://pythonalgos.com/dijkstras-algorithm-in-5-steps-with-python/
+
+Ok, I was not aware of https://en.wikipedia.org/wiki/Breadth-first_search[1],
+but when I observed it, it's exactly what this implementation does!
+
+[1] https://de.wikipedia.org/wiki/Breitensuche
 """
 
 

@@ -8,7 +8,7 @@ Unfortunately, creating a tree is a pain
 A simple approach seems to iterate over the data and create a map holding the
 point and it's neighbors.
 {
-    (x, y): [(xn, yn), (xn, yn), ...] 
+    (x, y): [(xn, yn), (xn, yn), ...]
 }
 With this base, we could implement something like
 https://pythonalgos.com/dijkstras-algorithm-in-5-steps-with-python/
