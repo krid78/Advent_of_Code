@@ -35,6 +35,8 @@ the time, I will achieve some golang skills, too.
 - [Day 11/Part 2](11/monkeys_part2.py)
 - [Day 12/Part 1](12/climbing_part1.py)
 - [Day 12/Part 2](12/climbing_part2.py)
+- [Day 13/Part 1](13/signal_part1.py)
+- [Day 13/Part 2](13/signal_part2.py)
 
 ## Links to Remember
 
