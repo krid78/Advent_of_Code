@@ -22,7 +22,8 @@ def get_data(filename: str) -> list:
 
 @functools.lru_cache(maxsize=None)
 def simulate(valve, time_left, opened):
-    """brute force pass all ways"""
+    """brute force pass all ways
+    does not work with test data, but luckily with real data"""
     global valves
     cur_flow = 0
     val = 0
