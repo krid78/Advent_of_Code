@@ -4,7 +4,7 @@ https://adventofcode.com/2022/day/13
 
 Bubble sort is really slow, could have used quicksort or something else
 
-Hint: 
+Hint:
 import functools
 the_data.sort(key=functools.cmp_to_key(compare_lists))
 """
