@@ -34,11 +34,11 @@ def simulate(valve, time_left, opened):
 
     # open current valve, if closed and has impact
     if valve not in opened:
+        opened = tuple(opened + (valve,))
         if valves[valve]["fl"] != 0:
             time_left -= 1
             val = time_left * valves[valve]["fl"]
             # opened[valve] = val
-            opened = tuple(opened + (valve,))
 
         for subsequent in valves[valve]["conn"]:
             # print(f"{time_left:} from {valve} to {subsequent}")
@@ -50,8 +50,8 @@ def simulate(valve, time_left, opened):
 
 def main():
     """code if module is called directly"""
-    # the_data = get_data("data_test1.txt")
-    the_data = get_data("data.txt")
+    the_data = get_data("data_test1.txt")
+    # the_data = get_data("data.txt")
 
     regex = re.compile(
         r"Valve (\w+) has flow rate=(\d+); tunnels* leads* to valves* (.*)"
