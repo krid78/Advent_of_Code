@@ -38,77 +38,77 @@ def print_rock(coords: list, base=0) -> None:
         print("".join(shape[line - 1]))
 
 
-# def main():
-"""code if module is called directly"""
-# the_data = get_data("data_test1.txt")
-the_data = get_data("data.txt")
+def main():
+    """code if module is called directly"""
+    # the_data = get_data("data_test1.txt")
+    the_data = get_data("data.txt")
 
-rock_shapes = [
-    {
-        "coords": [(0, 0), (1, 0), (2, 0), (3, 0)],
-        "width": 4,
-        "height": 1,
-    },
-    {
-        "coords": [(1, 0), (0, 1), (1, 1), (2, 1), (1, 2)],
-        "width": 3,
-        "height": 3,
-    },
-    {
-        "coords": [(0, 0), (1, 0), (2, 0), (2, 1), (2, 2)],
-        "width": 3,
-        "height": 3,
-    },
-    {
-        "coords": [(0, 0), (0, 1), (0, 2), (0, 3)],
-        "width": 1,
-        "height": 4,
-    },
-    {
-        "coords": [(0, 0), (1, 0), (0, 1), (1, 1)],
-        "width": 2,
-        "height": 2,
-    },
-]
+    rock_shapes = [
+        {
+            "coords": [(0, 0), (1, 0), (2, 0), (3, 0)],
+            "width": 4,
+            "height": 1,
+        },
+        {
+            "coords": [(1, 0), (0, 1), (1, 1), (2, 1), (1, 2)],
+            "width": 3,
+            "height": 3,
+        },
+        {
+            "coords": [(0, 0), (1, 0), (2, 0), (2, 1), (2, 2)],
+            "width": 3,
+            "height": 3,
+        },
+        {
+            "coords": [(0, 0), (0, 1), (0, 2), (0, 3)],
+            "width": 1,
+            "height": 4,
+        },
+        {
+            "coords": [(0, 0), (1, 0), (0, 1), (1, 1)],
+            "width": 2,
+            "height": 2,
+        },
+    ]
 
-tower = set()
-tower_height = 0
-shift_cnt = 0
-rock_count = 0
+    tower = set()
+    tower_height = 0
+    shift_cnt = 0
+    rock_count = 0
 
-while rock_count < 2022:
-    rock = rock_shapes[rock_count % 5]
-    # print(rock)
-    rx = 2
-    ry = tower_height + 3 + 1
-    rock_pos = [(rx + x, ry + y) for x, y in rock["coords"]]
-    # print_rock(list(tower | set(rock_pos)), 1)
-    while True:
-        shift = ord(the_data[shift_cnt % len(the_data)]) - 61
-        shift_cnt += 1
-        next_rock_pos = [(x + shift, y) for x, y in rock_pos]
-        valid = all(-1 < x < 7 and y > 0 for x, y in next_rock_pos)
-        if not (tower & set(next_rock_pos)) and valid:
-            rock_pos = next_rock_pos
-        next_rock_pos = [(x, y - 1) for x, y in rock_pos]
-        valid = all(-1 < x < 7 and y > 0 for x, y in next_rock_pos)
-        if not (tower & set(next_rock_pos)) and valid:
-            rock_pos = next_rock_pos
-        else:
-            break
+    while rock_count < 2022:
+        rock = rock_shapes[rock_count % 5]
+        # print(rock)
+        rx = 2
+        ry = tower_height + 3 + 1
+        rock_pos = [(rx + x, ry + y) for x, y in rock["coords"]]
+        # print_rock(list(tower | set(rock_pos)), 1)
+        while True:
+            shift = ord(the_data[shift_cnt % len(the_data)]) - 61
+            shift_cnt += 1
+            next_rock_pos = [(x + shift, y) for x, y in rock_pos]
+            valid = all(-1 < x < 7 and y > 0 for x, y in next_rock_pos)
+            if not (tower & set(next_rock_pos)) and valid:
+                rock_pos = next_rock_pos
+            next_rock_pos = [(x, y - 1) for x, y in rock_pos]
+            valid = all(-1 < x < 7 and y > 0 for x, y in next_rock_pos)
+            if not (tower & set(next_rock_pos)) and valid:
+                rock_pos = next_rock_pos
+            else:
+                break
 
-    tower |= set(rock_pos)
-    tower_height = max(tower_height, max([y for _, y in rock_pos]))
+        tower |= set(rock_pos)
+        tower_height = max(tower_height, max([y for _, y in rock_pos]))
+        # print_rock(list(tower), 1)
+        rock_count += 1
+
+    # print("-----")
+    # print(f"{tower=}")
     # print_rock(list(tower), 1)
-    rock_count += 1
-
-print("-----")
-# print(f"{tower=}")
-# print_rock(list(tower), 1)
-print(f"{rock_count=}, {tower_height=}")
-# return best
+    print(f"{rock_count=}, {tower_height=}")
+    return tower_height
 
 
-# if __name__ == "__main__":
-#     solution = main()
-#     print(f"{solution=}")
+if __name__ == "__main__":
+    solution = main()
+    print(f"{solution=}")
