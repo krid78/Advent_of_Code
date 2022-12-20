@@ -20,6 +20,16 @@ __EXAMPLE__ = [
 ]
 
 
+class Node(object):
+    def __init__(self, idx: int, data: str):
+        self.c_idx = idx
+        self.value = int(data)
+
+    def __str__(self):
+        # return f"""{self.value=}, {self.c_idx=}"""
+        return f"""{self.value}"""
+
+
 def get_data(filename: str) -> list:
     """
     Return file contents as list
@@ -30,81 +40,66 @@ def get_data(filename: str) -> list:
     return content
 
 
-class Node(object):
-    def __init__(self, idx, data):
-        self.c_idx = idx
-        self.value = int(data)
-        self.next = None
-        self.prev = None
+def main():
+    """code if module is called directly"""
+    # the_data = get_data("data_test1.txt")
+    the_data = get_data("data.txt")
 
-    def __str__(self):
-        return f"""{self.value=}, {self.idx=}"""
+    encrypted = []
+    the_data_len = len(the_data) - 1
 
+    # cycle through the input value by value
+    for idx, str_shift in enumerate(the_data):
+        encrypted.append(Node(idx, str_shift))
+        if str_shift == "0":
+            null = encrypted[-1]
 
-def print_list(head: Node) -> None:
-    cur = head
-    tail = head.prev
-    print("[", end="")
-    while cur != tail:
-        print(f"'{cur.value}'", end=", ")
-        cur = cur.next
-    else:
-        print(f"'{cur.value}']")
+    decrypted = encrypted.copy()
+    for idx, node in enumerate(encrypted):
+        # find the current position of value in target list
+        d_idx = decrypted.index(node)
 
+        # get the new index in target list by shifting
+        # if d_idx + node.value > the_data_len:
+        #     shift = (d_idx + node.value) % the_data_len
+        # else:
+        #    shift = d_idx + node.value
+        shift = (d_idx + node.value) % the_data_len
 
-# def main():
-"""code if module is called directly"""
-the_data = get_data("data_test1.txt")
-# the_data = get_data("data.txt")
+        # correct the move to zero
+        if shift == 0:
+            shift = the_data_len
 
-encrypted = []
-head = None
-tail = None
-the_data_len = len(the_data)
+        tmp = decrypted.pop(d_idx)
+        decrypted.insert(shift, tmp)
 
-# cycle through the input value by value
-for idx, str_shift in enumerate(the_data):
-    n = Node(idx, str_shift)
-    if head is None:
-        head = n
-        tail = n
-        n.next = head
-        n.prev = tail
-    else:
-        n.next = head
-        n.prev = tail
-        tail.next = n  # n.prev.next = n
-        head.prev = n  # head.prev = tail
-        tail = n
+        # print(f"---\n{node.value} moves from "
+        # f"{d_idx} to pos {shift} ({shift - d_idx})")
+        # print(f"Step {idx:4}: {__EXAMPLE__[idx]}")
+        # print(f"Step {idx:4}: {[str(d.value) for d in decrypted]}")
 
-    print_list(head)
-    encrypted.append(n)
+    c0_idx = decrypted.index(null)
+    print(decrypted[c0_idx])
+    the_data_len += 1
+    c1_idx = (c0_idx + 1000) % the_data_len
+    c2_idx = (c0_idx + 2000) % the_data_len
+    c3_idx = (c0_idx + 3000) % the_data_len
 
-for node in encrypted:
-    # get the number of exchanges
-    target_pos = (node.c_idx + node.value) % the_data_len
-
-    moves = target_pos - node.c_idx
-    print(f"From: {node.c_idx} to {target_pos} = {moves}")
-
-    # print(f"---\n{str_shift} moves to pos {shift}")
-    # print(f"Step {idx:4}: {__EXAMPLE__[idx]}")
-    # print(f"Step {idx:4}: {decrypted}")
-
-# c0_idx = decrypted.index("0")
-# c1_idx = (c0_idx + 1000) % the_data_len
-# c2_idx = (c0_idx + 2000) % the_data_len
-# c3_idx = (c0_idx + 3000) % the_data_len
-
-# print(f"{c0_idx}, {c1_idx}, {c2_idx}, {c3_idx}")
-# print(
-#    f"{decrypted[c0_idx]}, {decrypted[c1_idx]}, {decrypted[c2_idx]}, {decrypted[c3_idx]}"
-# )
-# solution = int(decrypted[c1_idx]) + int(decrypted[c2_idx]) + int(decrypted[c3_idx])
-# print(f"{solution=}")
-# return best
+    print(f"{c0_idx:3}, {c1_idx:3}, {c2_idx:3}, {c3_idx:3}")
+    print(
+        f"{decrypted[c0_idx].value:3}, "
+        f"{decrypted[c1_idx].value:3}, "
+        f"{decrypted[c2_idx].value:3}, "
+        f"{decrypted[c3_idx].value:3}"
+    )
+    solution = (
+        int(decrypted[c1_idx].value)
+        + int(decrypted[c2_idx].value)
+        + int(decrypted[c3_idx].value)
+    )
+    return solution
 
 
-# if __name__ == "__main__":
-#     solution = main()
-#     print(f"{solution=}")
+if __name__ == "__main__":
+    solution = main()
+    print(f"{solution=}")
