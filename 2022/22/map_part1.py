@@ -16,32 +16,31 @@ def get_data(filename: str) -> list:
 
 # def main():
 """code if module is called directly"""
-# the_data = get_data("data_test1.txt")
-the_data = get_data("data.txt")
+the_data = get_data("data_test1.txt")
+# the_data = get_data("data.txt")
 
 moves = the_data.pop()
-# print(moves)
+print(moves)
 
-the_map = []
-offsets = []
+valid_coordinates = []  # [[(row, col), ...], ...]
+stone_coordinates = []  # [(row, col), ]
 
-for data in the_data:
-    if data == "":
-        continue
-    offset = min(data.find("."), data.find("#"))
-    if offset < 0:
-        offset = max(data.find("."), data.find("#"))
+for row, data in enumerate(the_data[:-1]):
+    valid_coordinates.append([])
+    for col, val in enumerate(data):
+        if val == ".":
+            valid_coordinates[row].append((row, col))
+        elif val == "#":
+            stone_coordinates.append((row, col))
+        else:
+            pass
 
-    the_map.append(data)
-    offsets.append(offset)
 
-# for line in the_map:
-#     print(line)
-
-# .....R(0)...D(1).....L(2).......U(3)
-dirs = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+# .......R(0)....D(1).....L(2).....U(3)
+dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 head = 0
-pos = (offsets[0], 0)
+pos = valid_coordinates[0][0]
+print(f"Start Pos: {pos}")
 
 while moves:
     spl = min(moves.find("L"), moves.find("R"))
@@ -58,51 +57,41 @@ while moves:
 
     # first, move
     while move > 0:
-        x, y = pos
-        if x == 75 and y == 148:
-            print("Foo")
-        dx, dy = dirs[head]
-        new_x = x + dx
-        new_y = y + dy
-        if dx != 0:
-            if new_x >= len(the_map[new_y]):
-                new_x = offsets[new_y]
-            if new_x < offsets[new_y]:
-                new_x = len(the_map[new_y]) - 1
-            if the_map[new_y][new_x] != ".":
-                new_x = x
-        if dy != 0:
-            # End of map, go back
-            if new_y < 0:
-                new_y -= dy
-                while len(the_map[new_y]) >= new_x and the_map[new_y][new_x] != " ":
-                    new_y = (new_y - dy) % len(the_map)
-                new_y += dy
-            if new_y >= len(the_map):
-                new_y -= dy
-                while len(the_map[new_y]) >= new_x and offsets[new_y] < new_x:
-                    new_y = (new_y - dy) % len(the_map)
-                new_y += dy
-            # End of overlapping right space
-            if new_x >= len(the_map[new_y]):
-                new_y -= dy
-                while len(the_map[new_y]) >= new_x and the_map[new_y][new_x] != " ":
-                    new_y = (new_y - dy) % len(the_map)
-                new_y += dy
-            # End of overlapping left space
-            if the_map[new_y][new_x] == " ":
-                new_y -= dy
-                while the_map[new_y][new_x] != " ":
-                    new_y = (new_y - dy) % len(the_map)
-                new_y += dy
+        row, col = pos
+        d_row, d_col = dirs[head]
+        new_row = row + d_row
+        new_col = col + d_col
+        col_max = max(valid_coordinates[new_row])
+        col_min = min(valid_coordinates[new_row])
 
-            if the_map[new_y][new_x] != ".":
-                new_y = y
+        if (new_row, new_col) in valid_coordinates[new_row] or (new_row, new_col) in stone_coordinates:
+            # print(f"{(new_row, new_col)}: Valid or Stone")
+            pass
+        elif d_col > 0 and new_col > col_max[1]:
+            new_col = col_min[1]
+            # print(f"{(new_row, new_col)}: Valid or Stone")
+        elif d_col > 0 and new_col < col_min[1]:
+            new_col = col_max[1]
+            # print(f"{(new_row, new_col)}: Valid or Stone")
+        elif d_row != 0:
+            print(f"{(new_row, new_col)} out of y bound")
+            new_row = (new_row - d_row) % len(valid_coordinates)
+            while (new_row, new_col) in valid_coordinates[new_row] or (new_row, new_col) in stone_coordinates:
+                new_row = (new_row - d_row) % len(valid_coordinates)
+            new_row = (new_row + d_row) % len(valid_coordinates)
+            print(f"{(new_row, new_col)} wrapped y-bound")
+        else:
+            print(f"No rule for {(new_row, new_col)}")
 
-        pos = (new_x, new_y)
+        if (new_row, new_col) in stone_coordinates:
+            print(f"{(new_row, new_col)}: Stone")
+            new_row, new_col = row, col
+            print(f"{(new_row, new_col)}: Stone-Reset")
+
+        pos = (new_row, new_col)
         move -= 1
 
-    print(pos)
+    print(f"New valid position: {pos}")
 
     # then turn
     if turn == "R":
@@ -111,7 +100,7 @@ while moves:
         head = (head - 1) % 4
 
 print(f"Position: {pos}, Heading {head}")
-solution = 1000 * (pos[1] + 1) + 4 * (pos[0] + 1) + head
+solution = 1000 * (pos[0] + 1) + 4 * (pos[1] + 1) + head
 print(f"{solution=}")
 # return solution
 
