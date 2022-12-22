@@ -14,23 +14,16 @@ def get_data(filename: str) -> list:
     return content
 
 
-def print_map(a_map: list, offsets: list) -> None:
-    """print the map"""
-    for idx, line in enumerate(a_map):
-        print(" " * offsets[idx], end="")
-        print("".join(line))
-
-
 # def main():
 """code if module is called directly"""
-the_data = get_data("data_test1.txt")
-# the_data = get_data("data.txt")
+# the_data = get_data("data_test1.txt")
+the_data = get_data("data.txt")
 
 moves = the_data.pop()
-print(moves)
+# print(moves)
 
 the_map = []
-map_offsets = []
+offsets = []
 
 for data in the_data:
     if data == "":
@@ -39,20 +32,21 @@ for data in the_data:
     if offset < 0:
         offset = max(data.find("."), data.find("#"))
 
-    the_map.append(list(data.strip()))
-    map_offsets.append(offset)
+    the_map.append(data)
+    offsets.append(offset)
 
-print_map(the_map, map_offsets)
+# for line in the_map:
+#     print(line)
 
 # .....R(0)...D(1).....L(2).......U(3)
-dirs=[(1,0), (0, 1), (-1, 0), (0, -1)]
+dirs = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 head = 0
-pos = (map_offsets[0], 0)
+pos = (offsets[0], 0)
 
 while moves:
-    spl = min(moves.find('L'), moves.find('R'))
+    spl = min(moves.find("L"), moves.find("R"))
     if spl < 0:
-        spl = max(moves.find('L'), moves.find('R'))
+        spl = max(moves.find("L"), moves.find("R"))
 
     if spl >= 0:
         move, turn, moves = moves.partition(moves[spl])
@@ -60,23 +54,65 @@ while moves:
         move, turn, moves = moves, None, None
 
     move = int(move)
-    print(f"Move {move} Steps from {pos=} to {dirs[head]}")    
+    print(f"Move {move} Steps from {pos=} to {dirs[head]}")
 
     # first, move
     while move > 0:
         x, y = pos
+        if x == 75 and y == 148:
+            print("Foo")
         dx, dy = dirs[head]
-        x = (x + dx) % len(the_map[y])
-        y = (y + dy)
+        new_x = x + dx
+        new_y = y + dy
+        if dx != 0:
+            if new_x >= len(the_map[new_y]):
+                new_x = offsets[new_y]
+            if new_x < offsets[new_y]:
+                new_x = len(the_map[new_y]) - 1
+            if the_map[new_y][new_x] != ".":
+                new_x = x
+        if dy != 0:
+            # End of map, go back
+            if new_y < 0:
+                new_y -= dy
+                while len(the_map[new_y]) >= new_x and the_map[new_y][new_x] != " ":
+                    new_y = (new_y - dy) % len(the_map)
+                new_y += dy
+            if new_y >= len(the_map):
+                new_y -= dy
+                while len(the_map[new_y]) >= new_x and offsets[new_y] < new_x:
+                    new_y = (new_y - dy) % len(the_map)
+                new_y += dy
+            # End of overlapping right space
+            if new_x >= len(the_map[new_y]):
+                new_y -= dy
+                while len(the_map[new_y]) >= new_x and the_map[new_y][new_x] != " ":
+                    new_y = (new_y - dy) % len(the_map)
+                new_y += dy
+            # End of overlapping left space
+            if the_map[new_y][new_x] == " ":
+                new_y -= dy
+                while the_map[new_y][new_x] != " ":
+                    new_y = (new_y - dy) % len(the_map)
+                new_y += dy
+
+            if the_map[new_y][new_x] != ".":
+                new_y = y
+
+        pos = (new_x, new_y)
         move -= 1
 
-    # then turn
-    if turn == 'R':
-        head = (head + 1) % 4
-    elif turn == 'L':
-        head = (head - 1) % 4
-    
+    print(pos)
 
+    # then turn
+    if turn == "R":
+        head = (head + 1) % 4
+    elif turn == "L":
+        head = (head - 1) % 4
+
+print(f"Position: {pos}, Heading {head}")
+solution = 1000 * (pos[1] + 1) + 4 * (pos[0] + 1) + head
+print(f"{solution=}")
 # return solution
 
 
