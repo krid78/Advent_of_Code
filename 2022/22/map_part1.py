@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-""" Advent of Code 2022/12/21
-https://adventofcode.com/2022/day/21
+""" Advent of Code 2022/12/22
+https://adventofcode.com/2022/day/22
 """
 
 
@@ -14,97 +14,104 @@ def get_data(filename: str) -> list:
     return content
 
 
-# def main():
-"""code if module is called directly"""
-the_data = get_data("data_test1.txt")
-# the_data = get_data("data.txt")
+def main():
+    """code if module is called directly"""
+    # the_data = get_data("data_test1.txt")
+    the_data = get_data("data.txt")
 
-moves = the_data.pop()
-print(moves)
+    moves = the_data.pop()
+    # print(moves)
 
-valid_coordinates = []  # [[(row, col), ...], ...]
-stone_coordinates = []  # [(row, col), ]
+    valid_coordinates = []  # [[(row, col), ...], ...]
+    stone_coordinates = []  # [(row, col), ]
 
-for row, data in enumerate(the_data[:-1]):
-    valid_coordinates.append([])
-    for col, val in enumerate(data):
-        if val == ".":
-            valid_coordinates[row].append((row, col))
-        elif val == "#":
-            stone_coordinates.append((row, col))
+    for row, data in enumerate(the_data[:-1]):
+        valid_coordinates.append([])
+        for col, val in enumerate(data):
+            if val == ".":
+                valid_coordinates[row].append((row, col))
+            elif val == "#":
+                stone_coordinates.append((row, col))
+            else:
+                pass
+
+    # .......R(0)....D(1).....L(2).....U(3)
+    dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    head = 0
+    pos = valid_coordinates[0][0]
+    # print(f"Start Pos: {pos}")
+
+    while moves:
+        spl = min(moves.find("L"), moves.find("R"))
+        if spl < 0:
+            spl = max(moves.find("L"), moves.find("R"))
+
+        if spl >= 0:
+            move, turn, moves = moves.partition(moves[spl])
         else:
-            pass
+            move, turn, moves = moves, None, None
 
+        move = int(move)
+        # print(f"Move {move:3} Steps from {pos=} to {dirs[head]}")
+        #    if (row, col) == (194, 35):
+        #        print("Debug-In")
 
-# .......R(0)....D(1).....L(2).....U(3)
-dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-head = 0
-pos = valid_coordinates[0][0]
-print(f"Start Pos: {pos}")
+        # first, move
+        while move > 0:
+            row, col = pos
+            d_row, d_col = dirs[head]
+            new_row = row + d_row
+            new_col = col + d_col
 
-while moves:
-    spl = min(moves.find("L"), moves.find("R"))
-    if spl < 0:
-        spl = max(moves.find("L"), moves.find("R"))
+            col_max = max(valid_coordinates[row])
+            col_min = min(valid_coordinates[row])
 
-    if spl >= 0:
-        move, turn, moves = moves.partition(moves[spl])
-    else:
-        move, turn, moves = moves, None, None
-
-    move = int(move)
-    print(f"Move {move} Steps from {pos=} to {dirs[head]}")
-
-    # first, move
-    while move > 0:
-        row, col = pos
-        d_row, d_col = dirs[head]
-        new_row = row + d_row
-        new_col = col + d_col
-        col_max = max(valid_coordinates[new_row])
-        col_min = min(valid_coordinates[new_row])
-
-        if (new_row, new_col) in valid_coordinates[new_row] or (new_row, new_col) in stone_coordinates:
-            # print(f"{(new_row, new_col)}: Valid or Stone")
-            pass
-        elif d_col > 0 and new_col > col_max[1]:
-            new_col = col_min[1]
-            # print(f"{(new_row, new_col)}: Valid or Stone")
-        elif d_col > 0 and new_col < col_min[1]:
-            new_col = col_max[1]
-            # print(f"{(new_row, new_col)}: Valid or Stone")
-        elif d_row != 0:
-            print(f"{(new_row, new_col)} out of y bound")
-            new_row = (new_row - d_row) % len(valid_coordinates)
-            while (new_row, new_col) in valid_coordinates[new_row] or (new_row, new_col) in stone_coordinates:
+            if new_row < len(valid_coordinates) and (
+                (new_row, new_col) in valid_coordinates[new_row]
+                or (new_row, new_col) in stone_coordinates
+            ):
+                # print(f"{(new_row, new_col)}: Valid or Stone")
+                pass  # this case only prevents the else
+            elif d_col > 0 and new_col > col_max[1]:
+                new_col = col_min[1]
+                # print(f"{(new_row, new_col)}: Valid or Stone")
+            elif d_col < 0 and new_col < col_min[1]:
+                new_col = col_max[1]
+                # print(f"{(new_row, new_col)}: Valid or Stone")
+            elif d_row != 0:
                 new_row = (new_row - d_row) % len(valid_coordinates)
-            new_row = (new_row + d_row) % len(valid_coordinates)
-            print(f"{(new_row, new_col)} wrapped y-bound")
-        else:
-            print(f"No rule for {(new_row, new_col)}")
+                while (new_row, new_col) in valid_coordinates[new_row] or (
+                    new_row,
+                    new_col,
+                ) in stone_coordinates:
+                    new_row = (new_row - d_row) % len(valid_coordinates)
+                new_row = (new_row + d_row) % len(valid_coordinates)
+                # print(f"{(new_row, new_col)} wrapped y-bound")
+            else:
+                print(f"No rule for {(new_row, new_col)}")
 
-        if (new_row, new_col) in stone_coordinates:
-            print(f"{(new_row, new_col)}: Stone")
-            new_row, new_col = row, col
-            print(f"{(new_row, new_col)}: Stone-Reset")
+            if (new_row, new_col) in stone_coordinates:
+                # print(f"{(new_row, new_col)}: Stone")
+                new_row, new_col = row, col
+                # print(f"{(new_row, new_col)}: Stone-Reset")
 
-        pos = (new_row, new_col)
-        move -= 1
+            pos = (new_row, new_col)
+            move -= 1
 
-    print(f"New valid position: {pos}")
+        # print(f"New valid position: {pos}")
 
-    # then turn
-    if turn == "R":
-        head = (head + 1) % 4
-    elif turn == "L":
-        head = (head - 1) % 4
+        # then turn
+        if turn == "R":
+            head = (head + 1) % 4
+        elif turn == "L":
+            head = (head - 1) % 4
 
-print(f"Position: {pos}, Heading {head}")
-solution = 1000 * (pos[0] + 1) + 4 * (pos[1] + 1) + head
-print(f"{solution=}")
-# return solution
+    print(f"Position: {pos}, Heading {head}")
+    solution = 1000 * (pos[0] + 1) + 4 * (pos[1] + 1) + head
+    print(f"{solution=}")
+    return solution
 
 
-# if __name__ == "__main__":
-#     solution = main()
-#     print(f"{solution=}")
+if __name__ == "__main__":
+    solution = main()
+    print(f"{solution=}")
