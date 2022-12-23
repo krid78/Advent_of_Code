@@ -128,7 +128,7 @@ def main():
         head = (head + 1) % len(dir_stat)
         count += 1
         # print(len(set(positions) - set(old_positions)))
-        print(".", end="")
+        print(".", end="", flush=True)
         if positions == old_positions:
             print(f" => {count}")
             break
