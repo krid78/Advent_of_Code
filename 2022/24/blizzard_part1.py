@@ -93,8 +93,6 @@ def main():
                 if (next_x, next_y) not in next_field:
                     # print(f"candidate: {(next_x, next_y)}")
                     next_nodes.append((next_x, next_y))
-                if next_x < 0 or next_x > width or next_y < 0 or next_y > height:
-                    print(f"Fatal Error")
             if solution >= 0:
                 break
 
