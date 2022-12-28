@@ -77,9 +77,6 @@ def main():
     pos = valid_coordinates[0][0]
     print(f"Start Pos: {pos}")
 
-    log = open("mylog.log", "w")
-    count = 1
-
     while moves:
         move, turn, moves = next_move(moves)
         move = int(move)
@@ -98,11 +95,6 @@ def main():
             col_max = max(valid_coordinates[row])
             col_min = min(valid_coordinates[row])
 
-            # if (new_row, new_col) == (0, 93):
-            #     print("foo")
-            if count == 5032:
-                print("bar")
-
             if (
                 new_row >= 0
                 and new_row < len(valid_coordinates)
@@ -112,7 +104,7 @@ def main():
                 )
             ):
                 pass
-            elif d_col > 0 and new_col > col_max[1]:  # step too far to the right
+            elif d_col > 0 and new_col > col_max[1]:  # overflow right
                 if 0 <= new_row < 50:  # 2 to 5
                     # 2 to 5 and 5 to 2 are quite equal TODO: combine
                     new_row = 149 - new_row
@@ -153,36 +145,27 @@ def main():
             elif d_row < 0 and new_row < 0 and 50 <= new_col < 100:  # 1 to 6
                 # 1 to 6 and 4 to 3 are equal TODO: combine
                 new_row = new_col + 100
-                new_col = 0  # min(valid_coordinates[new_row] + stone_coordinates)[1]
+                new_col = 0
                 new_head = 0  # "right"
             elif d_row < 0 and new_row < 100 and 0 <= new_col < 50:  # 4 to 3
                 new_row = new_col + 50
-                new_col = 50  # min(valid_coordinates[new_row] + stone_coordinates)[1]
+                new_col = 50
                 new_head = 0  # "right"
             elif d_row > 0 and new_row >= 50 and 100 <= new_col <= col_max[1]:  # 2 to 3
                 # 2 to 3 and 5 to 6 are equal TODO: combine
                 new_row = new_col - 50
-                new_col = 99  # max(valid_coordinates[new_row] + stone_coordinates)[1]
+                new_col = 99
                 new_head = 2
             elif d_row > 0 and new_row >= 150 and 50 <= new_col < 100:  # 5 to 6
                 new_row = new_col + 100
-                new_col = 49  # max(valid_coordinates[new_row] + stone_coordinates)[1]
+                new_col = 49
                 new_head = 2
             elif d_row != 0 and (new_row < 0 or new_row > 199):  # 2 to 6 or 6 to 2
-                # 2 to 6 and 6 to 2 are equal TODO: combine
                 new_col = new_col + 100 * dirs[head][0]
                 new_row = new_row % 200  # 199 for -1 and 0 for 200
                 new_head = head
             else:
                 print(f"No rule for {(new_row, new_col)} coming from {pos}")
-
-            if (new_row, new_col) not in valid_coordinates[new_row] and (
-                new_row,
-                new_col,
-            ) not in stone_coordinates:
-                log.write(
-                    f"Invalid Position {(new_row, new_col)}," f"coming from {pos}"
-                )
 
             if (new_row, new_col) in stone_coordinates:
                 # print(f"{(new_row, new_col)}: Stone")
@@ -192,8 +175,6 @@ def main():
 
             pos = (new_row, new_col)
             head = new_head
-            log.write(f"{pos};{head}\n")
-            count += 1
             move -= 1
 
         # print(f"New valid position: {pos}")
@@ -204,7 +185,6 @@ def main():
         elif turn == "L":
             head = (head - 1) % 4
 
-    log.close()
     print(f"Position: {pos}, Heading {head}")
     solution = 1000 * (pos[0] + 1) + 4 * (pos[1] + 1) + head
     print(f"{solution=} (134076)")
