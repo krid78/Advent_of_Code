@@ -47,48 +47,59 @@ def get_valves(data):
 
 def nq_sort(status):
     """https://www.youtube.com/watch?v=3-VJC_KRUZ0&t=330s"""
-    _, _, t_left, r_pressure = status
-    return 10 * t_left + 100 * r_pressure
+    _, _, r_pressure = status
+    return r_pressure
 
 
 def main():
     """code if module is called directly"""
-    # the_data = get_data("data_test1.txt")
-    the_data = get_data("data.txt")
+    the_data = get_data("data_test1.txt")
+    # the_data = get_data("data.txt")
 
     valves = get_valves(the_data)
 
-    # store best values
-    best = set()
+    minutes = 0
 
-    # current valve, opened valves, time left, pressure released, cur. pressure
-    next_nodes = [("AA", (), 30, 0)]
+    # current valve, opened valves, time left, pressure released
+    next_nodes = [("AA", (), 0)]
 
-    while next_nodes:
+    while minutes < 5:
+        minutes += 1  # in minute ...
         nodes = deque(sorted(next_nodes, key=nq_sort, reverse=True)[:10000])
         next_nodes.clear()
 
         while nodes:
-            valve, opened, t_left, r_pressure = nodes.popleft()
+            valve, opened, r_pressure = nodes.popleft()
 
-            if t_left <= 0:
-                best.add(r_pressure)
-                continue
+            # pressure in this round
+            for o in opened:
+                r_pressure += valves[o]["fl"]
 
             if valve not in opened and valves[valve]["fl"] != 0:
                 opened = tuple(opened + (valve,))
-                t_left -= 1
-                r_pressure += t_left * valves[valve]["fl"]
-
-            for subsequent in valves[valve]["conn"]:
                 next_nodes.append(
                     (
-                        subsequent,
+                        valve,
                         opened,
-                        t_left - 1,
                         r_pressure,
                     )
                 )
+            else:
+                for subsequent in valves[valve]["conn"]:
+                    next_nodes.append(
+                        (
+                            subsequent,
+                            opened,
+                            r_pressure,
+                        )
+                    )
+
+    # store best values
+    best = set()
+    nodes = deque(sorted(next_nodes, key=nq_sort, reverse=True)[:10000])
+
+    for node in nodes:
+        best.add(node[2])
 
     return max(best)
 
