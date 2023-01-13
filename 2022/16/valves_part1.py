@@ -7,7 +7,7 @@ https://www.geeksforgeeks.org/python-functools-lru_cache/
 """
 
 import re
-import functools
+from collections import deque
 
 
 def get_data(filename: str) -> list:
@@ -20,46 +20,16 @@ def get_data(filename: str) -> list:
     return content
 
 
-@functools.lru_cache(maxsize=None)
-def simulate(valve, time_left, opened):
-    """brute force pass all ways
-    does not work with test data, but luckily with real data"""
-    global valves
-    cur_flow = 0
-    val = 0
-
-    # stop if time's over
-    if time_left <= 0:
-        return cur_flow
-
-    # open current valve, if closed and has impact
-    if valve not in opened:
-        opened = tuple(opened + (valve,))
-        if valves[valve]["fl"] != 0:
-            time_left -= 1
-            val = time_left * valves[valve]["fl"]
-            # opened[valve] = val
-
-        for subsequent in valves[valve]["conn"]:
-            # print(f"{time_left:} from {valve} to {subsequent}")
-            cur_flow = max(cur_flow, simulate(subsequent, time_left - 1, opened))
-            # print(f"{time_left=}: from {subsequent}: {cur_flow}")
-
-    return val + cur_flow
-
-
-def main():
-    """code if module is called directly"""
-    the_data = get_data("data_test1.txt")
-    # the_data = get_data("data.txt")
-
+def get_valves(data):
+    """
+    Return a data structure of all valves
+    """
     regex = re.compile(
         r"Valve (\w+) has flow rate=(\d+); tunnels* leads* to valves* (.*)"
     )
-    global valves
     valves = {}
 
-    for data in the_data:
+    for data in data:
         match = regex.match(data)
         if match:
             valve, flow_rate, connected_valves = match.groups()
@@ -72,25 +42,62 @@ def main():
             "conn": connected_valves.split(", "),
         }
 
-    # for valve in valves:
-    #     print(f"{valve}({valves[valve]['fl']}) -> {valves[valve]['conn']}")
+    return valves
 
-    # for valve in valves:
-    #     print(f"{valve}, ", end="")
-    #     print()
 
-    # for valve in valves:
-    #     for next_valve in valves[valve]["conn"]:
-    #         print(f"    {valve}[{valve}, {valves[valve]['fl']}] --> {next_valve}")
+def nq_sort(status):
+    """https://www.youtube.com/watch?v=3-VJC_KRUZ0&t=330s"""
+    _, _, t_left, r_pressure, _ = status
+    return 10 * t_left + 100 * r_pressure
 
-    # start at AA; have 30 Minutes left
-    best = simulate(
-        "AA",
-        30,
-        (),
-    )
 
-    return best
+def main():
+    """code if module is called directly"""
+    the_data = get_data("data_test1.txt")
+    # the_data = get_data("data.txt")
+
+    valves = get_valves(the_data)
+
+    logfile = open("valves_part1.log", "w")
+    # store best values
+    best = set()
+
+    # current valve, opened valves, time left, pressure released, way
+    next_nodes = [("AA", (), 30, 0, ())]
+
+    while next_nodes:
+        print(f"{len(next_nodes)}")
+        nodes = deque(sorted(next_nodes, key=nq_sort, reverse=True)[:10000])
+        next_nodes.clear()
+
+        while nodes:
+            valve, opened, t_left, r_pressure, way = nodes.popleft()
+
+            if t_left <= 0:
+                best.add(r_pressure)
+                logfile.write(f"{r_pressure}, {way=}, {opened=}\n")
+                continue
+
+            if valve not in opened and valves[valve]["fl"] != 0:
+                opened = tuple(opened + (valve,))
+                t_left -= 1
+                r_pressure += t_left * valves[valve]["fl"]
+
+            way = tuple(way + (valve,))
+            for subsequent in valves[valve]["conn"]:
+                next_nodes.append(
+                    (
+                        subsequent,
+                        opened,
+                        t_left - 1,
+                        r_pressure,
+                        way,
+                    )
+                )
+
+    logfile.close()
+
+    return max(best)
 
 
 if __name__ == "__main__":
