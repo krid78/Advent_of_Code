@@ -51,19 +51,11 @@ def nq_sort(status):
     return r_pressure
 
 
-def main():
-    """code if module is called directly"""
-    the_data = get_data("data_test1.txt")
-    # the_data = get_data("data.txt")
-
-    valves = get_valves(the_data)
-
-    minutes = 0
-
-    # current valve, opened valves, time left, pressure released
-    next_nodes = [("AA", (), 0)]
-
-    while minutes < 5:
+def solve(valves: list, next_nodes: list, minutes=30) -> int:
+    """
+    solve the puzzle, traverse the list of nodes
+    """
+    while minutes < 30:
         minutes += 1  # in minute ...
         nodes = deque(sorted(next_nodes, key=nq_sort, reverse=True)[:10000])
         next_nodes.clear()
@@ -101,7 +93,21 @@ def main():
     for node in nodes:
         best.add(node[2])
 
+    print(f"{best}")
     return max(best)
+
+
+def main():
+    """code if module is called directly"""
+    the_data = get_data("data_test1.txt")
+    # the_data = get_data("data.txt")
+
+    valves = get_valves(the_data)
+
+    # current valve, opened valves, time left, pressure released
+    best = solve(valves, [("AA", (), 0)], 30)
+
+    return best
 
 
 if __name__ == "__main__":
