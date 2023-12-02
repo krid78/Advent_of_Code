@@ -14,12 +14,6 @@ def get_data(filename: str) -> list:
     return content
 
 
-def find_all(src, sub):
-    """Find all occurrences of sub in src"""
-    while True:
-        idx = src.find(sub)
-
-
 def get_hits(line: str) -> dict:
     """Return a number"""
     # print(f"Try: {line}")
