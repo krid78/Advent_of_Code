@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Solve Advent of Code 2023/12/01
-https://adventofcode.com/2021/day/1
+"""Solve Advent of Code 2023/12/02
+https://adventofcode.com/2021/day/2
 """
 
 
