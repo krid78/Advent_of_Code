@@ -38,11 +38,20 @@ def main():
                     start = (row, col)
                 else:
                     number += val
+                    if col == (line_len - 1):
+                        stop = (row, col)
+                        numbers.append(
+                            {
+                                "start": start,
+                                "stop": stop,
+                                "val": int(number),
+                                "valid": False,
+                            }
+                        )
             else:
                 if col == (line_len - 1):
                     stop = (row, col)
-                else:
-                    stop = (row, col - 1)
+                stop = (row, col - 1)
 
                 if ord(val) != 46:
                     # found a special sign
@@ -75,9 +84,9 @@ def main():
         tl = tuple(tl)
 
         br = [number["stop"][0] + 1, number["stop"][1] + 1]
-        if br[0] >= (len(the_data) - 1):
+        if br[0] >= (len(the_data)):
             br[0] = len(the_data) - 1
-        if br[1] >= (line_len - 1):
+        if br[1] >= (line_len):
             br[1] = line_len - 1
         br = tuple(br)
 
@@ -90,6 +99,8 @@ def main():
     for number in numbers:
         if number["valid"] is True:
             solution += number["val"]
+        else:
+            print(f"{number['val']}")
 
     return solution
 
