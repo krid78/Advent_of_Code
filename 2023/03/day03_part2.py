@@ -18,8 +18,8 @@ def get_data(filename: str) -> list:
 def main():
     """Solve day 02"""
     solution = 0
-    the_data = get_data("day03_test1.txt")
-    # the_data = get_data("day03_data.txt")
+    # the_data = get_data("day03_test1.txt")
+    the_data = get_data("day03_data.txt")
 
     line_len = len(the_data[0])
 
