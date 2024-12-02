@@ -2,6 +2,7 @@
 """Solve Advent of Code 2024/12/01
 https://adventofcode.com/2024/day/1
 """
+from collections import Counter
 
 
 def get_data(filename: str) -> list:
@@ -33,9 +34,16 @@ def main():
 
     assert len(left) == len(right)
 
-    for idx in range(len(left)):
-        solution1 += abs(left[idx] - right[idx])
-        solution2 += left[idx] * right.count(left[idx])
+    # Use zip for solution1
+    for l, r in zip(left, right):
+        solution1 += abs(l - r)
+
+    # Precompute counts in right using Counter
+    right_counts = Counter(right)
+
+    # Use precomputed counts for solution2
+    for l in left:
+        solution2 += l * right_counts[l]
 
     return solution1, solution2
 
