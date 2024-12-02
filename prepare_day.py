@@ -31,8 +31,8 @@ def solve():
     solution1 = 0
     solution2 = 0
 
-    # the_data = get_data("day{day:02}.data")
-    the_data = get_data("day{day:02}.test")
+    # the_data = get_data("../{data_dir}day{day:02}.data")
+    the_data = get_data("../{data_dir}day{day:02}.test")
 
     return solution1, solution2
 
@@ -41,41 +41,57 @@ if __name__ == "__main__":
     solution1, solution2 = solve()
 '''
 
+
 def prepare_day(year, day):
     # Create directory if it doesn't exist
-    directory_name = str(year)
-    os.makedirs(directory_name, exist_ok=True)
-    print(f"Directory '{directory_name}' and files", end="")
+    code_dir_name = os.path.join(str(year), "python")
+    data_dir_name = os.path.join(str(year), "data")
+    os.makedirs(code_dir_name, exist_ok=True)
+    os.makedirs(data_dir_name, exist_ok=True)
+    print(f"Directorys '{code_dir_name}', '{data_dir_name}' and files", end="")
 
     # Create file with the specified day number
     file_name = f"day{day:02}.py"
-    file_path = os.path.join(directory_name, file_name)
-    with open(file_path, 'w') as file:
-        file.write(__TEMPLATE__.format(**{"year":year, "day":day}))
+    file_path = os.path.join(code_dir_name, file_name)
+    with open(file_path, "w") as file:
+        file.write(
+            __TEMPLATE__.format(
+                **{
+                    "data_dir": data_dir_name + os.sep,
+                    "year": year,
+                    "day": day,
+                }
+            )
+        )
         file.write('    print(f"{solution1=} | {solution2=}"\n')
 
     print(f" '{file_name}'", end="")
 
     file_name = f"day{day:02}.data"
-    file_path = os.path.join(directory_name, file_name)
-    with open(file_path, 'w') as file:
+    file_path = os.path.join(data_dir_name, file_name)
+    with open(file_path, "w") as file:
         pass  # Empty file
 
     print(f", '{file_name}'", end="")
 
     file_name = f"day{day:02}.test"
-    file_path = os.path.join(directory_name, file_name)
-    with open(file_path, 'w') as file:
+    file_path = os.path.join(data_dir_name, file_name)
+    with open(file_path, "w") as file:
         pass  # Empty file
 
     print(f" and '{file_name}'", end="")
 
-    print(f" created successfully.")
+    print(" created successfully.")
+
 
 def main():
-    parser = argparse.ArgumentParser(description='Prepare day directory and file.')
-    parser.add_argument('-y', '--year', type=int, help='Four-digit year (default: current year)')
-    parser.add_argument('-d', '--day', type=int, help='Day number (default: current day)')
+    parser = argparse.ArgumentParser(description="Prepare day directory and file.")
+    parser.add_argument(
+        "-y", "--year", type=int, help="Four-digit year (default: current year)"
+    )
+    parser.add_argument(
+        "-d", "--day", type=int, help="Day number (default: current day)"
+    )
     args = parser.parse_args()
 
     args = parser.parse_args()
@@ -88,6 +104,6 @@ def main():
 
     prepare_day(year, day)
 
+
 if __name__ == "__main__":
     main()
-
