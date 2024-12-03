@@ -118,10 +118,10 @@ def solve() -> tuple[int, int]:
     """
     # Load data
     the_data = get_data(
-        "/home/dkrieste/Dokumente/Develop/advent-of-code/2024/data/day02.data"
+        "2024/data/day02.data"
     )
     # the_data = get_data(
-    #     "/home/dkrieste/Dokumente/Develop/advent-of-code/2024/data/day02.test"
+    #     "2024/data/day02.test"
     # )
 
     solution1 = solve1(the_data)
