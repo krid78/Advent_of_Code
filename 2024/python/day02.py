@@ -4,20 +4,30 @@ https://adventofcode.com/2024/day/2
 """
 
 
-def get_data(filename: str) -> list:
-    """Return file contents as list"""
+def get_data(filename: str) -> list[str]:
+    """Return file contents as a list of strings."""
     with open(filename, "r") as in_file:
-        content = [row.rstrip() for row in in_file]
-
-    return content
+        return [row.rstrip() for row in in_file]
 
 
-def check_report(report):
-    """check the given report"""
+def check_report(report: list[str]) -> tuple[bool, int]:
+    """
+    Check the given report for the specified conditions.
+
+    Args:
+        report: List of stringified integers in the report.
+
+    Returns:
+        A tuple containing:
+        - A boolean indicating if the report is valid.
+        - The index where the first failure occurs (or the last checked index if valid).
+    """
     res = False
-    if 0 < (int(report[0]) - int(report[1])) < 4:
+    diff = int(report[0]) - int(report[1])
+
+    if 0 < diff < 4:
         safe = {1, 2, 3}
-    elif -4 < (int(report[0]) - int(report[1])) < 0:
+    elif -4 < diff < 0:
         safe = {-1, -2, -3}
     else:
         return res, 0
@@ -25,59 +35,88 @@ def check_report(report):
     for idx in range(1, len(report) - 1):
         check = int(report[idx]) - int(report[idx + 1])
         if check not in safe:
-            break
-    else:
-        res = True
+            return res, idx
 
-    return res, idx
+    return True, len(report) - 2
 
 
-def solve1(the_data):
-    """Solve puzzle part 1"""
+def try_fix_report(report: list[str], idx: int) -> bool:
+    """
+    Try fixing the report by removing problematic entries.
+
+    Args:
+        report: List of stringified integers in the report.
+        idx: Index of the first problematic entry.
+
+    Returns:
+        A boolean indicating if the report is valid after fixing.
+    """
+    # Try dropping the current element
+    res, _ = check_report(report[:idx] + report[idx + 1 :])
+    if res:
+        return True
+
+    # Try dropping the next element
+    res, _ = check_report(report[: idx + 1] + report[idx + 2 :])
+    if res:
+        return True
+
+    # Try dropping the first element if idx is within the first 2 elements
+    if idx < 2:
+        res, _ = check_report(report[1:])
+        return res
+
+    return False
+
+
+def solve1(the_data: list[str]) -> int:
+    """
+    Solve part 1 of the puzzle.
+
+    Args:
+        the_data: List of input lines from the puzzle file.
+
+    Returns:
+        The solution for part 1.
+    """
     solution = 0
     for line in the_data:
         report = line.split()
-
-        res, idx = check_report(report)
-
+        res, _ = check_report(report)
         if res:
             solution += 1
-
     return solution
 
 
-def solve2(the_data):
-    """Solve puzzle part 1"""
-    solution = 0
+def solve2(the_data: list[str]) -> int:
+    """
+    Solve part 2 of the puzzle.
 
-    # check()
-    # drop self, check()
-    # drop next, check()
+    Args:
+        the_data: List of input lines from the puzzle file.
+
+    Returns:
+        The solution for part 2.
+    """
+    solution = 0
     for line in the_data:
         report = line.split()
-
         res, idx = check_report(report)
-
         if not res:
-            res, _ = check_report(report[:idx] + report[idx + 1 :])
-
-        if not res:
-            res, _ = check_report(report[: idx + 1] + report[idx + 2 :])
-
-        if not res and idx < 2:
-            res, _ = check_report(report[1:])
-
+            res = try_fix_report(report, idx)
         if res:
             solution += 1
-
     return solution
 
 
-def solve():
-    """Solve the puzzle"""
-    solution1 = 0
-    solution2 = 0
+def solve() -> tuple[int, int]:
+    """
+    Solve the puzzle for both parts.
 
+    Returns:
+        A tuple containing solutions for part 1 and part 2.
+    """
+    # Load data
     the_data = get_data(
         "/home/dkrieste/Dokumente/Develop/advent-of-code/2024/data/day02.data"
     )
