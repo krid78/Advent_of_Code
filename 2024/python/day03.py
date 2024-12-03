@@ -16,15 +16,15 @@ def get_data(filename: str) -> list:
 
 def solve1(the_data):
     """Solve part 1"""
-    pattern1 = r"mul\(\d{1,3},\d{1,3}\)"
-    pattern2 = r"\d{1,3}"
+    pattern1 = re.compile(r"mul\(\d{1,3},\d{1,3}\)")
+    pattern2 = re.compile(r"\d{1,3}")
 
-    matches = re.findall(pattern1, "".join(the_data))
+    matches = pattern1.findall("".join(the_data))
     # print(matches)
 
     solution = 0
     for mul in matches:
-        numbers = re.findall(pattern2, mul)
+        numbers = pattern2.findall(mul)
         # print(numbers)
         solution += int(numbers[0]) * int(numbers[1])
 
@@ -33,10 +33,10 @@ def solve1(the_data):
 
 def solve2(the_data):
     """Solve part 2"""
-    pattern1 = r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)"
-    pattern2 = r"\d{1,3}"
+    pattern1 = re.compile(r"mul\(\d{1,3},\d{1,3}\)|do\(\)|don't\(\)")
+    pattern2 = re.compile(r"\d{1,3}")
 
-    matches = re.findall(pattern1, "".join(the_data))
+    matches = pattern1.findall("".join(the_data))
     # print(matches)
 
     solution = 0
@@ -45,7 +45,7 @@ def solve2(the_data):
         if tok in ["do()", "don't()"]:
             mode = tok
         elif mode == "do()":
-            numbers = re.findall(pattern2, tok)
+            numbers = pattern2.findall(tok)
             # print(numbers)
             solution += int(numbers[0]) * int(numbers[1])
         else:
