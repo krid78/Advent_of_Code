@@ -63,7 +63,7 @@ def prepare_day(year, day):
                 }
             )
         )
-        file.write('    print(f"{solution1=} | {solution2=}"\n')
+        file.write('    print(f"{solution1=} | {solution2=}")\n')
 
     print(f" '{file_name}'", end="")
 
