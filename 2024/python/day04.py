@@ -53,10 +53,9 @@ def find_mas(data: list[str], row: int, col: int):
     for dr, dc in [(-1, 1), (0, 0), (1, -1)]:
         bar += data[row + dr][col + dc]
 
-    if (foo == "MAS" or foo[::-1] == "MAS") and (bar == "MAS" or bar[::-1] == "MAS"):
-        return 1
+    valid_patterns = ["MAS", "SAM"]
 
-    return 0
+    return 1 if foo in valid_patterns and bar in valid_patterns else 0
 
 
 def solve():
@@ -84,8 +83,6 @@ def solve():
                 for direction in directions:
                     solution1 += find_xmas(the_data, row, col, direction)
 
-    for row in range(len(the_data)):
-        for col in range(len(the_data[0])):
             if the_data[row][col] == "A":
                 solution2 += find_mas(the_data, row, col)
 
