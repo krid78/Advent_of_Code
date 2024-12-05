@@ -31,23 +31,35 @@ def solve():
         page_map[pre].append(post)
 
     for line in the_data[upd_start + 1 :]:
-        l = [x for x in map(int, line.split(","))]
+        l = [int(x) for x in line.split(",")]
+        print(f"{l=}")
         correct = True
-        for li, lv in enumerate(l):
+        li = 0
+        while li < len(l):
+            lv = l[li]
             left = set(l[:li])
-            try:
-                right = set(page_map[lv])
-            except KeyError:
-                right = {}
+            right = set(page_map.get(lv, []))
 
-            if set(left) & set(right):
+            intersection = left & right
+            if left & right:
                 correct = False
-                break
+                # print(f"{lv=}, {intersection=}")
+                # print(f"{l=}")
+                i = len(left)
+                for x in intersection:
+                    i = min(i, l.index(x))
+                l.pop(li)
+                l.insert(i, lv)
+                li = i
+                # print(f"{l=}")
+            else:
+                li += 1
 
+        print(f"{l=}; {l[len(l) // 2]}")
         if correct:
-            print(f"{l=}")
-            print(f"{l[len(l)//2]}")
             solution1 += l[len(l) // 2]
+        else:
+            solution2 += l[len(l) // 2]
 
     return solution1, solution2
 
