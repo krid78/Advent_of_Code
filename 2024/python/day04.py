@@ -27,14 +27,33 @@ def find_xmas(data: list[str], row: int, col: int, direction: tuple[int, int]) -
     """
     dr, dc = direction
 
+    # Check bounds for the 4-character substring
     if not (0 <= row + 3 * dr < len(data) and 0 <= col + 3 * dc < len(data[0])):
         return 0
 
-    candidate = ""
-    for i in range(4):
-        candidate += data[row + i * dr][col + i * dc]
+    # Check if the characters form 'XMAS'
+    return all(data[row + i * dr][col + i * dc] == "XMAS"[i] for i in range(4))
 
-    if candidate == "XMAS":
+
+def find_mas(data: list[str], row: int, col: int):
+    """Find 2 times MAS in the shape of an X
+    M.M | M.S | S.M | S.S
+    .A. | .A. | .A. | .A.
+    S.S | M.S | S.M | M.M
+    """
+    # Check bounds for the 4-character substring
+    if not (0 < row < len(data) - 1 and 0 < col < len(data[0]) - 1):
+        return 0
+
+    foo = ""
+    for dr, dc in [(-1, -1), (0, 0), (1, 1)]:
+        foo += data[row + dr][col + dc]
+
+    bar = ""
+    for dr, dc in [(-1, 1), (0, 0), (1, -1)]:
+        bar += data[row + dr][col + dc]
+
+    if (foo == "MAS" or foo[::-1] == "MAS") and (bar == "MAS" or bar[::-1] == "MAS"):
         return 1
 
     return 0
@@ -63,7 +82,12 @@ def solve():
         for col in range(len(the_data[0])):
             if the_data[row][col] == "X":
                 for direction in directions:
-                    solution1 += find_xmas(the_data, row, col, (0, 1))
+                    solution1 += find_xmas(the_data, row, col, direction)
+
+    for row in range(len(the_data)):
+        for col in range(len(the_data[0])):
+            if the_data[row][col] == "A":
+                solution2 += find_mas(the_data, row, col)
 
     return solution1, solution2
 
