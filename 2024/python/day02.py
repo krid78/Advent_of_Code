@@ -117,12 +117,8 @@ def solve() -> tuple[int, int]:
         A tuple containing solutions for part 1 and part 2.
     """
     # Load data
-    the_data = get_data(
-        "2024/data/day02.data"
-    )
-    # the_data = get_data(
-    #     "2024/data/day02.test"
-    # )
+    the_data = get_data("2024/data/day02.data")
+    # the_data = get_data("2024/data/day02.test")
 
     solution1 = solve1(the_data)
     solution2 = solve2(the_data)

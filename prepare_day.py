@@ -31,8 +31,8 @@ def solve():
     solution1 = 0
     solution2 = 0
 
-    # the_data = get_data("../{data_dir}day{day:02}.data")
-    the_data = get_data("../{data_dir}day{day:02}.test")
+    # the_data = get_data("{data_dir}day{day:02}.data")
+    the_data = get_data("{data_dir}day{day:02}.test")
 
     return solution1, solution2
 

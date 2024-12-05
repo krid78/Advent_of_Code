@@ -18,8 +18,8 @@ def main():
 
     solution1 = 0
     solution2 = 0
-    # the_data = get_data("../../day01/test01.txt")
-    the_data = get_data("../../day01/data01.txt")
+    # the_data = get_data("2024/data/day01.test")
+    the_data = get_data("2024/data/day01.data")
 
     left = []
     right = []
