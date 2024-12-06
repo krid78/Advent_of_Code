@@ -5,119 +5,82 @@ https://adventofcode.com/2024/day/6
 
 import time
 
-__DIRECTIONS__ = [
-    (-1, 0),  # up
-    (0, 1),  # right
-    (1, 0),  # down
-    (0, -1),  # left
-]
+# Directions: up, right, down, left
+DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
 
 def get_data(filename: str) -> list[str]:
-    """Return file contents as list"""
+    """Return file contents as a list of strings."""
     with open(filename, "r") as in_file:
-        content = [row.rstrip() for row in in_file]
-
-    return content
+        return [row.rstrip() for row in in_file]
 
 
-def solve_part2(
-    the_data: list[str], obstructions: list[set], start: set[int], direction: int
-) -> int:
-    """Solve part 2"""
+def parse_map(the_data: list[str]):
+    """Parse the map and extract start position, direction, and obstructions."""
+    obstructions = set()
+    start = None
+    direction = 0
 
+    for row, line in enumerate(the_data):
+        for col, char in enumerate(line):
+            if char == "#":
+                obstructions.add((row, col))
+            elif char in "^>v<":
+                start = (row, col)
+                direction = "^>v<".index(char)
+
+    return obstructions, start, direction
+
+
+def traverse_map(
+    the_data: list[str], obstructions: set, start: tuple, direction: int, max_steps=150
+):
+    """Simulate traversal of the map."""
     row, col = start
-    dr, dc = __DIRECTIONS__[direction]
-    visited = [start]
-    counter = 0
-
-    while (
-        0 < row < len(the_data) - 1 and 0 < col < len(the_data[0]) - 1 and counter < 150
-    ):
-        row += dr
-        col += dc
-        if (row, col) in obstructions:
-            row -= dr
-            col -= dc
-            direction = (direction + 1) % 4
-            dr, dc = __DIRECTIONS__[direction]
-        elif (row, col) not in visited:
-            the_data[row] = the_data[row][:col] + "X" + the_data[row][col + 1 :]
-            visited.append((row, col))
-            counter = 0
-        else:
-            counter += 1
-
-    if counter >= 150:
-        return True
-    else:
-        return False
-
-
-def solve_part1(the_data: list[str], obstructions, start, direction) -> int:
-    """Solve part 1"""
-
-    row, col = start
-    dr, dc = __DIRECTIONS__[direction]
-    visited = [start]
+    dr, dc = DIRECTIONS[direction]
+    visited = set()
+    steps = 0
 
     while 0 < row < len(the_data) - 1 and 0 < col < len(the_data[0]) - 1:
+        if steps >= max_steps:
+            return False, visited
+
         row += dr
         col += dc
+
         if (row, col) in obstructions:
+            # Hit an obstruction, turn clockwise
             row -= dr
             col -= dc
             direction = (direction + 1) % 4
-            dr, dc = __DIRECTIONS__[direction]
+            dr, dc = DIRECTIONS[direction]
         elif (row, col) not in visited:
-            the_data[row] = the_data[row][:col] + "X" + the_data[row][col + 1 :]
-            visited.append((row, col))
+            # Visit a new cell
+            visited.add((row, col))
+            steps = 0
         else:
-            pass
+            # Already visited
+            steps += 1
 
-    # print("\n".join(the_data))
-
-    return visited, len(visited)
+    return True, visited
 
 
 def solve():
-    """Solve the puzzle"""
-    solution1 = 0
-    solution2 = 0
-
+    """Solve the puzzle."""
     the_data = get_data("2024/data/day06.data")
-    # the_data = get_data("2024/data/day06.test")
+    obstructions, start, direction = parse_map(the_data)
 
-    obstructions = []
+    # Part 1: Traverse the map and count visited cells
+    _, visited = traverse_map(the_data, obstructions, start, direction)
+    solution1 = len(visited)
 
-    for row, rdata in enumerate(the_data):
-        for col, cdata in enumerate(rdata):
-            if cdata == "#":
-                obstructions.append((row, col))
-            elif cdata == "^":
-                direction = 0
-                start = (row, col)
-            elif cdata == ">":
-                direction = 1
-                start = (row, col)
-            elif cdata == "v":
-                direction = 2
-                start = (row, col)
-            elif cdata == "<":
-                direction = 3
-                start = (row, col)
-            else:
-                pass
-
-    # print(f"{start=}, {obstructions=}")
-
-    route, solution1 = solve_part1(the_data, obstructions, start, direction)
-    length = len(route)
-    for block in route[1:]:
-        print(f"{length} left")
-        if solve_part2(the_data, obstructions + [block], start, direction):
+    # Part 2: Check blockages
+    solution2 = 0
+    for block in visited:
+        new_obstructions = obstructions | {block}
+        success, _ = traverse_map(the_data, new_obstructions, start, direction)
+        if not success:
             solution2 += 1
-        length -= 1
 
     return solution1, solution2
 
@@ -125,5 +88,5 @@ def solve():
 if __name__ == "__main__":
     time_start = time.perf_counter()
     solution1, solution2 = solve()
-    print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
+    print(f"Solved in {time.perf_counter()-time_start:.5f} seconds.")
     print(f"{solution1=} | {solution2=}")
