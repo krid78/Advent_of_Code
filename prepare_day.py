@@ -17,6 +17,7 @@ __TEMPLATE__ = '''"""Solve Advent of Code {year}, day {day}
 https://adventofcode.com/{year}/day/{day}
 """
 
+import time
 
 def get_data(filename: str) -> list:
     """Return file contents as list"""
@@ -38,7 +39,9 @@ def solve():
 
 
 if __name__ == "__main__":
+    time_start = time.perf_counter()
     solution1, solution2 = solve()
+    print(f'Solved in {time.perf_counter()-time_start:.5f} Sec.')
 '''
 
 
