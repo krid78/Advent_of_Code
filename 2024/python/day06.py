@@ -3,6 +3,8 @@
 https://adventofcode.com/2024/day/6
 """
 
+import time
+
 __DIRECTIONS__ = [
     (-1, 0),  # up
     (0, 1),  # right
@@ -19,37 +21,19 @@ def get_data(filename: str) -> list[str]:
     return content
 
 
-def look_right(the_data, vis, obs, pos):
-    """look right, if we find a spot"""
-    row, col = pos[:2]
-    dr, dc = __DIRECTIONS__[drc := ((pos[2] + 1) % 4)]
+def solve_part2(
+    the_data: list[str], obstructions: list[set], start: set[int], direction: int
+) -> int:
+    """Solve part 2"""
 
-    while 0 <= row < len(the_data) and 0 <= col < len(the_data[0]):
-        row += dr
-        col += dc
-        if (row, col) in obs:
-            row -= dr
-            col -= dc
-            break
-    else:
-        return False
-
-    if (row, col, drc) in vis:
-        # print(f"Found: {row}, {col}, {drc}")
-        return True
-
-    return False
-
-
-def solve_part2(the_data: list[str], obstructions, start) -> int:
-    """Solve part 1"""
-
-    row, col = start[:2]
-    dr, dc = __DIRECTIONS__[direction := start[2]]
+    row, col = start
+    dr, dc = __DIRECTIONS__[direction]
     visited = [start]
-    blocks = set()
+    counter = 0
 
-    while 0 < row < len(the_data) - 1 and 0 < col < len(the_data[0]) - 1:
+    while (
+        0 < row < len(the_data) - 1 and 0 < col < len(the_data[0]) - 1 and counter < 150
+    ):
         row += dr
         col += dc
         if (row, col) in obstructions:
@@ -57,19 +41,17 @@ def solve_part2(the_data: list[str], obstructions, start) -> int:
             col -= dc
             direction = (direction + 1) % 4
             dr, dc = __DIRECTIONS__[direction]
-        elif (row, col, direction) not in visited:
+        elif (row, col) not in visited:
             the_data[row] = the_data[row][:col] + "X" + the_data[row][col + 1 :]
-            visited.append((row, col, direction))
+            visited.append((row, col))
+            counter = 0
         else:
-            pass
+            counter += 1
 
-        if look_right(the_data, visited, obstructions, (row, col, direction)):
-            # print(f"{(row+dr, col+dc, direction)}")
-            blocks.add((row + dr, col + dc, direction))
-
-    # print("\n".join(the_data))
-
-    return len(blocks)
+    if counter >= 150:
+        return True
+    else:
+        return False
 
 
 def solve_part1(the_data: list[str], obstructions, start, direction) -> int:
@@ -95,7 +77,7 @@ def solve_part1(the_data: list[str], obstructions, start, direction) -> int:
 
     # print("\n".join(the_data))
 
-    return len(visited)
+    return visited, len(visited)
 
 
 def solve():
@@ -113,24 +95,35 @@ def solve():
             if cdata == "#":
                 obstructions.append((row, col))
             elif cdata == "^":
-                start = (row, col, 0)
+                direction = 0
+                start = (row, col)
             elif cdata == ">":
-                start = (row, col, 1)
+                direction = 1
+                start = (row, col)
             elif cdata == "v":
-                start = (row, col, 2)
+                direction = 2
+                start = (row, col)
             elif cdata == "<":
-                start = (row, col, 3)
+                direction = 3
+                start = (row, col)
             else:
                 pass
 
     # print(f"{start=}, {obstructions=}")
 
-    solution1 = solve_part1(the_data, obstructions, (start[:2]), start[2])
-    solution2 = solve_part2(the_data, obstructions, start)
+    route, solution1 = solve_part1(the_data, obstructions, start, direction)
+    length = len(route)
+    for block in route[1:]:
+        print(f"{length} left")
+        if solve_part2(the_data, obstructions + [block], start, direction):
+            solution2 += 1
+        length -= 1
 
     return solution1, solution2
 
 
 if __name__ == "__main__":
+    time_start = time.perf_counter()
     solution1, solution2 = solve()
+    print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
     print(f"{solution1=} | {solution2=}")
