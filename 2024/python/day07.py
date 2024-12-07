@@ -20,12 +20,12 @@ def get_data(filename: str) -> list:
     return data
 
 
-def solve_equation(target: int, numbers: list[int]) -> int:
+def solve_equation(target: int, numbers: list[int], operators: list[str]) -> int:
     """
     Check if the target can be computed using the numbers with addition and multiplication.
     """
     # Generate all possible operator combinations (+ or *) for the numbers
-    operators = list(product(["+", "*"], repeat=len(numbers) - 1))
+    operators = list(product(operators, repeat=len(numbers) - 1))
 
     # Test each operator combination
     for ops in operators:
@@ -36,6 +36,8 @@ def solve_equation(target: int, numbers: list[int]) -> int:
                 result += num
             elif op == "*":
                 result *= num
+            elif op == "|":
+                result = int(str(result) + str(num))
 
         # Check if the result matches the target
         if result == target:
@@ -55,7 +57,8 @@ def solve():
     """ only * and + available
     always left to right"""
     for result, operands in the_data:
-        solution1 += solve_equation(result, operands)
+        solution1 += solve_equation(result, operands, ["+", "*"])
+        solution2 += solve_equation(result, operands, ["+", "*", "|"])
 
     return solution1, solution2
 
