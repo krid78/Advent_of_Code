@@ -41,7 +41,6 @@ def solve():
 if __name__ == "__main__":
     time_start = time.perf_counter()
     solution1, solution2 = solve()
-    print(f'Solved in {time.perf_counter()-time_start:.5f} Sec.')
 '''
 
 
@@ -65,6 +64,9 @@ def prepare_day(year, day):
                     "day": day,
                 }
             )
+        )
+        file.write(
+            '    print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")\n'
         )
         file.write('    print(f"{solution1=} | {solution2=}")\n')
 
