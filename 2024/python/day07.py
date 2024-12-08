@@ -39,6 +39,9 @@ def solve_equation(target: int, numbers: list[int], operators: list[str]) -> int
             elif op == "|":
                 result = int(str(result) + str(num))
 
+            if result > target:
+                return 0
+
         # Check if the result matches the target
         if result == target:
             return result
