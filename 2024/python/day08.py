@@ -43,6 +43,33 @@ def draw_board(the_data: list[str], antinodes: set[tuple[int, int]]):
         print("")
 
 
+def node_loop(
+    row: int, col: int, dr: int, dc: int, lrow: int, lcol: int
+) -> set[tuple[int, int]]:
+    """
+    Generate a set of coordinates extending in a direction until the board boundary.
+
+    Args:
+        row (int): Starting row position.
+        col (int): Starting column position.
+        dr (int): Row direction (delta).
+        dc (int): Column direction (delta).
+        lrow (int): The number of rows in the board.
+        lcol (int): The number of columns in the board.
+
+    Returns:
+        set[tuple[int, int]]: A set of coordinates in the given direction.
+    """
+    newset = set()
+    nrow = row - dr
+    ncol = col - dc
+    while 0 <= nrow < lrow and 0 <= ncol < lcol:
+        newset.add((nrow, ncol))
+        nrow -= dr
+        ncol -= dc
+    return newset
+
+
 def find_antinodes(
     antennas: dict[str, set[tuple[int, int]]], lrow: int, lcol: int
 ) -> set[tuple[int, int]]:
@@ -60,7 +87,7 @@ def find_antinodes(
     antinodes = set()
 
     for key, value in antennas.items():
-        print(f"{key=}, {value=}")
+        # print(f"{key=}, {value=}")
         for (row1, col1), (row2, col2) in combinations(value, 2):
             dr = row2 - row1
             dc = col2 - col1
@@ -84,30 +111,19 @@ def find_harmonic_antinodes(
         lcol (int): The number of columns in the board.
 
     Returns:
-        set[tuple[int, int]]: A set of coordinates representing the antinodes.
+        set[tuple[int, int]]: A set of coordinates representing the harmonic antinodes.
     """
-
-    def node_loop(row, col, dr, dc):
-        newset = set()
-        nrow = row - dr
-        ncol = col - dc
-        while 0 <= nrow < lrow and 0 <= ncol < lcol:
-            newset.add((nrow, ncol))
-            nrow -= dr
-            ncol -= dc
-        return newset
-
     antinodes = set()
 
     for key, value in antennas.items():
-        print(f"{key=}, {value=}")
+        # print(f"{key=}, {value=}")
         assert len(value) > 1
         for (row1, col1), (row2, col2) in combinations(value, 2):
             dr = row2 - row1
             dc = col2 - col1
             antinodes.update({(row1, col1), (row2, col2)})
-            antinodes.update(node_loop(row1, col1, dr, dc))
-            antinodes.update(node_loop(row2, col2, -dr, -dc))
+            antinodes.update(node_loop(row1, col1, dr, dc, lrow, lcol))
+            antinodes.update(node_loop(row2, col2, -dr, -dc, lrow, lcol))
 
     return antinodes
 
@@ -136,11 +152,11 @@ def solve() -> tuple[int, int]:
 
     antinodes = find_antinodes(antennas, lrow, lcol)
     solution1 = len(antinodes)
-    draw_board(the_data, antinodes)
+    # draw_board(the_data, antinodes)
 
     antinodes = find_harmonic_antinodes(antennas, lrow, lcol)
     solution2 = len(antinodes)  # + len(antennas)
-    draw_board(the_data, antinodes)
+    # draw_board(the_data, antinodes)
 
     return solution1, solution2
 
