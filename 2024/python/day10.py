@@ -50,32 +50,22 @@ def solve():
 
     max_x = len(the_data[0])
     max_y = len(the_data)
-    zeros = set()
-    nines = set()
+    zeros = set(
+        [(x, y) for y in range(max_y) for x in range(max_x) if the_data[y][x] == 0]
+    )
+    nines = set(
+        [(x, y) for y in range(max_y) for x in range(max_x) if the_data[y][x] == 9]
+    )
     paths1 = []
     paths2 = []
-    for y in range(max_y):
-        for x in range(max_x):
-            if the_data[y][x] == 9:
-                nines.add((x, y))
-            if the_data[y][x] == 0:
-                zeros.add((x, y))
-
-    print(f"{zeros=}")
-    print(f"{nines=}")
 
     for x, y in nines:
         paths = walk(the_data, x, y, 9)
         paths2.extend(paths)
         paths1.extend(set(paths))
 
-    for x, y in zeros:
-        print(f"Zero at ({x}, {y}) has {paths1.count((x, y))} paths.")
-        solution1 += paths1.count((x, y))
-
-    for x, y in zeros:
-        print(f"Zero at ({x}, {y}) has {paths2.count((x, y))} paths.")
-        solution2 += paths2.count((x, y))
+    solution1 = sum([paths1.count((x, y)) for x, y in zeros])
+    solution2 = sum([paths2.count((x, y)) for x, y in zeros])
 
     return solution1, solution2
 
