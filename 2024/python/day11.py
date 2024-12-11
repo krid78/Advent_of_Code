@@ -1,5 +1,6 @@
 import time
 from collections import deque
+from concurrent.futures import ProcessPoolExecutor
 
 
 def get_data(filename: str) -> list[int]:
@@ -11,17 +12,18 @@ def get_data(filename: str) -> list[int]:
         return [int(x) for x in line.split()]
 
 
-def process_chunk(chunk: deque, iterations: int) -> deque:
+def process_chunk(chunk: list[int], iterations: int) -> int:
     """
     Process a chunk of data for the given number of iterations.
 
     Args:
-        chunk (deque): The current chunk of data.
+        chunk (list[int]): The current chunk of data.
         iterations (int): Number of iterations to perform on this chunk.
 
     Returns:
-        deque: The processed data.
+        int: The size of the processed chunk.
     """
+    chunk = deque(chunk)
     for _ in range(iterations):
         new_elements = deque()
         while chunk:
@@ -38,10 +40,10 @@ def process_chunk(chunk: deque, iterations: int) -> deque:
                 else:  # Odd-length number
                     new_elements.append(value * 2024)
         chunk = new_elements
-    return chunk
+    return len(chunk)
 
 
-def solve(the_data, iterations: int, chunk_size: int = 1000) -> int:
+def solve(the_data: list[int], iterations: int, chunk_size: int = 1000) -> int:
     """
     Solve the puzzle.
 
@@ -54,27 +56,29 @@ def solve(the_data, iterations: int, chunk_size: int = 1000) -> int:
         int: The final size of the processed data.
     """
     total_size = 0
+    chunks = [the_data[i : i + chunk_size] for i in range(0, len(the_data), chunk_size)]
 
-    # Split data into chunks
-    for i in range(0, len(the_data), chunk_size):
-        chunk = deque(the_data[i : i + chunk_size])
-        print(f"Processing chunk {i // chunk_size + 1}...")
-        chunk = process_chunk(chunk, iterations)
-        total_size += len(chunk)
+    # Parallel processing
+    with ProcessPoolExecutor() as executor:
+        for i, chunk_size in enumerate(
+            executor.map(process_chunk, chunks, [iterations] * len(chunks))
+        ):
+            print(f"Chunk {i + 1} processed, size: {chunk_size}")
+            total_size += chunk_size
 
     return total_size
 
 
 if __name__ == "__main__":
     time_start = time.perf_counter()
-    # the_data = get_data("2024/data/day11.data")
-    the_data = get_data("2024/data/day11.test")
+    the_data = get_data("2024/data/day11.data")
+    # the_data = get_data("2024/data/day11.test")
 
     print("Processing part 1 (25 iterations)...")
-    solution1 = solve(the_data, iterations=25, chunk_size=100)
+    solution1 = solve(the_data, iterations=25, chunk_size=10)
 
     print("Processing part 2 (75 iterations)...")
-    solution2 = solve(the_data, iterations=75, chunk_size=100)
+    solution2 = solve(the_data, iterations=75, chunk_size=10)
 
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
     print(f"{solution1=} | {solution2=}")
