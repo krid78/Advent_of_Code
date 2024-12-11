@@ -49,9 +49,9 @@ def solve(the_data, iterations: int) -> int:
 
 if __name__ == "__main__":
     time_start = time.perf_counter()
-    # the_data = get_data("2024/data/day11.data")
-    the_data = get_data("2024/data/day11.test")
-    solution1 = 0  # solve(the_data, iterations=25)
+    the_data = get_data("2024/data/day11.data")
+    # the_data = get_data("2024/data/day11.test")
+    solution1 = solve(the_data, iterations=25)
     solution2 = solve(the_data, iterations=75)  # Set iterations to 75 for part 2
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
     print(f"{solution1=} | {solution2=}")
