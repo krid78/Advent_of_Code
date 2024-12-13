@@ -5,6 +5,8 @@ https://adventofcode.com/2024/day/13
 
 import time
 
+# from math import gcd
+
 
 def get_data(filename: str) -> list[dict[str, tuple[int, int]]]:
     """
@@ -61,7 +63,6 @@ def solve_linear_system_all_solutions(x_a, x_b, p_x, y_a, y_b, p_y):
     Returns:
         list[tuple[int, int]]: All valid solutions (a, b).
     """
-    solutions = []
 
     for a in range(101):
         # Compute b for the first equation
@@ -75,9 +76,30 @@ def solve_linear_system_all_solutions(x_a, x_b, p_x, y_a, y_b, p_y):
         if 0 <= b <= 100:
             # Verify the second equation
             if a * y_a + b * y_b == p_y:
-                solutions.append((a, b))
+                return a, b
 
-    return solutions
+    return None
+
+
+def solve_by_cramer(x_a, x_b, p_x, y_a, y_b, p_y):
+    """One way to solve this system is to use Cramer's rule or direct elimination."""
+
+    # Determine the determinant of the coefficient matrix
+    d = x_a * y_b - y_a * x_b
+
+    #
+    if d == 0:
+        return None
+
+    d_a = p_x * y_b - p_y * x_b
+    d_b = x_a * p_y - y_a * p_x
+
+    if d_a % d == 0 and d_b % d == 0:
+        a = d_a // d
+        b = d_b // d
+        return a, b
+
+    return None
 
 
 def solve():
@@ -90,7 +112,7 @@ def solve():
 
     for claw_machine in the_data:
 
-        solutions = solve_linear_system_all_solutions(
+        solution = solve_linear_system_all_solutions(
             x_a=claw_machine["ButtonA"][0],
             x_b=claw_machine["ButtonB"][0],
             p_x=claw_machine["Prize"][0],
@@ -99,14 +121,19 @@ def solve():
             p_y=claw_machine["Prize"][1],
         )
 
-        if len(solutions) == 1:
-            # print(f"Eindeutige Lösung: {solutions[0]}")
-            solution1 += solutions[0][0] * 3 + solutions[0][1]
-        elif len(solutions) > 1:
-            print(f"Mehrere Lösungen: {solutions}")
-        else:
-            # print("Keine Lösung gefunden.")
-            pass
+        if solution is not None:
+            solution1 += solution[0] * 3 + solution[1]
+
+        solution = solve_by_cramer(
+            x_a=claw_machine["ButtonA"][0],
+            x_b=claw_machine["ButtonB"][0],
+            p_x=int(claw_machine["Prize"][0] + 1e13),
+            y_a=claw_machine["ButtonA"][1],
+            y_b=claw_machine["ButtonB"][1],
+            p_y=int(claw_machine["Prize"][1] + 1e13),
+        )
+        if solution is not None:
+            solution2 += solution[0] * 3 + solution[1]
 
     return solution1, solution2
 
