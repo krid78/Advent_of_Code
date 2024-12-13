@@ -4,6 +4,7 @@ https://adventofcode.com/2024/day/12
 """
 
 import time
+from collections import defaultdict
 
 __DIRECTIONS__ = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
@@ -11,74 +12,35 @@ __DIRECTIONS__ = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 def get_data(filename: str) -> list[str]:
     """Return file contents as list of strings."""
     with open(filename, "r") as in_file:
-        content = [row.rstrip() for row in in_file]
-
-    return content
+        return [row.rstrip() for row in in_file]
 
 
-def get_plant(the_data, plot, plant):
-    """check if position is still valid"""
-    if (
-        0 <= plot[0] < len(the_data)
-        and 0 <= plot[1] < len(the_data[0])
-        and the_data[plot[0]][plot[1]] == plant
-    ):
-        return True
-    return False
-
-
-def calc_perimeter(area):
+def calc_perimeter(area: set[tuple[int, int]]) -> int:
+    """Calculate the perimeter of an area."""
     perimeter = 0
-    for plot in area:
-        row, col = plot
-        peri = 4
+    for row, col in area:
         for dr, dc in __DIRECTIONS__:
-            if (row + dr, col + dc) in area:
-                peri -= 1
-        perimeter += peri
+            if (row + dr, col + dc) not in area:
+                perimeter += 1
     return perimeter
 
 
-def count_sides(area):
-    if len(area) == 1:
-        return 4
+def count_corners(area: set[tuple[int, int]]) -> int:
+    """Count the corner points of a given area."""
+    diagonal = [(-0.5, -0.5), (-0.5, 0.5), (0.5, -0.5), (0.5, 0.5)]
+    candidates = defaultdict(int)
 
-    area.sort()
-    sides = 1
-    start = area[0]
-    r, c = start
-    d = 1  # starting direction
-    dr, dc = __DIRECTIONS__[d]
-    turns = 0
+    for row, col in area:
+        for dr, dc in diagonal:
+            candidates[(row + dr, col + dc)] += 1
 
-    while True:
-        nr, nc = r + dr, c + dc
-        if (nr, nc) == start:
-            break
-        elif (nr, nc) in area:
-            if turns != 0:
-                sides += 2 - (turns % 2)
-                turns = 0
-        else:
-            for turn in (1, -1, 2):
-                nd = (d + turn) % 4
-                dr, dc = __DIRECTIONS__[nd]
-                if (r + dr, c + dc) in area:
-                    d = nd
-                    turns = abs(turn)
-                    break
-            continue
-
-        r, c = nr, nc
-
-    if d != 0:
-        sides += 1
-
-    return sides
+    return sum(1 for count in candidates.values() if count % 2 != 0)
 
 
-def add_plot(the_data, unvisited, row, col, plant):
-    """check current garden plot"""
+def add_plot(
+    the_data: list[str], unvisited: set[tuple[int, int]], row: int, col: int, plant: str
+) -> set[tuple[int, int]]:
+    """Collect all plots in the same area."""
     stack = [(row, col)]
     area = set()
 
@@ -100,31 +62,20 @@ def solve():
     solution1 = 0
     solution2 = 0
 
-    # the_data = get_data("2024/data/day12.data")
-    the_data = get_data("2024/data/day12.test")
+    the_data = get_data("2024/data/day12.data")
+    # the_data = get_data("2024/data/day12.test")
     unvisited = {
         (row, col) for row in range(len(the_data)) for col in range(len(the_data[0]))
     }
 
     areas = []
     while unvisited:
-        row, col = next(iter(unvisited))
+        row, col = min(unvisited)
         areas.append(add_plot(the_data, unvisited, row, col, the_data[row][col]))
 
-        a = areas[-1]
-        p = calc_perimeter(list(a))
-        s = count_sides(list(a))
-        print(f"== Area: {the_data[row][col]} ==")
-        print(f"Area size: {len(a)}")
-        print(f"Perimeter: {p}")
-        print(f"Sides    : {s}")
-        print(f"Cost1: {len(a)*p}")
-        print(f"Cost2: {len(a)*s}")
-        print(f"{a=}\n")
-
     for a in areas:
-        solution1 += calc_perimeter(list(a)) * len(a)
-        solution2 += count_sides(list(a)) * len(a)
+        solution1 += calc_perimeter(a) * len(a)
+        solution2 += count_corners(a) * len(a)
 
     return solution1, solution2
 
