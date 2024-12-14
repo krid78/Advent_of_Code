@@ -39,7 +39,7 @@ def draw_bot_map(bot_pos, max_row, max_col):
         max_row (int): Number of rows in the grid.
         max_col (int): Number of columns in the grid.
     """
-    grid = [["." for _ in range(max_col)] for _ in range(max_row)]
+    grid = [[" " for _ in range(max_col)] for _ in range(max_row)]
 
     for r, c in bot_pos:
         grid[r][c] = "#"
@@ -202,7 +202,9 @@ def solve_part2(the_data, steps, max_row, max_col):
             print(f"All bots are back in their start position at step {step}.")
             break
 
-        # draw_bot_map(bot_pos, max_row, max_col)
+        print("=" * 25 + f" Bots at step {step} " + "=" * 25)
+        draw_bot_map(bot_pos, max_row, max_col)
+        time.sleep(.20)
         # save_bot_map(bot_pos, max_row, max_col, step)
 
     return -1  # Return -1 if no solution found within the given steps
@@ -215,6 +217,7 @@ def solve():
 
     the_data = get_data("2024/data/day14.data")
     solution1 = solve_part1(the_data, 100, 103, 101)
+    # solution2 = solve_part2(the_data, 75, 103, 101)
     solution2 = solve_part2(the_data, 10500, 103, 101)
 
     # the_data = get_data("2024/data/day14.test")
