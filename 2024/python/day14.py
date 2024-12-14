@@ -5,6 +5,9 @@ https://adventofcode.com/2024/day/14
 
 import time
 
+import cv2
+import numpy as np
+
 
 def get_data(filename: str) -> list[dict[str, tuple[int, int]]]:
     """
@@ -48,7 +51,16 @@ def draw_bot_map(bot_pos, max_row, max_col):
         print("".join(row))
 
 
-# Speichern der Positionen in einer Datei
+def save_bot_img(bot_pos, max_row, max_col, steps):
+
+    filename = f"2024/data/bot_img_{steps:05d}.png"
+    img = np.zeros((max_row, max_col, 3), dtype=np.uint8)
+    for r, c in bot_pos:
+        img[r, c] = [0, 255, 0]
+
+    cv2.imwrite(filename, img)
+
+
 def save_bot_map(bot_pos, max_row, max_col, steps):
     """
     Save the bot positions to a text file.
@@ -117,7 +129,8 @@ def update_quadrants(row, col, max_row, max_col, quadrants):
         quadrants[3] += 1
     # Debugging for unexpected positions
     else:
-        print(f"Position ({row}, {col}) does not fit into any quadrant.")
+        # print(f"Position ({row}, {col}) does not fit into any quadrant.")
+        pass
 
 
 def solve_part1(the_data, steps, max_row, max_col):
@@ -132,47 +145,8 @@ def solve_part1(the_data, steps, max_row, max_col):
         update_quadrants(r, c, max_row, max_col, quadrants)
 
     # draw_bot_map(bot_final_pos, max_row, max_col)
+
     return quadrants[0] * quadrants[1] * quadrants[2] * quadrants[3]
-
-
-def is_christmas_tree(bot_pos, max_row, max_col):
-    """
-    Check if the bot positions form a Christmas tree pattern.
-
-    Args:
-        bot_pos (set[tuple[int, int]]): Set of bot positions (row, col).
-        max_row (int): Maximum rows in the grid.
-        max_col (int): Maximum columns in the grid.
-
-    Returns:
-        bool: True if the bots form a Christmas tree, False otherwise.
-    """
-    rows = {}
-    for r, c in bot_pos:
-        if r not in rows:
-            rows[r] = []
-        rows[r].append(c)
-
-    sorted_rows = sorted(rows.items())  # Sort by row index
-    prev_width = 0
-
-    for i, (row, cols) in enumerate(sorted_rows):
-        cols.sort()
-        width = len(cols)
-        center = sum(cols) / width  # Calculate center of current row
-
-        # Check symmetry
-        if not all(
-            cols[j] + cols[-(j + 1)] == 2 * center for j in range(len(cols) // 2)
-        ):
-            return False
-
-        # Check increasing width for tree shape
-        if width <= prev_width and i > 0:
-            return False
-        prev_width = width
-
-    return True
 
 
 def solve_part2(the_data, steps, max_row, max_col):
@@ -193,12 +167,17 @@ def solve_part2(the_data, steps, max_row, max_col):
     for step in range(1, steps + 1):
         bot_pos = {calculate_position(bot, step, max_row, max_col) for bot in the_data}
 
+        quadrants = [0, 0, 0, 0]
+        for r, c in bot_pos:
+            update_quadrants(r, c, max_row, max_col, quadrants)
+
+        for q in quadrants:
+            if q > 225:
+                # save_bot_img(bot_pos, max_row, max_col, step)
+                return step
+
         # Check for Christmas tree pattern
-        if is_christmas_tree(bot_pos, max_row, max_col):
-            print(f"Christmas tree pattern found at step {step}.")
-            save_bot_map(bot_pos, max_row, max_col, step)  # Optional: Save the pattern
-            return step
-        elif bot_pos == bot_start_pos:
+        if bot_pos == bot_start_pos:
             print(f"All bots are back in their start position at step {step}.")
             break
 
@@ -208,6 +187,7 @@ def solve_part2(the_data, steps, max_row, max_col):
         # save_bot_map(bot_pos, max_row, max_col, step)
 
     return -1  # Return -1 if no solution found within the given steps
+
 
 
 def solve():
