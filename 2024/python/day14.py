@@ -4,7 +4,6 @@ https://adventofcode.com/2024/day/14
 """
 
 import time
-from collections import deque
 
 
 def get_data(filename: str) -> list[dict[str, tuple[int, int]]]:
@@ -32,89 +31,181 @@ def get_data(filename: str) -> list[dict[str, tuple[int, int]]]:
 
 
 def draw_bot_map(bot_pos, max_row, max_col):
-    for r in range(max_row):
-        for c in range(max_col):
-            if (r, c) in bot_pos:
-                print(f"{bot_pos.count((r, c))}", end="")
-            else:
-                print(".", end="")
-        print("")
+    """
+    Draw the bot positions on the grid.
+
+    Args:
+        bot_pos (list[tuple[int, int]]): List of bot positions.
+        max_row (int): Number of rows in the grid.
+        max_col (int): Number of columns in the grid.
+    """
+    grid = [["." for _ in range(max_col)] for _ in range(max_row)]
+
+    for r, c in bot_pos:
+        grid[r][c] = "#"
+
+    for row in grid:
+        print("".join(row))
+
+
+# Speichern der Positionen in einer Datei
+def save_bot_map(bot_pos, max_row, max_col, steps):
+    """
+    Save the bot positions to a text file.
+
+    Args:
+        bot_pos (list[tuple[int, int]]): List of bot positions.
+        max_row (int): Maximum rows in the grid.
+        max_col (int): Maximum columns in the grid.
+        steps (int): Current number of steps, used in the filename.
+    """
+    filename = f"bot_map_{steps:05d}.txt"
+    with open(filename, "w") as f:
+        for r in range(max_row):
+            for c in range(max_col):
+                if (r, c) in bot_pos:
+                    f.write("#")
+                else:
+                    f.write(".")
+            f.write("\n")  # Newline after each row
+    print(f"Map saved to {filename}")
+
+
+def calculate_position(bot, steps, max_row, max_col):
+    """
+    Calculate the position of a bot after a given number of steps.
+
+    Args:
+        bot (dict): A dictionary containing 'p' (position) and 'v' (velocity).
+        steps (int): Number of steps to simulate.
+        max_row (int): Maximum row index for the grid.
+        max_col (int): Maximum column index for the grid.
+
+    Returns:
+        tuple[int, int]: The new position (row, col).
+    """
+    r = (bot["p"][1] + bot["v"][1] * steps) % max_row
+    c = (bot["p"][0] + bot["v"][0] * steps) % max_col
+    return r, c
+
+
+def update_quadrants(row, col, max_row, max_col, quadrants):
+    """
+    Update the quadrants count based on the given position, skipping the middle row/col.
+
+    Args:
+        row (int): Row index.
+        col (int): Column index.
+        max_row (int): Maximum row index.
+        max_col (int): Maximum column index.
+        quadrants (list[int]): List of four quadrant counts.
+    """
+    half_row = max_row // 2
+    half_col = max_col // 2
+
+    # Top-left quadrant
+    if 0 <= row < half_row and 0 <= col < half_col:
+        quadrants[0] += 1
+    # Top-right quadrant
+    elif 0 <= row < half_row and half_col < col < max_col:
+        quadrants[1] += 1
+    # Bottom-right quadrant
+    elif half_row < row < max_row and half_col < col < max_col:
+        quadrants[2] += 1
+    # Bottom-left quadrant
+    elif half_row < row < max_row and 0 <= col < half_col:
+        quadrants[3] += 1
+    # Debugging for unexpected positions
+    else:
+        print(f"Position ({row}, {col}) does not fit into any quadrant.")
 
 
 def solve_part1(the_data, steps, max_row, max_col):
     quadrants = [0, 0, 0, 0]
-    print(f"Quadrants:")
-    print(f"  Rows: 0 <= r < {(max_row // 2)} and {(max_row // 2)} < r < {max_row}")
-    print(f"  Cols: 0 <= c < {(max_col // 2)} and {(max_col // 2)} < c < {max_col}")
-
     bot_final_pos = []
 
     for bot in the_data:
-        # calculate the position of the bot after steps
-        r = (bot["p"][1] + bot["v"][1] * steps) % max_row
-        c = (bot["p"][0] + bot["v"][0] * steps) % max_col
+        # Berechnung der Endposition nach `steps`
+        r, c = calculate_position(bot, steps, max_row, max_col)
         bot_final_pos.append((r, c))
-        if 0 <= r < (max_row // 2) and 0 <= c < (max_col // 2):
-            # top-left-quadrant
-            quadrants[0] += 1
-        elif 0 <= r < (max_row // 2) and (max_col // 2) < c < max_col:
-            # top-right-quadrant
-            quadrants[1] += 1
-        elif (max_row // 2) < r < max_row and (max_col // 2) < c < max_col:
-            # bottom-right-quadrant
-            quadrants[2] += 1
-        elif (max_row // 2) < r < max_row and 0 <= c < (max_col // 2):
-            # bottom-left-quadrant
-            quadrants[3] += 1
-        else:
-            print(f"{bot=} is at the floor ({r}, {c})")
+        # Aktualisiere Quadranten
+        update_quadrants(r, c, max_row, max_col, quadrants)
 
-    print(f"{quadrants[0]} * {quadrants[1]} * {quadrants[2]} * {quadrants[3]}")
-    draw_bot_map(bot_final_pos, max_row, max_col)
-
+    # draw_bot_map(bot_final_pos, max_row, max_col)
     return quadrants[0] * quadrants[1] * quadrants[2] * quadrants[3]
 
 
-def solve_part2(the_data, steps, max_row, max_col):
-    """find shape of christmas tree
-     *
-    ***
+def is_christmas_tree(bot_pos, max_row, max_col):
+    """
+    Check if the bot positions form a Christmas tree pattern.
 
     Args:
-        the_data (_type_): _description_
-        steps (_type_): _description_
-        max_row (_type_): _description_
-        max_col (_type_): _description_
+        bot_pos (set[tuple[int, int]]): Set of bot positions (row, col).
+        max_row (int): Maximum rows in the grid.
+        max_col (int): Maximum columns in the grid.
 
     Returns:
-        _type_: _description_
+        bool: True if the bots form a Christmas tree, False otherwise.
     """
-    bot_pos = []
-    # do a while, until all bots have the starting position (again)
-    for step in range(steps):
-        bot_pos.clear()
-        bots_per_row = [0 for _ in range(max_row)]
-        for bot in the_data:
-            # calculate the position of the bot after steps
-            r = (bot["p"][1] + bot["v"][1] * steps) % max_row
-            c = (bot["p"][0] + bot["v"][0] * steps) % max_col
-            bots_per_row[r] += 1
-            bot_pos.append((r, c))
+    rows = {}
+    for r, c in bot_pos:
+        if r not in rows:
+            rows[r] = []
+        rows[r].append(c)
 
-        print(f"Max bots in a row: {max(bots_per_row)}")
+    sorted_rows = sorted(rows.items())  # Sort by row index
+    prev_width = 0
 
-        while 1 in bots_per_row:
-            idx = bots_per_row.index(1)
-            depth = 1
-            expected = 3
-            while bots_per_row[idx + depth] == expected:
-                depth += 1
-                expected += 2
-            print(f"Seconds: {step+1}, row: {idx}, depth: {expected}")
-            # draw_bot_map(bot_pos, max_row, max_col)
-            bots_per_row.remove(1)
+    for i, (row, cols) in enumerate(sorted_rows):
+        cols.sort()
+        width = len(cols)
+        center = sum(cols) / width  # Calculate center of current row
 
-    return step
+        # Check symmetry
+        if not all(
+            cols[j] + cols[-(j + 1)] == 2 * center for j in range(len(cols) // 2)
+        ):
+            return False
+
+        # Check increasing width for tree shape
+        if width <= prev_width and i > 0:
+            return False
+        prev_width = width
+
+    return True
+
+
+def solve_part2(the_data, steps, max_row, max_col):
+    """
+    Find when all bots return to their starting positions.
+
+    Args:
+        the_data (list[dict]): List of bots with positions and velocities.
+        steps (int): Maximum number of steps to simulate.
+        max_row (int): Maximum row index for the grid.
+        max_col (int): Maximum column index for the grid.
+
+    Returns:
+        int: The number of steps required for all bots to return to their starting positions.
+    """
+    bot_start_pos = {calculate_position(bot, 0, max_row, max_col) for bot in the_data}
+
+    for step in range(1, steps + 1):
+        bot_pos = {calculate_position(bot, step, max_row, max_col) for bot in the_data}
+
+        # Check for Christmas tree pattern
+        if is_christmas_tree(bot_pos, max_row, max_col):
+            print(f"Christmas tree pattern found at step {step}.")
+            save_bot_map(bot_pos, max_row, max_col, step)  # Optional: Save the pattern
+            return step
+        elif bot_pos == bot_start_pos:
+            print(f"All bots are back in their start position at step {step}.")
+            break
+
+        # draw_bot_map(bot_pos, max_row, max_col)
+        # save_bot_map(bot_pos, max_row, max_col, step)
+
+    return -1  # Return -1 if no solution found within the given steps
 
 
 def solve():
@@ -123,8 +214,8 @@ def solve():
     solution2 = 0
 
     the_data = get_data("2024/data/day14.data")
-    # solution1 = solve_part1(the_data, 100, 103, 101)
-    solution2 = solve_part2(the_data, 10000000, 103, 101)
+    solution1 = solve_part1(the_data, 100, 103, 101)
+    solution2 = solve_part2(the_data, 10500, 103, 101)
 
     # the_data = get_data("2024/data/day14.test")
     # solution1 = solve_part1(the_data, 100, 7, 11)
