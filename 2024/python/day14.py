@@ -4,6 +4,7 @@ https://adventofcode.com/2024/day/14
 """
 
 import time
+import tkinter as tk
 
 
 def get_data(filename: str) -> list[dict[str, tuple[int, int]]]:
@@ -39,7 +40,7 @@ def draw_bot_map(bot_pos, max_row, max_col):
         max_row (int): Number of rows in the grid.
         max_col (int): Number of columns in the grid.
     """
-    grid = [[" " for _ in range(max_col)] for _ in range(max_row)]
+    grid = [["." for _ in range(max_col)] for _ in range(max_row)]
 
     for r, c in bot_pos:
         grid[r][c] = "#"
@@ -149,31 +150,31 @@ def is_christmas_tree(bot_pos, max_row, max_col):
     """
     rows = {}
     for r, c in bot_pos:
-        if r not in rows:
-            rows[r] = []
-        rows[r].append(c)
+        rows.setdefault(r, []).append(c)
 
-    sorted_rows = sorted(rows.items())  # Sort by row index
     prev_width = 0
-
-    for i, (row, cols) in enumerate(sorted_rows):
-        cols.sort()
-        width = len(cols)
-        center = sum(cols) / width  # Calculate center of current row
-
-        # Check symmetry
-        if not all(
-            cols[j] + cols[-(j + 1)] == 2 * center for j in range(len(cols) // 2)
-        ):
+    for i, row in enumerate(sorted(rows)):
+        cols = sorted(rows[row])
+        if len(cols) <= prev_width and i > 0:
+            return False  # Breite nimmt nicht zu
+        if cols != cols[::-1]:  # Symmetrie prüfen
             return False
-
-        # Check increasing width for tree shape
-        if width <= prev_width and i > 0:
-            return False
-        prev_width = width
+        prev_width = len(cols)
 
     return True
 
+
+def draw_points(canvas, points, radius, scale):
+    """Löscht das Canvas und zeichnet die Punkte neu."""
+    canvas.delete("all")  # Canvas zurücksetzen
+    for (x, y) in points:
+        cx = x * scale
+        cy = y * scale
+        canvas.create_oval(cx - radius,
+                           cy - radius,
+                           cx + radius,
+                           cy + radius,
+                           fill="black")
 
 def solve_part2(the_data, steps, max_row, max_col):
     """
@@ -188,10 +189,14 @@ def solve_part2(the_data, steps, max_row, max_col):
     Returns:
         int: The number of steps required for all bots to return to their starting positions.
     """
-    bot_start_pos = {calculate_position(bot, 0, max_row, max_col) for bot in the_data}
 
-    for step in range(1, steps + 1):
+    def update_points(step):
+        """Aktualisiert die Punktliste und zeichnet diese neu."""
+
+        # for step in range(1, steps + 1):
         bot_pos = {calculate_position(bot, step, max_row, max_col) for bot in the_data}
+
+        draw_points(canvas, bot_pos, radius, scale)
 
         # Check for Christmas tree pattern
         if is_christmas_tree(bot_pos, max_row, max_col):
@@ -200,14 +205,29 @@ def solve_part2(the_data, steps, max_row, max_col):
             return step
         elif bot_pos == bot_start_pos:
             print(f"All bots are back in their start position at step {step}.")
-            break
+            return -1
 
-        print("=" * 25 + f" Bots at step {step} " + "=" * 25)
-        draw_bot_map(bot_pos, max_row, max_col)
-        time.sleep(.20)
-        # save_bot_map(bot_pos, max_row, max_col, step)
+        # In 1 Sekunde erneut updaten
+        canvas.after(500, update_points, step+1)
 
-    return -1  # Return -1 if no solution found within the given steps
+    bot_start_pos = {calculate_position(bot, 0, max_row, max_col) for bot in the_data}
+
+    root = tk.Tk()
+    root.title("Dynamische Punktdarstellung")
+
+    canvas_width = 800
+    canvas_height = 800
+    canvas = tk.Canvas(root, width=canvas_width, height=canvas_height, bg="white")
+    canvas.pack()
+
+    # Initial einmal zeichnen
+    radius = 2
+    scale = 7
+    draw_points(canvas, bot_start_pos, radius, scale)
+    # Update starten
+    update_points(steps)
+
+    root.mainloop()
 
 
 def solve():
@@ -217,8 +237,7 @@ def solve():
 
     the_data = get_data("2024/data/day14.data")
     solution1 = solve_part1(the_data, 100, 103, 101)
-    # solution2 = solve_part2(the_data, 75, 103, 101)
-    solution2 = solve_part2(the_data, 10500, 103, 101)
+    solution2 = solve_part2(the_data, 50, 103, 101)
 
     # the_data = get_data("2024/data/day14.test")
     # solution1 = solve_part1(the_data, 100, 7, 11)
