@@ -42,44 +42,39 @@ def draw_bot_map(bot_pos, max_row, max_col):
         max_row (int): Number of rows in the grid.
         max_col (int): Number of columns in the grid.
     """
-    grid = [[" " for _ in range(max_col)] for _ in range(max_row)]
+    grid = [["." for _ in range(max_col)] for _ in range(max_row)]
 
     for r, c in bot_pos:
         grid[r][c] = "#"
 
     for row in grid:
-        print("".join(row))
+        print("".join(row).strip())
 
 
-def save_bot_img(bot_pos, max_row, max_col, steps):
-
-    filename = f"2024/data/bot_img_{steps:05d}.png"
-    img = np.zeros((max_row, max_col, 3), dtype=np.uint8)
-    for r, c in bot_pos:
-        img[r, c] = [0, 255, 0]
-
-    cv2.imwrite(filename, img)
-
-
-def save_bot_map(bot_pos, max_row, max_col, steps):
+def save_bot_map_or_img(bot_pos, max_row, max_col, steps, save_as_img=True):
     """
-    Save the bot positions to a text file.
+    Save the bot positions as a text map or an image.
 
     Args:
         bot_pos (list[tuple[int, int]]): List of bot positions.
         max_row (int): Maximum rows in the grid.
         max_col (int): Maximum columns in the grid.
         steps (int): Current number of steps, used in the filename.
+        save_as_img (bool): Whether to save as an image or text file.
     """
-    filename = f"bot_map_{steps:05d}.txt"
-    with open(filename, "w") as f:
-        for r in range(max_row):
-            for c in range(max_col):
-                if (r, c) in bot_pos:
-                    f.write("#")
-                else:
-                    f.write(".")
-            f.write("\n")  # Newline after each row
+    if save_as_img:
+        filename = f"2024/data/bot_img_{steps:05d}.png"
+        img = np.zeros((max_row, max_col, 3), dtype=np.uint8)
+        for r, c in bot_pos:
+            img[r, c] = [0, 255, 0]
+        cv2.imwrite(filename, img)
+    else:
+        filename = f"bot_map_{steps:05d}.txt"
+        with open(filename, "w") as f:
+            for r in range(max_row):
+                for c in range(max_col):
+                    f.write("#" if (r, c) in bot_pos else ".")
+                f.write("\n")
     print(f"Map saved to {filename}")
 
 
@@ -171,23 +166,18 @@ def solve_part2(the_data, steps, max_row, max_col):
         for r, c in bot_pos:
             update_quadrants(r, c, max_row, max_col, quadrants)
 
-        for q in quadrants:
-            if q > 225:
-                # save_bot_img(bot_pos, max_row, max_col, step)
-                return step
+        if max(quadrants) > 225:
+            print("=" * 30 + f" Bots at step {step} " + "=" * 30)
+            draw_bot_map(bot_pos, max_row, max_col)
+            save_bot_map_or_img(bot_pos, max_row, max_col, step)
+            return step
 
         # Check for Christmas tree pattern
         if bot_pos == bot_start_pos:
             print(f"All bots are back in their start position at step {step}.")
             break
 
-        # print("=" * 25 + f" Bots at step {step} " + "=" * 25)
-        # draw_bot_map(bot_pos, max_row, max_col)
-        # time.sleep(.20)
-        # save_bot_map(bot_pos, max_row, max_col, step)
-
     return -1  # Return -1 if no solution found within the given steps
-
 
 
 def solve():
