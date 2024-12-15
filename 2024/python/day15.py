@@ -36,27 +36,6 @@ def get_data_part1(map_data):
     return walls, boxes, bot_pos
 
 
-def get_data_part2(map_data):
-    walls = set()
-    boxes = set()
-
-    global map_cols
-    map_cols = len(map_data[0]) * 2
-
-    for r in range(len(map_data)):
-        for c in range(len(map_data[0])):
-            if map_data[r][c] == "#":
-                walls.add((r, c * 2))
-                walls.add((r, c * 2 + 1))
-            elif map_data[r][c] == "O":
-                boxes.add((r, c * 2))
-                boxes.add((r, c * 2 + 1))
-            elif map_data[r][c] == "@":
-                bot_pos = (r, c * 2)
-
-    return walls, boxes, bot_pos
-
-
 def print_map(walls, boxes, bot_pos):
     grid = [["." for _ in range(map_cols)] for _ in range(map_rows)]
     for r, c in walls:
@@ -64,25 +43,6 @@ def print_map(walls, boxes, bot_pos):
     for r, c in boxes:
         assert grid[r][c] == "."
         grid[r][c] = "O"
-
-    assert grid[bot_pos[0]][bot_pos[1]] == "."
-    grid[bot_pos[0]][bot_pos[1]] = "@"
-
-    for row in grid:
-        print("".join(row).strip())
-
-
-def print_map2(walls, boxes, bot_pos):
-    grid = [["." for _ in range(map_cols)] for _ in range(map_rows)]
-    for r, c in sorted(walls):
-        grid[r][c] = "#"
-        # grid[r][c + 1] = "#"
-    for r, c in sorted(boxes):
-        assert grid[r][c] == "."
-        if grid[r][c-1] in "]#.":
-            grid[r][c] = "["
-        else:
-            grid[r][c] = "]"
 
     assert grid[bot_pos[0]][bot_pos[1]] == "."
     grid[bot_pos[0]][bot_pos[1]] = "@"
@@ -118,21 +78,6 @@ def move_boxes(
     return True
 
 
-def move_boxes2(
-    walls: set[tuple], boxes: set[tuple], br: int, bc: int, dr: int, dc: int
-):
-
-    # simple horizontal move
-    if dr == 0:
-        return move_boxes(walls, boxes, br, bc, dr, dc)
-
-    # komplex vertical move
-    # seams not to work with my current idea
-
-    # return true, if position is free
-    return True
-
-
 def calc_distances(boxes):
     gps = [100 * r + c for r, c in boxes]
     return sum(gps)
@@ -163,7 +108,110 @@ def solve_part1(walls, boxes, bot_pos, moves):
     return calc_distances(boxes)
 
 
-def solve_part2(walls, boxes, bot_pos, moves):
+def get_data_part2(map_data):
+
+    global map_cols
+    map_cols = len(map_data[0]) * 2
+
+    grid = {(r, c): "." for c in range(map_cols) for r in range(map_rows)}
+
+    for r in range(len(map_data)):
+        for c in range(len(map_data[0])):
+            if map_data[r][c] == "#":
+                grid[(r, c * 2)] = "#"
+                grid[(r, c * 2 + 1)] = "#"
+            elif map_data[r][c] == "O":
+                grid[(r, c * 2)] = "["
+                grid[(r, c * 2 + 1)] = "]"
+            elif map_data[r][c] == "@":
+                bot_pos = (r, c * 2)
+
+    return grid, bot_pos
+
+
+def print_map2(grid: dict[tuple:str], bot_pos):
+    draw = [["." for _ in range(map_cols)] for _ in range(map_rows)]
+    for (r, c), v in grid.items():
+        assert draw[r][c] == "."
+        draw[r][c] = v
+
+    assert draw[bot_pos[0]][bot_pos[1]] == "."
+    draw[bot_pos[0]][bot_pos[1]] = "@"
+
+    for row in draw:
+        print("".join(row).strip())
+
+
+def move_boxes2(grid: dict[tuple:str], br: int, bc: int, dr: int, dc: int):
+
+    def get_box(gr, gc):
+        box = set([(gr, gc)])
+        if grid[(gr, gc)] == "[":
+            box.add((gr, gc+1))
+        elif grid[(gr, gc)] == "]":
+            box.add((gr, gc-1))
+        else:
+            raise(ValueError)
+        return box
+
+    boxes_to_move = []
+
+    if dr == 0:
+        while grid[(br, bc)] in "[]":
+            boxes_to_move.append((br, bc))
+            # br += dr
+            bc += dc
+        else:
+            if grid[(br, bc)] == "#":
+                # print(f"{boxes_to_move} end on wall ({br}, {bc})")
+                return False
+        for br, bc in boxes_to_move[::-1]:
+            grid[(br, bc + dc)] = grid[(br, bc)]
+            grid[(br, bc)] = "."
+
+        return True
+
+    pos_to_move={br: get_box(br, bc)}
+    found = True
+    r = br
+
+    min_c = min(c for _,c in pos_to_move[br])
+    max_c = max(c for _,c in pos_to_move[br])
+
+    while found:
+        r += dr
+        candidates = set()
+        found = False
+        for c in range(min_c, max_c + 1):
+            if grid[(r, c)] == "#":
+                return False
+            elif grid[(r, c)] in "[]":
+                candidates.update(get_box(r, c))
+                found = True
+            else:
+                pass
+        if candidates:
+            min_c = min(c for _,c in candidates)
+            max_c = max(c for _,c in candidates)
+            pos_to_move[r] = candidates
+
+    while r != br:
+        r -= dr
+        for _,c in pos_to_move[r]:
+            grid[(r+dr, c)] = grid[(r, c)]
+            grid[(r, c)] = "."
+
+
+    # return true, if position is free
+    return True
+
+
+def calc_distances2(grid):
+    gps = [100 * r + c for (r, c), v in grid.items() if v == "["]
+    return sum(gps)
+
+
+def solve_part2(grid, bot_pos, moves):
     directions = {
         "^": (-1, 0),
         ">": (0, 1),
@@ -174,18 +222,19 @@ def solve_part2(walls, boxes, bot_pos, moves):
     for move in moves:
         dr, dc = directions[move]
         nr, nc = r + dr, c + dc
-        if (nr, nc) in walls:
+        if grid[(nr, nc)] == "#":
             continue
-        elif (nr, nc) in boxes:
-            if not move_boxes2(walls, boxes, nr, nc, dr, dc):
+        elif grid[(nr, nc)] in "[]":
+            if not move_boxes2(grid, nr, nc, dr, dc):
                 continue
         else:
             pass
 
         r, c = (nr, nc)
-        # print_map2(walls, boxes, (r, c))
+        # print_map2(grid, (r, c))
 
-    return calc_distances(boxes)
+    return calc_distances2(grid)
+
 
 
 def solve():
@@ -201,9 +250,8 @@ def solve():
     walls, boxes, bot_pos = get_data_part1(the_data)
     solution1 = solve_part1(walls, boxes, bot_pos, moves)
 
-    walls, boxes, bot_pos = get_data_part2(the_data)
-    print_map2(walls, boxes, bot_pos)
-    solution2 = solve_part2(walls, boxes, bot_pos, moves)
+    grid, bot_pos = get_data_part2(the_data)
+    solution2 = solve_part2(grid, bot_pos, moves)
 
     return solution1, solution2
 
