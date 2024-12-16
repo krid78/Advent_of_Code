@@ -158,21 +158,67 @@ def a_star(walls: set[tuple], start: tuple[int, int], goal: tuple[int, int]) -> 
     return -1  # Kein Weg gefunden
 
 
+def find_all_paths(walls, start, goal):
+    """
+    Find all paths from start to goal in a maze, calculating the cost for each path.
+
+    Args:
+        walls (set[tuple[int, int]]): Set of wall positions in the maze.
+        start (tuple[int, int]): Start position (row, col).
+        goal (tuple[int, int]): Goal position (row, col).
+
+    Returns:
+        list[tuple[list[tuple[int, int]], int]]: A list of tuples, each containing a path and its cost.
+    """
+    directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]  # Up, Right, Down, Left
+    stack = [(start, 1, [start], 0)]  # (current position, direction, path, cost)
+    all_paths = {}
+
+    while stack:
+        current_pos, current_dir, path, current_cost = stack.pop()
+
+        # Ziel erreicht, aktuellen Pfad speichern
+        if current_pos == goal:
+            # all_paths.append((path, current_cost))
+            all_paths.setdefault(current_cost, set()).update(path)
+            continue
+
+        r, c = current_pos
+        for new_dir, (dr, dc) in enumerate(directions):
+            new_pos = (r + dr, c + dc)
+
+            # Wände ignorieren
+            if new_pos in walls or new_pos in path:
+                continue
+
+            # Bewegungskosten berechnen
+            turn_cost = 1000 if new_dir != current_dir else 0
+            move_cost = 1
+            new_cost = current_cost + turn_cost + move_cost
+
+            # Neuen Zustand auf den Stapel legen
+            stack.append((new_pos, new_dir, path + [new_pos], new_cost))
+
+    return all_paths
+
+
 def solve():
     """Solve the puzzle."""
     solution1 = 0
     solution2 = 0
 
     the_data = get_data("2024/data/day16.data")
+    # the_data = get_data("2024/data/day16.0.test")
     # the_data = get_data("2024/data/day16.1.test")
     walls, start, goal = parse_data(the_data)
 
     time_start = time.perf_counter()
-    solution1 = a_star(walls, start, goal)
+    solution1 = dijkstra(walls, start, goal)
     print(f"Solved Part 1 in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
-    solution2 = dijkstra(walls, start, goal)
+    all_paths = find_all_paths(walls, start, goal)
+    solution2 = len(all_paths[min(all_paths)])
     print(f"Solved Part 2 in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
