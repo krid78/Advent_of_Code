@@ -160,7 +160,7 @@ def a_star(walls: set[tuple], start: tuple[int, int], goal: tuple[int, int]) -> 
 
 def find_all_paths(walls, start, goal):
     """
-    Find all paths from start to goal in a maze, calculating the cost for each path.
+    Find all minimal-cost paths from start to goal in a maze.
 
     Args:
         walls (set[tuple[int, int]]): Set of wall positions in the maze.
@@ -168,7 +168,8 @@ def find_all_paths(walls, start, goal):
         goal (tuple[int, int]): Goal position (row, col).
 
     Returns:
-        list[tuple[list[tuple[int, int]], int]]: A list of tuples, each containing a path and its cost.
+        dict[int, set[tuple[int, int]]]: A dictionary with costs as keys and the set of all unique
+                                         tiles covered by minimal-cost paths as values.
     """
     directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]  # Up, Right, Down, Left
     stack = [(start, 1, [start], 0)]  # (current position, direction, path, cost)
@@ -179,7 +180,6 @@ def find_all_paths(walls, start, goal):
 
         # Ziel erreicht, aktuellen Pfad speichern
         if current_pos == goal:
-            # all_paths.append((path, current_cost))
             all_paths.setdefault(current_cost, set()).update(path)
             continue
 
@@ -196,6 +196,10 @@ def find_all_paths(walls, start, goal):
             move_cost = 1
             new_cost = current_cost + turn_cost + move_cost
 
+            # Frühzeitiger Abbruch, falls Kosten unnötig hoch
+            if new_cost > min(all_paths.keys(), default=float("inf")):
+                continue
+
             # Neuen Zustand auf den Stapel legen
             stack.append((new_pos, new_dir, path + [new_pos], new_cost))
 
@@ -208,8 +212,8 @@ def solve():
     solution2 = 0
 
     the_data = get_data("2024/data/day16.data")
-    # the_data = get_data("2024/data/day16.0.test")
-    # the_data = get_data("2024/data/day16.1.test")
+    # the_data = get_data("2024/data/day16.0.test") # 7036 | 45
+    # the_data = get_data("2024/data/day16.1.test") # 11048 | 64
     walls, start, goal = parse_data(the_data)
 
     time_start = time.perf_counter()
@@ -218,7 +222,8 @@ def solve():
 
     time_start = time.perf_counter()
     all_paths = find_all_paths(walls, start, goal)
-    solution2 = len(all_paths[min(all_paths)])
+    min_cost = min(all_paths.keys())
+    solution2 = len(all_paths[min_cost])
     print(f"Solved Part 2 in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
