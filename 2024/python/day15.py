@@ -1,6 +1,12 @@
 """Solve Advent of Code 2024, day 15
 
 https://adventofcode.com/2024/day/15
+
+TODO: Implement a fully "algorithmic" version using only the coordinates
+- walls = set()
+- boxes = dict() --> works for boxes with width 1 and 2
+  - boxes = {(r0,c0): set((r0,c0)), ... }
+  - boxes = {(r0,c0): set((r0,c0),(r1,c1)), ..., (r1,c1): set((r0,c0),(r1,c1)), ...}
 """
 
 import time
