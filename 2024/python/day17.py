@@ -87,6 +87,28 @@ def run_program(registers, program):
     return ",".join(map(str, output))
 
 
+def find_register_a(program):
+    """
+    Find the value of register A that makes the program's output match the program itself.
+
+    Args:
+        program: A list of integers representing the program instructions.
+
+    Returns:
+        The correct value of register A.
+    """
+    # Start searching for a suitable value of A 64_854_237
+    for candidate_a in range(10_000_000, 100_000_000):  # Arbitrary upper limit for the search
+        registers = [candidate_a, 0, 0]  # A = candidate_a, B = 0, C = 0
+        output = run_program(registers, program)
+
+        # Compare the output to the program
+        if output == program:
+            return candidate_a
+
+    raise ValueError("No valid value for register A found.")
+
+
 def solve():
     """Solve the puzzle."""
     solution1 = 0
@@ -105,13 +127,17 @@ def solve():
         print(f"{run_program([0, 29, 0], [1,7])=}")  # B to 26.
         print(f"{run_program([0, 2024 , 43690], [4,0])=}")  # B to 44354.
 
+    time_start = time.perf_counter()
     solution1 = run_program(registers, program)
+    print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
+
+    time_start = time.perf_counter()
+    solution2 = find_register_a(program)
+    print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
 
 
 if __name__ == "__main__":
-    time_start = time.perf_counter()
     solution1, solution2 = solve()
-    print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
     print(f"{solution1=} | {solution2=}")
