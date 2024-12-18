@@ -102,16 +102,32 @@ def run_program(registers, program):
     return ",".join(map(str, output))
 
 
-def find_a(registers, program, prg_pos):
+def find_initial_a(registers, program, remaining_digits):
+    """
+    Find the initial value of A that causes the program to output itself.
+
+    Args:
+        registers (list[int]): Initial register values [A, B, C].
+        program (list[int]): The program code.
+        remaining_digits (int): The number of output digits left to match.
+
+    Returns:
+        int: The initial value of A, or None if no solution exists.
+    """
     a, b, c = registers
-    if abs(prg_pos) > len(program):
+    if remaining_digits < 0:  # Base case: all output digits matched
         return a
-    for i in range(8):
-        first_digit_out = run_program([a * 8 + i, b, c], program)
-        if int(first_digit_out[0]) == program[prg_pos]:
-            e = find_a([a * 8 + i, b, c], program, prg_pos - 1)
-            if e:
-                return e
+
+    for i in range(8):  # Test all possible values for the next digit
+        candidate_a = a * 8 + i
+        output = run_program([candidate_a, b, c], program)
+        expected_digit = program[remaining_digits]
+        if int(output[0]) == expected_digit:
+            result = find_initial_a([candidate_a, b, c], program, remaining_digits - 1)
+            if result is not None:
+                return result
+
+    return None  # No solution found
 
 
 def solve():
@@ -137,7 +153,7 @@ def solve():
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
-    solution2 = find_a([0, 0, 0], program, -1)
+    solution2 = find_initial_a([0, 0, 0], program, len(program) - 1)
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
