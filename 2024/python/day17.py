@@ -45,12 +45,16 @@ def run_program(registers, program):
     # Combo operand value resolution
     def resolve_combo_operand(operand):
         if operand <= 3:  # Literal values 0-3
+            # print(f"return {operand=}")
             return operand
         elif operand == 4:  # Value of register A
+            # print("return A")
             return A
         elif operand == 5:  # Value of register B
+            # print("return B")
             return B
         elif operand == 6:  # Value of register C
+            # print("return C")
             return C
         elif operand == 7:  # Reserved
             raise ValueError("Invalid combo operand: 7")
@@ -59,23 +63,34 @@ def run_program(registers, program):
     while ip < len(program):
         opcode = program[ip]  # Current instruction opcode
         operand = program[ip + 1]  # Operand
+        # print(f"{opcode=}, {operand=}, {A=}")
         if opcode == 0:  # adv: A = A // 2^(combo_operand)
+            # print("A = A // 2^(combo_operand)")
             A //= 2 ** resolve_combo_operand(operand)
         elif opcode == 1:  # bxl: B = B ^ literal_operand
+            # print("B = B ^ literal_operand")
             B ^= operand
         elif opcode == 2:  # bst: B = combo_operand % 8
+            # print("B = combo_operand % 8")
             B = resolve_combo_operand(operand) % 8
         elif opcode == 3:  # jnz: if A != 0, jump to literal_operand
             if A != 0:
+                # print("if A != 0, jump to literal_operand\n")
                 ip = operand
                 continue
+            # print(f"No Jump, {A=}\n")
         elif opcode == 4:  # bxc: B = B ^ C (operand ignored)
+            # print("B = B ^ C (operand ignored)")
             B ^= C
         elif opcode == 5:  # out: output combo_operand % 8
+            # print("output combo_operand % 8")
             output.append(resolve_combo_operand(operand) % 8)
+            # print(f"New {output=}")
         elif opcode == 6:  # bdv: B = A // 2^(combo_operand)
+            # print("B = A // 2^(combo_operand)")
             B = A // 2 ** resolve_combo_operand(operand)
         elif opcode == 7:  # cdv: C = A // 2^(combo_operand)
+            # print("C = A // 2^(combo_operand)")
             C = A // 2 ** resolve_combo_operand(operand)
         else:
             raise ValueError(f"Invalid opcode: {opcode}")
@@ -87,26 +102,16 @@ def run_program(registers, program):
     return ",".join(map(str, output))
 
 
-def find_register_a(program):
-    """
-    Find the value of register A that makes the program's output match the program itself.
-
-    Args:
-        program: A list of integers representing the program instructions.
-
-    Returns:
-        The correct value of register A.
-    """
-    # Start searching for a suitable value of A 64_854_237
-    for candidate_a in range(10_000_000, 100_000_000):  # Arbitrary upper limit for the search
-        registers = [candidate_a, 0, 0]  # A = candidate_a, B = 0, C = 0
-        output = run_program(registers, program)
-
-        # Compare the output to the program
-        if output == program:
-            return candidate_a
-
-    raise ValueError("No valid value for register A found.")
+def find_a(registers, program, prg_pos):
+    a, b, c = registers
+    if abs(prg_pos) > len(program):
+        return a
+    for i in range(8):
+        first_digit_out = run_program([a * 8 + i, b, c], program)
+        if int(first_digit_out[0]) == program[prg_pos]:
+            e = find_a([a * 8 + i, b, c], program, prg_pos - 1)
+            if e:
+                return e
 
 
 def solve():
@@ -132,7 +137,7 @@ def solve():
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
-    solution2 = find_register_a(program)
+    solution2 = find_a([0, 0, 0], program, -1)
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2

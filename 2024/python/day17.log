@@ -1,0 +1,221 @@
+opcode=2, operand=4, A=64854237
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=64854237
+B = B ^ literal_operand
+opcode=7, operand=5, A=64854237
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=64854237
+B = B ^ literal_operand
+opcode=4, operand=0, A=64854237
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=64854237
+output combo_operand % 8
+return B
+New output=[4]
+opcode=0, operand=3, A=64854237
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=8106779
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=8106779
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=8106779
+B = B ^ literal_operand
+opcode=7, operand=5, A=8106779
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=8106779
+B = B ^ literal_operand
+opcode=4, operand=0, A=8106779
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=8106779
+output combo_operand % 8
+return B
+New output=[4, 1]
+opcode=0, operand=3, A=8106779
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=1013347
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=1013347
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=1013347
+B = B ^ literal_operand
+opcode=7, operand=5, A=1013347
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=1013347
+B = B ^ literal_operand
+opcode=4, operand=0, A=1013347
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=1013347
+output combo_operand % 8
+return B
+New output=[4, 1, 7]
+opcode=0, operand=3, A=1013347
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=126668
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=126668
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=126668
+B = B ^ literal_operand
+opcode=7, operand=5, A=126668
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=126668
+B = B ^ literal_operand
+opcode=4, operand=0, A=126668
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=126668
+output combo_operand % 8
+return B
+New output=[4, 1, 7, 6]
+opcode=0, operand=3, A=126668
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=15833
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=15833
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=15833
+B = B ^ literal_operand
+opcode=7, operand=5, A=15833
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=15833
+B = B ^ literal_operand
+opcode=4, operand=0, A=15833
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=15833
+output combo_operand % 8
+return B
+New output=[4, 1, 7, 6, 4]
+opcode=0, operand=3, A=15833
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=1979
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=1979
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=1979
+B = B ^ literal_operand
+opcode=7, operand=5, A=1979
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=1979
+B = B ^ literal_operand
+opcode=4, operand=0, A=1979
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=1979
+output combo_operand % 8
+return B
+New output=[4, 1, 7, 6, 4, 1]
+opcode=0, operand=3, A=1979
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=247
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=247
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=247
+B = B ^ literal_operand
+opcode=7, operand=5, A=247
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=247
+B = B ^ literal_operand
+opcode=4, operand=0, A=247
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=247
+output combo_operand % 8
+return B
+New output=[4, 1, 7, 6, 4, 1, 0]
+opcode=0, operand=3, A=247
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=30
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=30
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=30
+B = B ^ literal_operand
+opcode=7, operand=5, A=30
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=30
+B = B ^ literal_operand
+opcode=4, operand=0, A=30
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=30
+output combo_operand % 8
+return B
+New output=[4, 1, 7, 6, 4, 1, 0, 2]
+opcode=0, operand=3, A=30
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=3
+if A != 0, jump to literal_operand
+
+opcode=2, operand=4, A=3
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=3
+B = B ^ literal_operand
+opcode=7, operand=5, A=3
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=3
+B = B ^ literal_operand
+opcode=4, operand=0, A=3
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=3
+output combo_operand % 8
+return B
+New output=[4, 1, 7, 6, 4, 1, 0, 2, 7]
+opcode=0, operand=3, A=3
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=0
+No Jump, A=0
+
+Solved in 0.00030 Sec.
+Solved in 0.00000 Sec.
+opcode=2, operand=4, A=0
+B = combo_operand % 8
+return A
+opcode=1, operand=1, A=0
+B = B ^ literal_operand
+opcode=7, operand=5, A=0
+C = A // 2^(combo_operand)
+return B
+opcode=1, operand=5, A=0
+B = B ^ literal_operand
+opcode=4, operand=0, A=0
+B = B ^ C (operand ignored)
+opcode=5, operand=5, A=0
+output combo_operand % 8
+return B
+New output=[4]
+opcode=0, operand=3, A=0
+A = A // 2^(combo_operand)
+return operand=3
+opcode=3, operand=0, A=0
+No Jump, A=0
