@@ -62,22 +62,27 @@ def build_trie(patterns):
     return trie
 
 
-def can_form_design(trie, design):
+def count_representations(trie, design):
     """
-    Check if the design can be formed using the available patterns with dynamic programming.
+    Count the number of ways to represent a design using patterns in the Trie.
+
+    Args:
+        trie (Trie): The Trie containing available patterns.
+        design (str): The string design to be represented.
+
+    Returns:
+        int: The number of ways to represent the design.
     """
     n = len(design)
-    dp = [False] * (n + 1)
-    dp[0] = True  # Empty string is always formable
+    dp = [0] * (n + 1)  # DP array to store the number of ways to form substrings
+    dp[0] = 1  # Base case: one way to represent an empty design
 
     for i in range(n):
-        if not dp[i]:
-            continue
-        # Find all prefixes starting at index i
-        for end_index in trie.find_prefixes(design, i):
-            dp[end_index] = True
+        if dp[i] > 0:  # Only process if this position is reachable
+            for end_index in trie.find_prefixes(design, i):
+                dp[end_index] += dp[i]  # Add ways to form prefix ending at end_index
 
-    return dp[n]
+    return dp[n]  # Total ways to form the complete design
 
 
 def solve_part1(patterns, designs):
@@ -95,7 +100,8 @@ def solve_part1(patterns, designs):
     results = {}
 
     for design in designs:
-        results[design] = can_form_design(trie, design)
+        # results[design] = can_form_design(trie, design)
+        results[design] = count_representations(trie, design)
 
     return results
 
@@ -126,8 +132,13 @@ def solve(test=False):
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
     # print(design_matches)
 
-    for _, can_form in design_matches.items():
-        solution1 += can_form
+    # solution1 = can_form
+
+    for design, count in design_matches.items():
+        if count > 0:
+            print(f"{design} can be represented in {count} ways.")
+            solution2 += count
+        solution1 += int(count > 0)
 
     return solution1, solution2
 
