@@ -1,4 +1,4 @@
-"""Solve Advent of Code 2024, day 19
+"""""Solve Advent of Code 2024, day 19
 
 https://adventofcode.com/2024/day/19
 """
@@ -51,6 +51,40 @@ class Trie:
                 prefixes.append(i + 1)  # End index of the prefix
         return prefixes
 
+    def to_dot(self, filename="trie.dot"):
+        """
+        Generate a Graphviz DOT file to visualize the trie.
+
+        Args:
+            filename (str): The output DOT file name.
+        """
+        dot_lines = ["digraph Trie {", "    node [shape=circle];"]
+
+        def traverse(node, parent_id):
+            nonlocal node_id
+            current_id = node_id
+            node_id += 1
+
+            if parent_id is not None:
+                dot_lines.append(f"    {parent_id} -> {current_id};")
+
+            if node.is_end_of_pattern:
+                dot_lines.append(f"    {current_id} [shape=doublecircle];")
+
+            for char, child in node.children.items():
+                child_id = traverse(child, current_id)
+                dot_lines.append(f"    {current_id} -> {child_id} [label=\"{char}\"];")
+
+            return current_id
+
+        node_id = 0
+        traverse(self.root, None)
+
+        dot_lines.append("}")
+
+        with open(filename, "w") as f:
+            f.write("\n".join(dot_lines))
+
 
 def build_trie(patterns):
     """
@@ -62,27 +96,47 @@ def build_trie(patterns):
     return trie
 
 
-def count_representations(trie, design):
+def can_form_design(trie, design):
     """
-    Count the number of ways to represent a design using patterns in the Trie.
-
-    Args:
-        trie (Trie): The Trie containing available patterns.
-        design (str): The string design to be represented.
-
-    Returns:
-        int: The number of ways to represent the design.
+    Check if the design can be formed using the available patterns with dynamic programming.
     """
     n = len(design)
-    dp = [0] * (n + 1)  # DP array to store the number of ways to form substrings
-    dp[0] = 1  # Base case: one way to represent an empty design
+    dp = [False] * (n + 1)
+    dp[0] = True  # Empty string is always formable
 
     for i in range(n):
-        if dp[i] > 0:  # Only process if this position is reachable
-            for end_index in trie.find_prefixes(design, i):
-                dp[end_index] += dp[i]  # Add ways to form prefix ending at end_index
+        if not dp[i]:
+            continue
+        # Find all prefixes starting at index i
+        for end_index in trie.find_prefixes(design, i):
+            dp[end_index] = True
 
-    return dp[n]  # Total ways to form the complete design
+    return dp[n]
+
+
+def count_representations(trie, design):
+    """
+    Count the number of ways a design can be formed using available patterns.
+
+    Args:
+        trie (Trie): The Trie built from available patterns.
+        design (str): The design string to check.
+
+    Returns:
+        int: The number of representations for the design.
+    """
+    n = len(design)
+    dp = [0] * (n + 1)
+    dp[0] = 1  # One way to form an empty string
+
+    for i in range(n):
+        if dp[i] == 0:
+            continue
+        # Find all prefixes starting at index i
+        for end_index in trie.find_prefixes(design, i):
+            dp[end_index] += dp[i]
+
+    return dp[n]
 
 
 def solve_part1(patterns, designs):
@@ -100,8 +154,9 @@ def solve_part1(patterns, designs):
     results = {}
 
     for design in designs:
-        # results[design] = can_form_design(trie, design)
         results[design] = count_representations(trie, design)
+
+    trie.to_dot("trie_visualization.dot")  # Generate visualization for debugging
 
     return results
 
@@ -132,18 +187,13 @@ def solve(test=False):
     print(f"Solved in {time.perf_counter()-time_start:.5f} Sec.")
     # print(design_matches)
 
-    # solution1 = can_form
-
-    for design, count in design_matches.items():
-        if count > 0:
-            print(f"{design} can be represented in {count} ways.")
-            solution2 += count
-        solution1 += int(count > 0)
+    for _, count in design_matches.items():
+        solution1 += count
 
     return solution1, solution2
 
 
 if __name__ == "__main__":
-    # solution1, solution2 = solve(test=True)
-    solution1, solution2 = solve(test=False)
+    solution1, solution2 = solve(test=True)
+    # solution1, solution2 = solve(test=False)
     print(f"{solution1=} | {solution2=}")

@@ -1,0 +1,31 @@
+digraph Trie {
+    node [shape=circle];
+    0 -> 1;
+    1 [shape=doublecircle];
+    1 -> 2;
+    2 [shape=doublecircle];
+    1 -> 2 [label="b"];
+    0 -> 1 [label="r"];
+    0 -> 3;
+    3 -> 4;
+    4 [shape=doublecircle];
+    3 -> 4 [label="r"];
+    0 -> 3 [label="w"];
+    0 -> 5;
+    5 [shape=doublecircle];
+    5 -> 6;
+    6 -> 7;
+    7 [shape=doublecircle];
+    6 -> 7 [label="u"];
+    5 -> 6 [label="w"];
+    5 -> 8;
+    8 [shape=doublecircle];
+    5 -> 8 [label="r"];
+    0 -> 5 [label="b"];
+    0 -> 9;
+    9 [shape=doublecircle];
+    9 -> 10;
+    10 [shape=doublecircle];
+    9 -> 10 [label="b"];
+    0 -> 9 [label="g"];
+}
