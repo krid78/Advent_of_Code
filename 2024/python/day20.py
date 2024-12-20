@@ -156,6 +156,37 @@ def find_cheating_spots(
     return cheating_spots
 
 
+def find_cheating_spots2(
+    walls: set[tuple[int, int]],
+    path: list[tuple[int, int]],
+) -> dict:
+    """
+    Identify potential cheating spots along the path.
+
+    Args:
+        walls (set[tuple[int, int]]): Set of wall positions.
+        path (list[tuple[int, int]]): Shortest path from start to goal.
+        map_dim (tuple[int, int]): Number of rows and columns in the map.
+        start (tuple[int, int]): Start position.
+        goal (tuple[int, int]): Goal position.
+
+    Returns:
+        set[tuple[tuple[int, int], tuple[int, int]]]: Set of wall positions to remove for potential shortcuts.
+    """
+
+    cheating_spots = {}
+    # pos -> wall -> path
+
+    for rs, cs in path[1:-1]:
+        for dr, dc in __DIRECTIONS__:
+            wall = (rs + dr, cs + dc)
+            next_pos = (rs + 2 * dr, cs + 2 * dc)
+
+            if wall in walls and wall not in cheating_spots and next_pos in path:
+                cheating_spots[wall] = [(rs, cs), next_pos]
+
+    return cheating_spots
+
 def solve_part1(
     walls: set[tuple[int, int]],
     map_dim,
@@ -189,12 +220,12 @@ def solve_part1(
     good_cheating = {}
 
     for cutoff_start, cutoff_end in cheating_spots.values():
-        # Temporarily remove the wall(s)
-        #walls.remove(csp)
 
         # Recalculate shortest path
-        csp_cost, cut_way = find_shortest_path(walls, cutoff_start, cutoff_end)
-        cheat_saving = csp_cost - 2
+        # csp_cost, cut_way = find_shortest_path(walls, cutoff_start, cutoff_end)
+        co_start = way.index(cutoff_start)
+        co_end = way.index(cutoff_end)
+        cheat_saving = co_end - co_start - 2
 
         # Restore the wall(s)
         # walls.add(csp)
@@ -206,8 +237,8 @@ def solve_part1(
         if cheat_saving >= cheating_saves:
             good_cheating[cheat_saving] = good_cheating.setdefault(cheat_saving, 0) + 1
 
-    for k in sorted(good_cheating):
-        print(f"There are {good_cheating[k]:3} cheats that save {k:3} picoseconds.")
+    # for k in sorted(good_cheating):
+    #     print(f"There are {good_cheating[k]:3} cheats that save {k:3} picoseconds.")
 
     return sum(v for k, v in good_cheating.items() if k >= cheating_saves)
 
@@ -226,17 +257,22 @@ def solve(test: bool = False):
     solution2 = 0
 
     if test:
-        cheating_saves = 2
+        cheating_saves1 = 2
+        cheating_saves2 = 50
         the_data = get_data("2024/data/day20.test")
     else:
-        cheating_saves = 100
+        cheating_saves1 = cheating_saves2 = 100
         the_data = get_data("2024/data/day20.data")
 
     walls, start, goal, map_dim = parse_data(the_data)
 
     time_start = time.perf_counter()
-    solution1 = solve_part1(walls, map_dim, start, goal, cheating_saves)
+    solution1 = solve_part1(walls, map_dim, start, goal, cheating_saves1)
     print(f"Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
+
+    # time_start = time.perf_counter()
+    # solution2 = solve_part1(walls, map_dim, start, goal, cheating_saves2)
+    # print(f"Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
 
