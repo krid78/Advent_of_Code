@@ -220,6 +220,9 @@ def solve_part1(
     # Identify cheating spots (walls along the way)
     cheating_spots = find_cheating_spots(walls, way)
     print(f"Possible Cheating spots: {len(cheating_spots)}")
+    print("Max shortcut length: 2")
+    print(f"Min cheating save: {cheating_saves}")
+
 
     good_cheating = {}
 
@@ -246,8 +249,6 @@ def solve_part2(
     cheating_saves: int = 100,
     cheat_length: int = 20,
 ):
-    # find all shortest path from one point on the track to an other
-    # if the path is <= 20 steps, count the saving length
     base_cost, way = find_shortest_path(walls, start, goal)
 
     if base_cost == float("inf"):
@@ -256,19 +257,35 @@ def solve_part2(
     print(f"{base_cost=}")
 
     # Identify cheating spots (walls along the way)
-    cheating_spots = find_cheating_spots2(walls, way, map_dim, cheat_length)
-    print(f"Possible Cheating spots: {len(cheating_spots)}")
 
     good_cheating = {}
+    cheating_spots = 0
+    spath = set(way)
 
-    for cutoff_start, cutoff_end in cheating_spots:
+    no_walls = walls.copy()
 
-        co_start = way.index(cutoff_start)
-        co_end = way.index(cutoff_end)
-        cheat_saving = co_end - co_start - 2
+    for r in range(1, map_dim[0] - 1):
+        for c in range(1, map_dim[1] - 1):
+            if (r, c) in no_walls:
+                no_walls.remove((r, c))
 
-        if cheat_saving >= cheating_saves:
-            good_cheating[cheat_saving] = good_cheating.setdefault(cheat_saving, 0) + 1
+    for rs, cs in way[:-2]:
+        s_idx = way.index((rs, cs))
+        for re, ce in way[s_idx + 2 :]:
+            e_idx = way.index((re, ce))
+            cost, shortcut = find_shortest_path(no_walls, (rs, cs), (re, ce))
+            scut = set(shortcut)
+            if cost <= cheat_length and not scut.issubset(spath):
+                cheat_saving = base_cost - (s_idx + (base_cost - e_idx) + cost)
+                cheating_spots += 1
+                if cheat_saving >= cheating_saves:
+                    good_cheating[cheat_saving] = (
+                        good_cheating.setdefault(cheat_saving, 0) + 1
+                    )
+    
+    print(f"Possible Cheating spots: {cheating_spots}")
+    print(f"Max shortcut length: {cheat_length}")
+    print(f"Min cheating save: {cheating_saves}")
 
     for k in sorted(good_cheating):
         print(f"There are {good_cheating[k]:3} cheats that save {k:3} picoseconds.")
@@ -304,7 +321,7 @@ def solve(test: bool = False):
     print(f"Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
-    solution2 = solve_part2(walls, map_dim, start, goal, cheating_saves2, 20)
+    solution2 = solve_part2(walls, map_dim, start, goal, cheating_saves2)
     print(f"Part 2 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
