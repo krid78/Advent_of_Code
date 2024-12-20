@@ -127,7 +127,7 @@ def find_shortest_path(
 def find_cheating_spots(
     walls: set[tuple[int, int]],
     path: list[tuple[int, int]],
-) -> set[tuple[tuple[int, int], tuple[int, int]]]:
+) -> dict:
     """
     Identify potential cheating spots along the path.
 
@@ -151,7 +151,7 @@ def find_cheating_spots(
             next_pos = (rp + 2 * dr, cp + 2 * dc)
 
             if wall in walls and wall not in cheating_spots and next_pos in path:
-                cheating_spots[wall] = (rp, cp)
+                cheating_spots[wall] = [(rp, cp), next_pos]
 
     return cheating_spots
 
@@ -188,19 +188,19 @@ def solve_part1(
     
     good_cheating = {}
 
-    for csp, new_start in cheating_spots.items():
+    for cutoff_start, cutoff_end in cheating_spots.values():
         # Temporarily remove the wall(s)
         #walls.remove(csp)
 
         # Recalculate shortest path
-        csp_cost, new_way = find_shortest_path(walls, csp, goal)
-        csp_cost += way.index(new_start) + 1
+        csp_cost, cut_way = find_shortest_path(walls, cutoff_start, cutoff_end)
+        cheat_saving = csp_cost - 2
 
         # Restore the wall(s)
-        walls.add(csp)
+        # walls.add(csp)
 
-        cheat_saving = base_cost - csp_cost
-        # print("="*20 + f" {csp=} {cheat_saving=}")
+        # cheat_saving = base_cost - csp_cost
+        # print("="*10 + f" Removing {csp}, and a way from {cut_off[0]} to {cut_off[1]}, saving {csp_cost=} leaving costs of {cheat_saving=}")
         # draw_map(walls, start, goal, map_dim, new_way, csp)
 
         if cheat_saving >= cheating_saves:
@@ -242,5 +242,5 @@ def solve(test: bool = False):
 
 
 if __name__ == "__main__":
-    solution1, solution2 = solve(True)
+    solution1, solution2 = solve(False)
     print(f"{solution1=} | {solution2=}")
