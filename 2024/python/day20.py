@@ -273,9 +273,12 @@ def solve_part2(
         s_idx = way.index((rs, cs))
         for re, ce in way[s_idx + 2 :]:
             e_idx = way.index((re, ce))
-            cost, shortcut = find_shortest_path(no_walls, (rs, cs), (re, ce))
-            scut = set(shortcut)
-            if cost <= cheat_length and not scut.issubset(spath):
+            # cost, shortcut = find_shortest_path(no_walls, (rs, cs), (re, ce))
+            cost = abs(re-rs) + abs(ce-cs)
+            # assert cost == costx
+            #scut = set(shortcut)
+            #if cost <= cheat_length and not scut.issubset(spath):
+            if cost <= cheat_length and cost != e_idx - s_idx:
                 cheat_saving = base_cost - (s_idx + (base_cost - e_idx) + cost)
                 cheating_spots += 1
                 if cheat_saving >= cheating_saves:
@@ -318,15 +321,17 @@ def solve(test: bool = False):
 
     time_start = time.perf_counter()
     solution1 = solve_part1(walls, start, goal, cheating_saves1)
-    print(f"Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
+    # solution1 = solve_part2(walls, map_dim, start, goal, 2, 2)
+    print(f"{solution1=} | Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
     solution2 = solve_part2(walls, map_dim, start, goal, cheating_saves2)
-    print(f"Part 2 solved in {time.perf_counter()-time_start:.5f} Sec.")
+    # solution2 = solve_part2(walls, map_dim, start, goal, 2, 2)
+    print(f"{solution2=} | Part 2 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
 
 
 if __name__ == "__main__":
-    solution1, solution2 = solve(True)
+    solution1, solution2 = solve(False)
     print(f"{solution1=} | {solution2=}")
