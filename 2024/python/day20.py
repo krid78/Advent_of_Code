@@ -150,6 +150,8 @@ def find_cheating_spots(
             wall = (rp + dr, cp + dc)
             next_pos = (rp + 2 * dr, cp + 2 * dc)
 
+            # here, a dict was faster than sorting a list like cheating.add(tuple(sorted([(wall),(next_pos)]))
+            # probably, measuring the distance and using half path is even faster?
             if wall in walls and wall not in cheating_spots and next_pos in path:
                 cheating_spots[wall] = [(rp, cp), next_pos]
 
@@ -159,37 +161,39 @@ def find_cheating_spots(
 def find_cheating_spots2(
     walls: set[tuple[int, int]],
     path: list[tuple[int, int]],
-) -> dict:
+    map_dim: tuple[int, int],
+    max_cost: int = 20,
+):
     """
-    Identify potential cheating spots along the path.
-
-    Args:
-        walls (set[tuple[int, int]]): Set of wall positions.
-        path (list[tuple[int, int]]): Shortest path from start to goal.
-        map_dim (tuple[int, int]): Number of rows and columns in the map.
-        start (tuple[int, int]): Start position.
-        goal (tuple[int, int]): Goal position.
-
-    Returns:
-        set[tuple[tuple[int, int], tuple[int, int]]]: Set of wall positions to remove for potential shortcuts.
+    |  isdisjoint(...)
+    |      Return True if two sets have a null intersection.
+    |
+    |  issubset(self, other, /)
+    |      Test whether every element in the set is in other.
     """
+    cheating_spots = set()
+    spath = set(path)
 
-    cheating_spots = {}
-    # pos -> wall -> path
+    no_walls = walls.copy()
 
-    for rs, cs in path[1:-1]:
-        for dr, dc in __DIRECTIONS__:
-            wall = (rs + dr, cs + dc)
-            next_pos = (rs + 2 * dr, cs + 2 * dc)
+    for r in range(1, map_dim[0] - 1):
+        for c in range(1, map_dim[1] - 1):
+            if (r, c) in no_walls:
+                no_walls.remove((r, c))
 
-            if wall in walls and wall not in cheating_spots and next_pos in path:
-                cheating_spots[wall] = [(rs, cs), next_pos]
+    for rs, cs in path[:-2]:
+        idx = path.index((rs, cs))
+        for re, ce in path[idx + 2 :]:
+            cost, way = find_shortest_path(no_walls, (rs, cs), (re, ce))
+            sway = set(way)
+            if cost <= max_cost and not sway.issubset(spath):
+                cheating_spots.add(((rs, cs), (re, ce)))
 
     return cheating_spots
 
+
 def solve_part1(
     walls: set[tuple[int, int]],
-    map_dim,
     start: tuple[int, int],
     goal: tuple[int, int],
     cheating_saves: int = 100,
@@ -216,29 +220,58 @@ def solve_part1(
     # Identify cheating spots (walls along the way)
     cheating_spots = find_cheating_spots(walls, way)
     print(f"Possible Cheating spots: {len(cheating_spots)}")
-    
+
     good_cheating = {}
 
     for cutoff_start, cutoff_end in cheating_spots.values():
 
-        # Recalculate shortest path
-        # csp_cost, cut_way = find_shortest_path(walls, cutoff_start, cutoff_end)
         co_start = way.index(cutoff_start)
         co_end = way.index(cutoff_end)
         cheat_saving = co_end - co_start - 2
-
-        # Restore the wall(s)
-        # walls.add(csp)
-
-        # cheat_saving = base_cost - csp_cost
-        # print("="*10 + f" Removing {csp}, and a way from {cut_off[0]} to {cut_off[1]}, saving {csp_cost=} leaving costs of {cheat_saving=}")
-        # draw_map(walls, start, goal, map_dim, new_way, csp)
 
         if cheat_saving >= cheating_saves:
             good_cheating[cheat_saving] = good_cheating.setdefault(cheat_saving, 0) + 1
 
     # for k in sorted(good_cheating):
     #     print(f"There are {good_cheating[k]:3} cheats that save {k:3} picoseconds.")
+
+    return sum(v for k, v in good_cheating.items() if k >= cheating_saves)
+
+
+def solve_part2(
+    walls: set[tuple[int, int]],
+    map_dim: tuple[int, int],
+    start: tuple[int, int],
+    goal: tuple[int, int],
+    cheating_saves: int = 100,
+    cheat_length: int = 20,
+):
+    # find all shortest path from one point on the track to an other
+    # if the path is <= 20 steps, count the saving length
+    base_cost, way = find_shortest_path(walls, start, goal)
+
+    if base_cost == float("inf"):
+        return 0  # No path found
+
+    print(f"{base_cost=}")
+
+    # Identify cheating spots (walls along the way)
+    cheating_spots = find_cheating_spots2(walls, way, map_dim, cheat_length)
+    print(f"Possible Cheating spots: {len(cheating_spots)}")
+
+    good_cheating = {}
+
+    for cutoff_start, cutoff_end in cheating_spots:
+
+        co_start = way.index(cutoff_start)
+        co_end = way.index(cutoff_end)
+        cheat_saving = co_end - co_start - 2
+
+        if cheat_saving >= cheating_saves:
+            good_cheating[cheat_saving] = good_cheating.setdefault(cheat_saving, 0) + 1
+
+    for k in sorted(good_cheating):
+        print(f"There are {good_cheating[k]:3} cheats that save {k:3} picoseconds.")
 
     return sum(v for k, v in good_cheating.items() if k >= cheating_saves)
 
@@ -267,16 +300,16 @@ def solve(test: bool = False):
     walls, start, goal, map_dim = parse_data(the_data)
 
     time_start = time.perf_counter()
-    solution1 = solve_part1(walls, map_dim, start, goal, cheating_saves1)
+    solution1 = solve_part1(walls, start, goal, cheating_saves1)
     print(f"Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
-    # time_start = time.perf_counter()
-    # solution2 = solve_part1(walls, map_dim, start, goal, cheating_saves2)
-    # print(f"Part 1 solved in {time.perf_counter()-time_start:.5f} Sec.")
+    time_start = time.perf_counter()
+    solution2 = solve_part2(walls, map_dim, start, goal, cheating_saves2, 20)
+    print(f"Part 2 solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     return solution1, solution2
 
 
 if __name__ == "__main__":
-    solution1, solution2 = solve(False)
+    solution1, solution2 = solve(True)
     print(f"{solution1=} | {solution2=}")
