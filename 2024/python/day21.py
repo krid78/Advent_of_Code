@@ -12,31 +12,19 @@ https://adventofcode.com/2024/day/21
     | 0 | A | -> | 0,2 | 0,1 | 0,0 |
     +---+---+    +-----+-----+-----+
 
-    +---+---+ -> +-----+-----+-----+ -> +-------+-------+-------+
-    | ^ | A | -> | 1,2 | 1,1 | 1,0 | -> |       |  1, 0 |  0, 0 |
-+---+---+---+ -> +-----+-----+-----+ -> +-------+-------+-------+
-| < | v | > | -> | 0,2 | 0,1 | 0,0 | -> |  0, 1 | -1, 0 |  0,-1 |
-+---+---+---+ -> +-----+-----+-----+ -> +-------+-------+-------+
-
+    +---+---+ -> +-----+-----+-----+
+    | ^ | A | -> | 1,2 | 1,1 | 1,0 |
++---+---+---+ -> +-----+-----+-----+
+| < | v | > | -> | 0,2 | 0,1 | 0,0 |
++---+---+---+ -> +-----+-----+-----+
 
 All start at "A"
 
-P2: <vA <A A >>^A vA A <^A >A <v<A >>^A vA ^A <vA >^A <v<A >^A >A A vA ^A <v<A >A >^A A A vA <^A >A
-P1:   v  < <    A  > >   ^  A    <    A  >  A   v   A    <   ^  A A  >  A    <  v   A A A  >   ^  A
-P0:             <           A         ^     A       >           ^ ^     A           v v v         A
-NP:                         0               2                           9                         A
-
-P2: <vA <A A >>^A vA A <^A >A <v<A >>^A vA ^A <vA >^A <v<A >^A >A A vA ^A <v<A >A >^A A A vA <^A >A
-NP:                         0               2                           9                         A
-
-
-Move Left: <vA<AA
-Move Right: vA
 """
 
 import time
 
-# Bewegungsrichtungen (oben, rechts, unten, links)
+# Bewegungsrichtungen (runter, links, hoch, rechts)
 __DIRECTIONS__ = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 __DIRECTION_MAP__ = {
     (1, 0): "^",
@@ -45,11 +33,10 @@ __DIRECTION_MAP__ = {
     (0, 1): "<",
 }
 
-
 def get_num_coordinates():
     """
     Define the mapping of keys to coordinates on the grid.
-
+    
     Returns:
         dict: Mapping of keys to their respective coordinates (row, column).
     """
@@ -67,11 +54,10 @@ def get_num_coordinates():
         "A": (0, 0),
     }
 
-
 def get_arrow_coordinates():
     """
-    Define the mapping of keys to coordinates on the grid.
-
+    Define the mapping of keys to coordinates on the arrow grid.
+    
     Returns:
         dict: Mapping of keys to their respective coordinates (row, column).
     """
@@ -82,7 +68,6 @@ def get_arrow_coordinates():
         "v": (0, 1),
         "<": (0, 2),
     }
-
 
 def calculate_path(start: str, end: str, coord_map: dict) -> list[str]:
     """
@@ -117,7 +102,6 @@ def calculate_path(start: str, end: str, coord_map: dict) -> list[str]:
 
     return path
 
-
 def calculate_full_path(sequence: str) -> list[str]:
     """
     Calculate the full path for a sequence of keys.
@@ -138,11 +122,54 @@ def calculate_full_path(sequence: str) -> list[str]:
 
     return full_path
 
+def map_to_arrow_path(sequence: list[str]) -> list[str]:
+    """
+    Map a sequence of movements and `A` to arrow coordinates.
+
+    Args:
+        sequence (list[str]): A sequence of directions (`<`, `^`, `v`, `>`) and `A`.
+
+    Returns:
+        list[str]: Transformed sequence in the arrow coordinate system.
+    """
+    arrow_coords = get_arrow_coordinates()
+    arrow_path = []
+    current_coord = (1, 0)  # Start at "A"
+
+    for item in sequence:
+        target_coord = arrow_coords[item]
+
+        # Move vertically
+        while current_coord[0] != target_coord[0]:
+            dr = 1 if target_coord[0] > current_coord[0] else -1
+            arrow_path.append("^" if dr > 0 else "v")
+            current_coord = (current_coord[0] + dr, current_coord[1])
+
+        # Move horizontally
+        while current_coord[1] != target_coord[1]:
+            dc = 1 if target_coord[1] > current_coord[1] else -1
+            arrow_path.append("<" if dc > 0 else ">")
+            current_coord = (current_coord[0], current_coord[1] + dc)
+
+        # Append the symbol
+        arrow_path.append("A")
+
+    return arrow_path
 
 # Example usage
 if __name__ == "__main__":
-    sequence = "029A"
+    sequences = ["140A", "143A", "349A", "582A", "964A"]
+    # sequences = ["029A", "980A", "179A", "456A", "379A"]
+    solution1 = 0
     start_time = time.perf_counter()
-    path = calculate_full_path("A" + sequence)
-    print(f"Path for sequence {sequence}: {' '.join(path)}")
-    print(f"Computed in {time.perf_counter() - start_time:.5f} seconds.")
+    for sequence in sequences:
+        path = calculate_full_path("A" + sequence)
+        print(f"Path for sequence {sequence}: {''.join(path)}")
+        arrow_path1 = map_to_arrow_path(path)
+        print(f"Path for sequence {sequence}: {''.join(arrow_path1)}")
+        arrow_path2 = map_to_arrow_path(arrow_path1)
+        print(f"Path for sequence {sequence}: {''.join(arrow_path2)}")
+        solution1 += int(sequence[:-1]) * len(arrow_path2)
+        print(f"{len(arrow_path2)} * {int(sequence[:-1])}")
+
+    print(f"Solution 1: {solution1} Computed in {time.perf_counter() - start_time:.5f} seconds.")
