@@ -9,14 +9,14 @@ https://adventofcode.com/2024/day/21
 +---+---+---+    +-----+-----+-----+
 | 1 | 2 | 3 | -> | 1,2 | 1,1 | 1,0 |
 +---+---+---+    +-----+-----+-----+
-    | 0 | A | -> |     | 0,1 | 0,0 |
+    | 0 | A | -> | 0,2 | 0,1 | 0,0 |
     +---+---+    +-----+-----+-----+
 
-    +---+---+ -> +-----+-----+-----+
-    | ^ | A | -> |     | 0,1 | 0,0 |
-+---+---+---+ -> +-----+-----+-----+
-| < | v | > | -> | 1,2 | 1,1 | 1,0 |
-+---+---+---+ -> +-----+-----+-----+
+    +---+---+ -> +-----+-----+-----+ -> +-------+-------+-------+
+    | ^ | A | -> | 1,2 | 1,1 | 1,0 | -> |       |  1, 0 |  0, 0 |
++---+---+---+ -> +-----+-----+-----+ -> +-------+-------+-------+
+| < | v | > | -> | 0,2 | 0,1 | 0,0 | -> |  0, 1 | -1, 0 |  0,-1 |
++---+---+---+ -> +-----+-----+-----+ -> +-------+-------+-------+
 
 
 All start at "A"
@@ -36,105 +36,113 @@ Move Right: vA
 
 import time
 
-
-def get_data(filename: str) -> list[str]:
-    """Return file contents as list of strings."""
-    with open(filename, "r") as in_file:
-        content = [row.rstrip() for row in in_file]
-
-    return content
-
-
-class Pad(object):
-    def __init__(self):
-        self.pos = "A"
-        self.pad = None
-        self.type = "Pad"
-
-    def __repr__(self):
-        return f"{self.pos}"
-
-    def __str__(self):
-        return f"{self.type}@{self.pos}"
+# Bewegungsrichtungen (oben, rechts, unten, links)
+__DIRECTIONS__ = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+__DIRECTION_MAP__ = {
+    (1, 0): "^",
+    (0, -1): ">",
+    (-1, 0): "v",
+    (0, 1): "<",
+}
 
 
-class NumPad(Pad):
-    def __init__(self):
-        super().__init__()
-        self.pad = {
-            "A": (0, 0),
-            "0": (0, 1),
-            "3": (1, 0),
-            "2": (1, 1),
-            "1": (1, 2),
-            "6": (2, 0),
-            "5": (2, 1),
-            "4": (2, 2),
-            "9": (3, 0),
-            "8": (3, 1),
-            "7": (3, 2),
-        }
-        self.type = "NumPad"
+def get_num_coordinates():
+    """
+    Define the mapping of keys to coordinates on the grid.
 
-    def activate(self):
-        return self.move_to("A")
-
-    def move_to(self, target: str = "A") -> tuple[int, int]:
-        cy, cx = self.pad[self.pos]
-        ny, nx = self.pad[target]
-        self.pos = target
-
-        return nx - cx, ny - cy
+    Returns:
+        dict: Mapping of keys to their respective coordinates (row, column).
+    """
+    return {
+        "7": (3, 2),
+        "8": (3, 1),
+        "9": (3, 0),
+        "4": (2, 2),
+        "5": (2, 1),
+        "6": (2, 0),
+        "1": (1, 2),
+        "2": (1, 1),
+        "3": (1, 0),
+        "0": (0, 1),
+        "A": (0, 0),
+    }
 
 
-class KeyPad(Pad):
-    def __init__(self):
-        super().__init__()
-        self.pad = {
-            "A": (0,0),
-            "^": (0,1),
-            ">": (1,0),
-            "v": (1,1),
-            "<": (1,2),
-        }
-        self.type = "KeyPad"
+def get_arrow_coordinates():
+    """
+    Define the mapping of keys to coordinates on the grid.
+
+    Returns:
+        dict: Mapping of keys to their respective coordinates (row, column).
+    """
+    return {
+        "A": (1, 0),
+        "^": (1, 1),
+        ">": (0, 0),
+        "v": (0, 1),
+        "<": (0, 2),
+    }
 
 
-def solve_part1(the_data: list[str]):
-    """Solve the puzzle."""
-    solution1 = 0
+def calculate_path(start: str, end: str, coord_map: dict) -> list[str]:
+    """
+    Calculate the path from start to end as a sequence of directions.
 
-    r2 = NumPad()
+    Args:
+        start (str): Starting key on the grid.
+        end (str): Ending key on the grid.
+        coord_map (dict): Mapping of keys to coordinates.
 
-    # length of the shortest sequence * numeric part of the code
-    for code in the_data:
-        sum_dx = 0
-        sum_dy = 0
-        for num in code:
-            if num == "A":
-                dx, dy = np.activate()
-            else:
-                dx, dy = np.move_to(num)
-            sum_dx += dx
-            sum_dy += dy
+    Returns:
+        list[str]: List of directions (`<`, `^`, `v`, `>`) and `A` for keys.
+    """
+    path = []
+    start_coord = coord_map[start]
+    end_coord = coord_map[end]
 
-    return solution1
+    # Calculate row movements
+    while start_coord[0] != end_coord[0]:
+        dr = 1 if end_coord[0] > start_coord[0] else -1
+        path.append(__DIRECTION_MAP__[(dr, 0)])
+        start_coord = (start_coord[0] + dr, start_coord[1])
+
+    # Calculate column movements
+    while start_coord[1] != end_coord[1]:
+        dc = 1 if end_coord[1] > start_coord[1] else -1
+        path.append(__DIRECTION_MAP__[(0, dc)])
+        start_coord = (start_coord[0], start_coord[1] + dc)
+
+    # Append `A` for the target key
+    path.append("A")
+
+    return path
 
 
-def solve_part2(the_data: list[str]):
-    """Solve the puzzle."""
-    solution2 = 0
+def calculate_full_path(sequence: str) -> list[str]:
+    """
+    Calculate the full path for a sequence of keys.
 
-    return solution2
+    Args:
+        sequence (str): A string of keys (e.g., "029A").
+
+    Returns:
+        list[str]: Full list of directions (`<`, `^`, `v`, `>`) and `A` for keys.
+    """
+    coord_map = get_num_coordinates()
+    full_path = []
+
+    for i in range(len(sequence) - 1):
+        start = sequence[i]
+        end = sequence[i + 1]
+        full_path.extend(calculate_path(start, end, coord_map))
+
+    return full_path
 
 
+# Example usage
 if __name__ == "__main__":
-    # the_data = get_data("2024/data/day21.data")
-    the_data = get_data("2024/data/day21.test")
-    time_start = time.perf_counter()
-    solution1 = solve_part1(the_data)
-    print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
-    time_start = time.perf_counter()
-    solution2 = solve_part2(the_data)
-    print(f"Part 2 ({solution2}) solved in {time.perf_counter()-time_start:.5f} Sec.")
-    print(f"{solution1=} | {solution2=}")
+    sequence = "029A"
+    start_time = time.perf_counter()
+    path = calculate_full_path("A" + sequence)
+    print(f"Path for sequence {sequence}: {' '.join(path)}")
+    print(f"Computed in {time.perf_counter() - start_time:.5f} seconds.")
