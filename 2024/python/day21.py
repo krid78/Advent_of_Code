@@ -24,196 +24,208 @@ All start at "A"
 
 import time
 
-# Bewegungsrichtungen (runter, links, hoch, rechts)
-__DIRECTIONS__ = [(-1, 0), (0, 1), (1, 0), (0, -1)]
-__DIRECTION_MAP__ = {
-    (1, 0): "^",
-    (0, -1): ">",
-    (-1, 0): "v",
-    (0, 1): "<",
+sequenceCache = {}
+
+__PATHMAP__ = {
+    ("A", "0"): "<A",
+    ("0", "A"): ">A",
+    ("A", "1"): "^<<A",
+    ("1", "A"): ">>vA",
+    ("A", "2"): "<^A",
+    ("2", "A"): "v>A",
+    ("A", "3"): "^A",
+    ("3", "A"): "vA",
+    ("A", "4"): "^^<<A",
+    ("4", "A"): ">>vvA",
+    ("A", "5"): "<^^A",
+    ("5", "A"): "vv>A",
+    ("A", "6"): "^^A",
+    ("6", "A"): "vvA",
+    ("A", "7"): "^^^<<A",
+    ("7", "A"): ">>vvvA",
+    ("A", "8"): "<^^^A",
+    ("8", "A"): "vvv>A",
+    ("A", "9"): "^^^A",
+    ("9", "A"): "vvvA",
+    ("0", "1"): "^<A",
+    ("1", "0"): ">vA",
+    ("0", "2"): "^A",
+    ("2", "0"): "vA",
+    ("0", "3"): "^>A",
+    ("3", "0"): "<vA",
+    ("0", "4"): "^<^A",
+    ("4", "0"): ">vvA",
+    ("0", "5"): "^^A",
+    ("5", "0"): "vvA",
+    ("0", "6"): "^^>A",
+    ("6", "0"): "<vvA",
+    ("0", "7"): "^^^<A",
+    ("7", "0"): ">vvvA",
+    ("0", "8"): "^^^A",
+    ("8", "0"): "vvvA",
+    ("0", "9"): "^^^>A",
+    ("9", "0"): "<vvvA",
+    ("1", "2"): ">A",
+    ("2", "1"): "<A",
+    ("1", "3"): ">>A",
+    ("3", "1"): "<<A",
+    ("1", "4"): "^A",
+    ("4", "1"): "vA",
+    ("1", "5"): "^>A",
+    ("5", "1"): "<vA",
+    ("1", "6"): "^>>A",
+    ("6", "1"): "<<vA",
+    ("1", "7"): "^^A",
+    ("7", "1"): "vvA",
+    ("1", "8"): "^^>A",
+    ("8", "1"): "<vvA",
+    ("1", "9"): "^^>>A",
+    ("9", "1"): "<<vvA",
+    ("2", "3"): ">A",
+    ("3", "2"): "<A",
+    ("2", "4"): "<^A",
+    ("4", "2"): "v>A",
+    ("2", "5"): "^A",
+    ("5", "2"): "vA",
+    ("2", "6"): "^>A",
+    ("6", "2"): "<vA",
+    ("2", "7"): "<^^A",
+    ("7", "2"): "vv>A",
+    ("2", "8"): "^^A",
+    ("8", "2"): "vvA",
+    ("2", "9"): "^^>A",
+    ("9", "2"): "<vvA",
+    ("3", "4"): "<<^A",
+    ("4", "3"): "v>>A",
+    ("3", "5"): "<^A",
+    ("5", "3"): "v>A",
+    ("3", "6"): "^A",
+    ("6", "3"): "vA",
+    ("3", "7"): "<<^^A",
+    ("7", "3"): "vv>>A",
+    ("3", "8"): "<^^A",
+    ("8", "3"): "vv>A",
+    ("3", "9"): "^^A",
+    ("9", "3"): "vvA",
+    ("4", "5"): ">A",
+    ("5", "4"): "<A",
+    ("4", "6"): ">>A",
+    ("6", "4"): "<<A",
+    ("4", "7"): "^A",
+    ("7", "4"): "vA",
+    ("4", "8"): "^>A",
+    ("8", "4"): "<vA",
+    ("4", "9"): "^>>A",
+    ("9", "4"): "<<vA",
+    ("5", "6"): ">A",
+    ("6", "5"): "<A",
+    ("5", "7"): "<^A",
+    ("7", "5"): "v>A",
+    ("5", "8"): "^A",
+    ("8", "5"): "vA",
+    ("5", "9"): "^>A",
+    ("9", "5"): "<vA",
+    ("6", "7"): "<<^A",
+    ("7", "6"): "v>>A",
+    ("6", "8"): "<^A",
+    ("8", "6"): "v>A",
+    ("6", "9"): "^A",
+    ("9", "6"): "vA",
+    ("7", "8"): ">A",
+    ("8", "7"): "<A",
+    ("7", "9"): ">>A",
+    ("9", "7"): "<<A",
+    ("8", "9"): ">A",
+    ("9", "8"): "<A",
+
+    ("<", "^"): ">^A",
+    ("^", "<"): "v<A",
+    ("<", "v"): ">A",
+    ("v", "<"): "<A",
+    ("<", ">"): ">>A",
+    (">", "<"): "<<A",
+    ("<", "A"): ">>^A",
+    ("A", "<"): "v<<A",
+    ("^", "v"): "vA",
+    ("v", "^"): "^A",
+    ("^", ">"): "v>A",
+    (">", "^"): "<^A",
+    ("^", "A"): ">A",
+    ("A", "^"): "<A",
+    ("v", ">"): ">A",
+    (">", "v"): "<A",
+    ("v", "A"): "^>A",
+    ("A", "v"): "<vA",
+    (">", "A"): "^A",
+    ("A", ">"): "vA",
 }
 
-
-def get_num_coordinates():
+def getMoveCount(current, nxt, depth):
     """
-    Define the mapping of keys to coordinates on the grid.
-
-    Returns:
-        dict: Mapping of keys to their respective coordinates (row, column).
+    Holt die kürzeste Sequenz, um von 'current' nach 'nxt' zu wechseln (aus 'paths'),
+    und gibt dann die Länge zurück, die benötigt wird, wenn wir diese Sequenz
+    nochmal in getSequenceLength hineinstecken (mit depth-1).
     """
-    return {
-        "7": (3, 2),
-        "8": (3, 1),
-        "9": (3, 0),
-        "4": (2, 2),
-        "5": (2, 1),
-        "6": (2, 0),
-        "1": (1, 2),
-        "2": (1, 1),
-        "3": (1, 0),
-        "0": (0, 1),
-        "A": (0, 0),
-    }
+    # Falls identisch, return 1
+    if current == nxt:
+        return 1
+    # Ansonsten LUT
+    newSequence = __PATHMAP__.get((current, nxt), "")
+    return getSequenceLength(newSequence, depth - 1)
 
-
-def get_arrow_coordinates():
+def getSequenceLength(targetSequence, depth):
     """
-    Define the mapping of keys to coordinates on the arrow grid.
-
-    Returns:
-        dict: Mapping of keys to their respective coordinates (row, column).
+    Kernfunktion, die rekursiv (bzw. kaskadierend) die "Kosten" berechnet.
+    - depth=0 => Rückgabe: length = len(targetSequence)
+    - depth>0 => Starte bei 'A', laufe durch targetSequence und summiere getMoveCount(...)
+    Entspricht in Rust: getSequenceLength(...)
     """
-    return {
-        "A": (1, 0),
-        "^": (1, 1),
-        ">": (0, 0),
-        "v": (0, 1),
-        "<": (0, 2),
-    }
+    key = (targetSequence, depth)
+    if key in sequenceCache:
+        return sequenceCache[key]
 
+    length = 0
+    if depth == 0:
+        # Rust: length = len(targetSequence)
+        length = len(targetSequence)
+    else:
+        current = 'A'
+        for nxt in targetSequence:
+            length += getMoveCount(current, nxt, depth)
+            current = nxt
 
-def calculate_path(start: str, end: str, coord_map: dict) -> list[str]:
+    sequenceCache[key] = length
+    return length
+
+def calculateScore(code, robots):
     """
-    Calculate the path from start to end as a sequence of directions.
-
-    Args:
-        start (str): Starting key on the grid.
-        end (str): Ending key on the grid.
-        coord_map (dict): Mapping of keys to coordinates.
-
-    Returns:
-        list[str]: List of directions (`<`, `^`, `v`, `>`) and `A` for keys.
+    Entspricht in Rust: calculateScore(code string, robots int) int
     """
-    
-    def move_vertical(cc, tc):
-        # Move vertically
-        while cc[0] != tc[0]:
-            dr = 1 if tc[0] > cc[0] else -1
-            path.append(__DIRECTION_MAP__[(dr, 0)])
-            cc = (cc[0] + dr, cc[1])
-            assert cc != (0,2)
-        return cc
+    numericCode = int(code[:-1])
+    length = getSequenceLength(code, robots)
+    return numericCode * length
 
-    def move_horizontal(cc, tc):
-        # Move horizontally
-        while cc[1] != tc[1]:
-            dc = 1 if tc[1] > cc[1] else -1
-            path.append(__DIRECTION_MAP__[(0, dc)])
-            cc = (cc[0], cc[1] + dc)
-            assert cc != (0,2)
-        return cc
-    
-    path = []
-    start_coord = coord_map[start]
-    end_coord = coord_map[end]
-
-    if start_coord[0] < 1:
-        start_coord = move_vertical(start_coord, end_coord)
-        start_coord = move_horizontal(start_coord, end_coord)
-    elif end_coord[0] < 1:
-        start_coord = move_horizontal(start_coord, end_coord)
-        start_coord = move_vertical(start_coord, end_coord)
-    else:     
-        start_coord = move_vertical(start_coord, end_coord)
-        start_coord = move_horizontal(start_coord, end_coord)
-
-    # Append `A` for the target key
-    path.append("A")
-
-    return path
-
-
-def calculate_full_path(sequence: str) -> list[str]:
-    """
-    Calculate the full path for a sequence of keys.
-
-    Args:
-        sequence (str): A string of keys (e.g., "029A").
-
-    Returns:
-        list[str]: Full list of directions (`<`, `^`, `v`, `>`) and `A` for keys.
-    """
-    coord_map = get_num_coordinates()
-    full_path = []
-
-    for i in range(len(sequence) - 1):
-        start = sequence[i]
-        end = sequence[i + 1]
-        full_path.extend(calculate_path(start, end, coord_map))
-
-    return full_path
-
-
-def map_to_arrow_path(sequence: list[str]) -> list[str]:
-    """
-    Map a sequence of movements and `A` to arrow coordinates.
-
-    Args:
-        sequence (list[str]): A sequence of directions (`<`, `^`, `v`, `>`) and `A`.
-
-    Returns:
-        list[str]: Transformed sequence in the arrow coordinate system.
-    """
-
-    def move_vertical(cc, tc):
-        # Move vertically
-        while cc[0] != tc[0]:
-            dr = 1 if tc[0] > cc[0] else -1
-            arrow_path.append("^" if dr > 0 else "v")
-            cc = (cc[0] + dr, cc[1])
-            assert cc != (1,2)
-        return cc
-
-    def move_horizontal(cc, tc):
-        # Move horizontally
-        while cc[1] != tc[1]:
-            dc = 1 if tc[1] > cc[1] else -1
-            arrow_path.append("<" if dc > 0 else ">")
-            cc = (cc[0], cc[1] + dc)
-            assert cc != (1,2)
-        return cc
-
-    arrow_coords = get_arrow_coordinates()
-    arrow_path = []
-    current_coord = (1, 0)  # Start at "A"
-
-    for item in sequence:
-        target_coord = arrow_coords[item]
-
-        #if current_coord == (0,2) and target_coord==(1,0):
-        #    arrow_path.append(">")
-        #    arrow_path.append("^")
-        #    arrow_path.append(">")
-        #    current_coord = target_coord
-        if current_coord[0] > target_coord[0]:
-            current_coord = move_vertical(current_coord, target_coord)
-            current_coord = move_horizontal(current_coord, target_coord)
-        else:
-            current_coord = move_horizontal(current_coord, target_coord)
-            current_coord = move_vertical(current_coord, target_coord)
-
-        # Append the symbol
-        arrow_path.append("A")
-
-    return arrow_path
-
-
-# Example usage
 if __name__ == "__main__":
-    # sequences = ["140A", "143A", "349A", "582A", "964A"]
-    sequences = ["029A", "980A", "179A", "456A", "379A"]
+    sequences = ["140A", "143A", "349A", "582A", "964A"]
+    # sequences = ["029A", "980A", "179A", "456A", "379A"]
+
+    # Teil 1: "3 robots"
     solution1 = 0
     start_time = time.perf_counter()
-    for sequence in sequences:
-        path = calculate_full_path("A" + sequence)
-        print(f"Path for sequence {sequence}: {''.join(path)}")
-        arrow_path1 = map_to_arrow_path(path)
-        print(f"Path for sequence {sequence}: {''.join(arrow_path1)}")
-        arrow_path2 = map_to_arrow_path(arrow_path1)
-        print(f"Path for sequence {sequence}: {''.join(arrow_path2)}")
-        solution1 += int(sequence[:-1]) * len(arrow_path2)
-        print(f"{len(arrow_path2)} * {int(sequence[:-1])}")
-
+    for code in sequences:
+        solution1 += calculateScore(code, 3)
     print(
         f"Solution 1: {solution1} Computed in {time.perf_counter() - start_time:.5f} seconds."
     )
+
+    # Teil 2: "26 robots"
+    solution2 = 0
+    start_time = time.perf_counter()
+    for code in sequences:
+        solution2 += calculateScore(code, 26)
+    print(
+        f"Solution 2: {solution2} Computed in {time.perf_counter() - start_time:.5f} seconds."
+    )
+
+    print(f"{solution1=} | {solution2=}")
+
