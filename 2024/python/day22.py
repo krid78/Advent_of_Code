@@ -52,15 +52,16 @@ def solve_intro2(secret: int = 123) -> None:
 
 
 def solve_part1(the_data: list[int]) -> int:
-    """Solve the puzzle."""
+    """Solve the puzzle.
+    s1 = ((s0 * 64) ^ s0) % 16777216
+    s2 = ((s1 // 32) ^ s1) % 16777216
+    s3 = ((s2 * 2048) ^ s2) % 16777216
+    """
     secrets = []
 
     for s0 in the_data:
         for _ in range(2000):
-            s1 = ((s0 * 64) ^ s0) % 16777216
-            s2 = ((s1 // 32) ^ s1) % 16777216
-            s3 = ((s2 * 2048) ^ s2) % 16777216
-            s0 = s3
+            s0 = next_secret(s0)
         secrets.append(s0)
 
     return sum(secrets)
@@ -83,8 +84,8 @@ if __name__ == "__main__":
     solve_intro2(123)
     print(f"Intro solved in {time.perf_counter()-time_start:.5f} Sec.")
 
-    # the_data = get_data("2024/data/day22.data")
-    the_data = get_data("2024/data/day22.test")
+    the_data = get_data("2024/data/day22.data")
+    # the_data = get_data("2024/data/day22.test")
 
     # solve part 1
     time_start = time.perf_counter()
