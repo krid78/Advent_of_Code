@@ -74,7 +74,6 @@ def solve_intro2(secret: int = 123) -> None:
         watcher.setdefault((d0, d1, d2, d3), []).append(current_price)
         last_price = current_price
 
-    print(watcher)
     for k, v in watcher.items():
         print(f"{k=}, {v=}")
 
@@ -105,10 +104,12 @@ def solve_part2(the_data: list[int]) -> int:
 
     # sequence: [prices]
     watcher = {}
+    seen = set()
 
     for s0 in the_data:
         # fill the data structures
         d0 = d1 = d2 = d3 = 10
+        seen.clear()
         last_price = s0 % 10
 
         for _ in range(3):
@@ -127,44 +128,41 @@ def solve_part2(the_data: list[int]) -> int:
             d1 = d2
             d2 = d3
             d3 = current_price - last_price
-            watcher.setdefault((d0, d1, d2, d3), []).append(current_price)
+            if (d0, d1, d2, d3) not in seen:
+                seen.add((d0, d1, d2, d3))
+                watcher.setdefault((d0, d1, d2, d3), []).append(current_price)
             last_price = current_price
-
-    for k, v in watcher.items():
-        print(f"{k=}, {v=}")
-
-    print(f"{watcher[(-2, 1, -1, 3)]}, {sum(watcher[(-2, 1, -1, 3)])}")
 
     max_key = max(watcher, key=lambda k: sum(watcher[k]))
     max_sum = sum(watcher[max_key])
-    print(f"{max_key=} {watcher[max_key]}, {max_sum=}")
 
     return max_sum
 
 
 if __name__ == "__main__":
+    solution1 = solution2 = 0
 
-    # time_start = time.perf_counter()
-    # solve_intro1(123)
-    # print(f"Intro solved in {time.perf_counter()-time_start:.5f} Sec.")
+    time_start = time.perf_counter()
+    solve_intro1(123)
+    print(f"Intro solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
     solve_intro2(123)
     print(f"Intro solved in {time.perf_counter()-time_start:.5f} Sec.")
 
-    # the_data = get_data("2024/data/day22.data")
+    the_data = get_data("2024/data/day22.data")
 
     # solve part 1
-    # time_start = time.perf_counter()
+    time_start = time.perf_counter()
     # solution1 = solve_part1([1,10,100,2024])
-    # solution1 = solve_part1(the_data)
-    # print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
+    solution1 = solve_part1(the_data)
+    print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     # solve part 2
     time_start = time.perf_counter()
-    solution2 = solve_part2([1, 2, 3, 2024])
-    # solution2 = solve_part2(the_data)
+    # solution2 = solve_part2([1, 2, 3, 2024])
+    solution2 = solve_part2(the_data)
     print(f"Part 2 ({solution2}) solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     # finally
-    # print(f"{solution1=} | {solution2=}")
+    print(f"{solution1=} | {solution2=}")
