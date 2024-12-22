@@ -113,7 +113,7 @@ def solve_part2(the_data: list[int]) -> int:
             d3 = current_price - last_price
             last_price = current_price
 
-        for _ in range(3, 10):
+        for _ in range(3, 2000):
             s0 = next_secret(s0)
             current_price = s0 % 10
             d0 = d1
