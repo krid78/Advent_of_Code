@@ -4,6 +4,7 @@ https://adventofcode.com/2024/day/22
 """
 
 import time
+from functools import lru_cache
 
 
 def get_data(filename: str) -> list[int]:
@@ -14,6 +15,7 @@ def get_data(filename: str) -> list[int]:
     return list(map(int, content))
 
 
+@lru_cache(maxsize=None)
 def next_secret(s: int) -> int:
     # Operation 1: S * 64
     s = ((s << 6) ^ s) & 0xFFFFFF
@@ -72,9 +74,14 @@ def solve_intro2(secret: int = 123) -> None:
         watcher.setdefault((d0, d1, d2, d3), []).append(current_price)
         last_price = current_price
 
-        # print(watcher)
+    print(watcher)
     for k, v in watcher.items():
         print(f"{k=}, {v=}")
+
+    max_key = max(watcher, key=lambda k: sum(watcher[k]))
+    max_sum = sum(watcher[max_key])
+
+    print(f"Intro 2: {max_key=}, {max_sum=}")
 
 
 def solve_part1(the_data: list[int]) -> int:
@@ -126,9 +133,13 @@ def solve_part2(the_data: list[int]) -> int:
     for k, v in watcher.items():
         print(f"{k=}, {v=}")
 
-    print(f"{watcher[(-2, 1, -1, 3)]}")
+    print(f"{watcher[(-2, 1, -1, 3)]}, {sum(watcher[(-2, 1, -1, 3)])}")
 
-    return 0
+    max_key = max(watcher, key=lambda k: sum(watcher[k]))
+    max_sum = sum(watcher[max_key])
+    print(f"{max_key=} {watcher[max_key]}, {max_sum=}")
+
+    return max_sum
 
 
 if __name__ == "__main__":
