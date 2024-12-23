@@ -66,34 +66,61 @@ def solve_part1(graph: dict[str, set[str]]) -> int:
     return solution
 
 
-def solve_part2(graph: dict[str, set[str]]):
-    """Solve the puzzle."""
-    solution = ""
+def solve_part2(graph: dict[str, set[str]]) -> str:
+    """
+    Find the largest group in the graph using a tree-based approach.
 
-    # build a tree of nodes
-    # for node in graph:
-    #     build_tree bei checking, if
-    # E1-neighbour knows me
-    # E2-neighbour knows me and the E1 I came across
-    # E3-neighbour knows me and the E1 I came across and the E2 I came across
+    Args:
+        graph (dict[str, set[str]]): The adjacency list representation of the graph.
+
+    Returns:
+        str: Comma-separated names of the computers in the largest group.
+    """
+
+    def expand_group(node: str, current_group: set[str]) -> set[str]:
+        """
+        Expand the group starting from the given node.
+
+        Args:
+            node (str): The starting node.
+            current_group (set[str]): The current set of nodes in the group.
+
+        Returns:
+            set[str]: The largest group starting from the given node.
+        """
+        neighbors = graph[node]
+        for neighbor in neighbors:
+            # Check if the neighbor is connected to all nodes in the current group
+            if all(neighbor in graph[other] for other in current_group):
+                # Add the neighbor to the group and continue expanding
+                current_group.add(neighbor)
+                expand_group(neighbor, current_group)
+        return current_group
+
+    largest_group = set()
+    for node in graph:
+        group = expand_group(node, {node})
+        if len(group) > len(largest_group):
+            largest_group = group
 
     # co,de,ka,ta
-    return solution
+    # Return the group as a sorted, comma-separated string
+    return ",".join(sorted(largest_group))
 
 
 if __name__ == "__main__":
     solution1 = solution2 = 0
-    # the_data = get_data("2024/data/day23.data")
-    the_data = get_data("2024/data/day23.test")
+    the_data = get_data("2024/data/day23.data")
+    # the_data = get_data("2024/data/day23.test")
     graph = parse_data(the_data=the_data)
 
-    time_start = time.perf_counter()
-    solution1 = solve_part1(graph)
-    print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
-
     # time_start = time.perf_counter()
-    # solution2 = solve_part2(graph)
-    # print(f"Part 2 ({solution2}) solved in {time.perf_counter()-time_start:.5f} Sec.")
+    # solution1 = solve_part1(graph)
+    # print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
+
+    time_start = time.perf_counter()
+    solution2 = solve_part2(graph)
+    print(f"Part 2 ({solution2}) solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     # finally
     print(f"{solution1=} | {solution2=}")
