@@ -112,11 +112,12 @@ if __name__ == "__main__":
     solution1 = solution2 = 0
     the_data = get_data("2024/data/day23.data")
     # the_data = get_data("2024/data/day23.test")
+    
     graph = parse_data(the_data=the_data)
 
-    # time_start = time.perf_counter()
-    # solution1 = solve_part1(graph)
-    # print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
+    time_start = time.perf_counter()
+    solution1 = solve_part1(graph)
+    print(f"Part 1 ({solution1}) solved in {time.perf_counter()-time_start:.5f} Sec.")
 
     time_start = time.perf_counter()
     solution2 = solve_part2(graph)
