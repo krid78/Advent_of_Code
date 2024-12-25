@@ -1,0 +1,1557 @@
+digraph {
+	rankdir=LR
+	y44 [label=y44 shape=ellipse]
+	x44 [label=x44 shape=ellipse]
+	dfp_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y44 -> dfp_XOR
+	x44 -> dfp_XOR
+	dfp [label=dfp shape=ellipse]
+	dfp_XOR -> dfp
+	shn [label=shn shape=ellipse]
+	nmv [label=nmv shape=ellipse]
+	pvg_OR [label=OR color=lightgrey shape=box style=filled]
+	shn -> pvg_OR
+	nmv -> pvg_OR
+	pvg [label=pvg shape=ellipse]
+	pvg_OR -> pvg
+	hgv [label=hgv shape=ellipse]
+	ckv [label=ckv shape=ellipse]
+	vrf_AND [label=AND color=lightgrey shape=box style=filled]
+	hgv -> vrf_AND
+	ckv -> vrf_AND
+	vrf [label=vrf shape=ellipse]
+	vrf_AND -> vrf
+	rpn [label=rpn shape=ellipse]
+	vjh [label=vjh shape=ellipse]
+	bmn_AND [label=AND color=lightgrey shape=box style=filled]
+	rpn -> bmn_AND
+	vjh -> bmn_AND
+	bmn [label=bmn shape=ellipse]
+	bmn_AND -> bmn
+	fkr [label=fkr shape=ellipse]
+	pvg [label=pvg shape=ellipse]
+	ggp_AND [label=AND color=lightgrey shape=box style=filled]
+	fkr -> ggp_AND
+	pvg -> ggp_AND
+	ggp [label=ggp shape=ellipse]
+	ggp_AND -> ggp
+	fhf [label=fhf shape=ellipse]
+	trb [label=trb shape=ellipse]
+	vcd_AND [label=AND color=lightgrey shape=box style=filled]
+	fhf -> vcd_AND
+	trb -> vcd_AND
+	vcd [label=vcd shape=ellipse]
+	vcd_AND -> vcd
+	kkq [label=kkq shape=ellipse]
+	vvs [label=vvs shape=ellipse]
+	trb_OR [label=OR color=lightgrey shape=box style=filled]
+	kkq -> trb_OR
+	vvs -> trb_OR
+	trb [label=trb shape=ellipse]
+	trb_OR -> trb
+	dgm [label=dgm shape=ellipse]
+	ctf [label=ctf shape=ellipse]
+	kvn_OR [label=OR color=lightgrey shape=box style=filled]
+	dgm -> kvn_OR
+	ctf -> kvn_OR
+	kvn [label=kvn shape=ellipse]
+	kvn_OR -> kvn
+	phq [label=phq shape=ellipse]
+	kbq [label=kbq shape=ellipse]
+	gvs_OR [label=OR color=lightgrey shape=box style=filled]
+	phq -> gvs_OR
+	kbq -> gvs_OR
+	gvs [label=gvs shape=ellipse]
+	gvs_OR -> gvs
+	sqv [label=sqv shape=ellipse]
+	wmm [label=wmm shape=ellipse]
+	mwn_OR [label=OR color=lightgrey shape=box style=filled]
+	sqv -> mwn_OR
+	wmm -> mwn_OR
+	mwn [label=mwn shape=ellipse]
+	mwn_OR -> mwn
+	y08 [label=y08 shape=ellipse]
+	x08 [label=x08 shape=ellipse]
+	rmf_AND [label=AND color=lightgrey shape=box style=filled]
+	y08 -> rmf_AND
+	x08 -> rmf_AND
+	rmf [label=rmf shape=ellipse]
+	rmf_AND -> rmf
+	ktm [label=ktm shape=ellipse]
+	fsb [label=fsb shape=ellipse]
+	htt_OR [label=OR color=lightgrey shape=box style=filled]
+	ktm -> htt_OR
+	fsb -> htt_OR
+	htt [label=htt shape=ellipse]
+	htt_OR -> htt
+	x14 [label=x14 shape=ellipse]
+	y14 [label=y14 shape=ellipse]
+	ctf_AND [label=AND color=lightgrey shape=box style=filled]
+	x14 -> ctf_AND
+	y14 -> ctf_AND
+	ctf [label=ctf shape=ellipse]
+	ctf_AND -> ctf
+	y20 [label=y20 shape=ellipse]
+	x20 [label=x20 shape=ellipse]
+	kgm_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y20 -> kgm_XOR
+	x20 -> kgm_XOR
+	kgm [label=kgm shape=ellipse]
+	kgm_XOR -> kgm
+	vcd [label=vcd shape=ellipse]
+	fsh [label=fsh shape=ellipse]
+	btb_OR [label=OR color=lightgrey shape=box style=filled]
+	vcd -> btb_OR
+	fsh -> btb_OR
+	btb [label=btb shape=ellipse]
+	btb_OR -> btb
+	x22 [label=x22 shape=ellipse]
+	y22 [label=y22 shape=ellipse]
+	dds_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x22 -> dds_XOR
+	y22 -> dds_XOR
+	dds [label=dds shape=ellipse]
+	dds_XOR -> dds
+	y17 [label=y17 shape=ellipse]
+	x17 [label=x17 shape=ellipse]
+	cwj_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y17 -> cwj_XOR
+	x17 -> cwj_XOR
+	cwj [label=cwj shape=ellipse]
+	cwj_XOR -> cwj
+	y34 [label=y34 shape=ellipse]
+	x34 [label=x34 shape=ellipse]
+	mbr_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y34 -> mbr_XOR
+	x34 -> mbr_XOR
+	mbr [label=mbr shape=ellipse]
+	mbr_XOR -> mbr
+	y20 [label=y20 shape=ellipse]
+	x20 [label=x20 shape=ellipse]
+	vgd_AND [label=AND color=lightgrey shape=box style=filled]
+	y20 -> vgd_AND
+	x20 -> vgd_AND
+	vgd [label=vgd shape=ellipse]
+	vgd_AND -> vgd
+	mks [label=mks shape=ellipse]
+	cdk [label=cdk shape=ellipse]
+	z45_OR [label=OR color=lightgrey shape=box style=filled]
+	mks -> z45_OR
+	cdk -> z45_OR
+	z45 [label=z45 shape=ellipse]
+	z45_OR -> z45
+	x33 [label=x33 shape=ellipse]
+	y33 [label=y33 shape=ellipse]
+	dgb_AND [label=AND color=lightgrey shape=box style=filled]
+	x33 -> dgb_AND
+	y33 -> dgb_AND
+	dgb [label=dgb shape=ellipse]
+	dgb_AND -> dgb
+	ckv [label=ckv shape=ellipse]
+	hgv [label=hgv shape=ellipse]
+	z42_XOR [label=XOR color=lightgrey shape=box style=filled]
+	ckv -> z42_XOR
+	hgv -> z42_XOR
+	z42 [label=z42 shape=ellipse]
+	z42_XOR -> z42
+	bmp [label=bmp shape=ellipse]
+	bcb [label=bcb shape=ellipse]
+	z31_XOR [label=XOR color=lightgrey shape=box style=filled]
+	bmp -> z31_XOR
+	bcb -> z31_XOR
+	z31 [label=z31 shape=ellipse]
+	z31_XOR -> z31
+	mwg [label=mwg shape=ellipse]
+	hrf [label=hrf shape=ellipse]
+	z39_XOR [label=XOR color=lightgrey shape=box style=filled]
+	mwg -> z39_XOR
+	hrf -> z39_XOR
+	z39 [label=z39 shape=ellipse]
+	z39_XOR -> z39
+	y33 [label=y33 shape=ellipse]
+	x33 [label=x33 shape=ellipse]
+	kvq_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y33 -> kvq_XOR
+	x33 -> kvq_XOR
+	kvq [label=kvq shape=ellipse]
+	kvq_XOR -> kvq
+	cvj [label=cvj shape=ellipse]
+	ftw [label=ftw shape=ellipse]
+	rvd_OR [label=OR color=lightgrey shape=box style=filled]
+	cvj -> rvd_OR
+	ftw -> rvd_OR
+	rvd [label=rvd shape=ellipse]
+	rvd_OR -> rvd
+	hrf [label=hrf shape=ellipse]
+	mwg [label=mwg shape=ellipse]
+	jkn_AND [label=AND color=lightgrey shape=box style=filled]
+	hrf -> jkn_AND
+	mwg -> jkn_AND
+	jkn [label=jkn shape=ellipse]
+	jkn_AND -> jkn
+	y32 [label=y32 shape=ellipse]
+	x32 [label=x32 shape=ellipse]
+	fhf_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y32 -> fhf_XOR
+	x32 -> fhf_XOR
+	fhf [label=fhf shape=ellipse]
+	fhf_XOR -> fhf
+	rkj [label=rkj shape=ellipse]
+	gsd [label=gsd shape=ellipse]
+	ppm_OR [label=OR color=lightgrey shape=box style=filled]
+	rkj -> ppm_OR
+	gsd -> ppm_OR
+	ppm [label=ppm shape=ellipse]
+	ppm_OR -> ppm
+	y40 [label=y40 shape=ellipse]
+	x40 [label=x40 shape=ellipse]
+	hkg_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y40 -> hkg_XOR
+	x40 -> hkg_XOR
+	hkg [label=hkg shape=ellipse]
+	hkg_XOR -> hkg
+	vjh [label=vjh shape=ellipse]
+	rpn [label=rpn shape=ellipse]
+	z02_XOR [label=XOR color=lightgrey shape=box style=filled]
+	vjh -> z02_XOR
+	rpn -> z02_XOR
+	z02 [label=z02 shape=ellipse]
+	z02_XOR -> z02
+	kgg [label=kgg shape=ellipse]
+	jrg [label=jrg shape=ellipse]
+	bwq_AND [label=AND color=lightgrey shape=box style=filled]
+	kgg -> bwq_AND
+	jrg -> bwq_AND
+	bwq [label=bwq shape=ellipse]
+	bwq_AND -> bwq
+	y22 [label=y22 shape=ellipse]
+	x22 [label=x22 shape=ellipse]
+	qnd_AND [label=AND color=lightgrey shape=box style=filled]
+	y22 -> qnd_AND
+	x22 -> qnd_AND
+	qnd [label=qnd shape=ellipse]
+	qnd_AND -> qnd
+	dnq [label=dnq shape=ellipse]
+	rpv [label=rpv shape=ellipse]
+	z19_XOR [label=XOR color=lightgrey shape=box style=filled]
+	dnq -> z19_XOR
+	rpv -> z19_XOR
+	z19 [label=z19 shape=ellipse]
+	z19_XOR -> z19
+	ghk [label=ghk shape=ellipse]
+	qhj [label=qhj shape=ellipse]
+	crn_OR [label=OR color=lightgrey shape=box style=filled]
+	ghk -> crn_OR
+	qhj -> crn_OR
+	crn [label=crn shape=ellipse]
+	crn_OR -> crn
+	cwj [label=cwj shape=ellipse]
+	gvs [label=gvs shape=ellipse]
+	z17_XOR [label=XOR color=lightgrey shape=box style=filled]
+	cwj -> z17_XOR
+	gvs -> z17_XOR
+	z17 [label=z17 shape=ellipse]
+	z17_XOR -> z17
+	x35 [label=x35 shape=ellipse]
+	y35 [label=y35 shape=ellipse]
+	bhv_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x35 -> bhv_XOR
+	y35 -> bhv_XOR
+	bhv [label=bhv shape=ellipse]
+	bhv_XOR -> bhv
+	y39 [label=y39 shape=ellipse]
+	x39 [label=x39 shape=ellipse]
+	hrf_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y39 -> hrf_XOR
+	x39 -> hrf_XOR
+	hrf [label=hrf shape=ellipse]
+	hrf_XOR -> hrf
+	mbr [label=mbr shape=ellipse]
+	wbd [label=wbd shape=ellipse]
+	z34_XOR [label=XOR color=lightgrey shape=box style=filled]
+	mbr -> z34_XOR
+	wbd -> z34_XOR
+	z34 [label=z34 shape=ellipse]
+	z34_XOR -> z34
+	kfb [label=kfb shape=ellipse]
+	nkh [label=nkh shape=ellipse]
+	cvj_AND [label=AND color=lightgrey shape=box style=filled]
+	kfb -> cvj_AND
+	nkh -> cvj_AND
+	cvj [label=cvj shape=ellipse]
+	cvj_AND -> cvj
+	pvn [label=pvn shape=ellipse]
+	tmp [label=tmp shape=ellipse]
+	phq_AND [label=AND color=lightgrey shape=box style=filled]
+	pvn -> phq_AND
+	tmp -> phq_AND
+	phq [label=phq shape=ellipse]
+	phq_AND -> phq
+	kvn [label=kvn shape=ellipse]
+	prg [label=prg shape=ellipse]
+	z15_XOR [label=XOR color=lightgrey shape=box style=filled]
+	kvn -> z15_XOR
+	prg -> z15_XOR
+	z15 [label=z15 shape=ellipse]
+	z15_XOR -> z15
+	dtr [label=dtr shape=ellipse]
+	jtr [label=jtr shape=ellipse]
+	jrg_OR [label=OR color=lightgrey shape=box style=filled]
+	dtr -> jrg_OR
+	jtr -> jrg_OR
+	jrg [label=jrg shape=ellipse]
+	jrg_OR -> jrg
+	vsv [label=vsv shape=ellipse]
+	jnt [label=jnt shape=ellipse]
+	fhc_OR [label=OR color=lightgrey shape=box style=filled]
+	vsv -> fhc_OR
+	jnt -> fhc_OR
+	fhc [label=fhc shape=ellipse]
+	fhc_OR -> fhc
+	hkj [label=hkj shape=ellipse]
+	fjp [label=fjp shape=ellipse]
+	ckv_OR [label=OR color=lightgrey shape=box style=filled]
+	hkj -> ckv_OR
+	fjp -> ckv_OR
+	ckv [label=ckv shape=ellipse]
+	ckv_OR -> ckv
+	y23 [label=y23 shape=ellipse]
+	x23 [label=x23 shape=ellipse]
+	mwh_AND [label=AND color=lightgrey shape=box style=filled]
+	y23 -> mwh_AND
+	x23 -> mwh_AND
+	mwh [label=mwh shape=ellipse]
+	mwh_AND -> mwh
+	dfp [label=dfp shape=ellipse]
+	rvd [label=rvd shape=ellipse]
+	mks_AND [label=AND color=lightgrey shape=box style=filled]
+	dfp -> mks_AND
+	rvd -> mks_AND
+	mks [label=mks shape=ellipse]
+	mks_AND -> mks
+	ftr [label=ftr shape=ellipse]
+	mqt [label=mqt shape=ellipse]
+	z30_XOR [label=XOR color=lightgrey shape=box style=filled]
+	ftr -> z30_XOR
+	mqt -> z30_XOR
+	z30 [label=z30 shape=ellipse]
+	z30_XOR -> z30
+	y05 [label=y05 shape=ellipse]
+	x05 [label=x05 shape=ellipse]
+	ptv_AND [label=AND color=lightgrey shape=box style=filled]
+	y05 -> ptv_AND
+	x05 -> ptv_AND
+	ptv [label=ptv shape=ellipse]
+	ptv_AND -> ptv
+	y26 [label=y26 shape=ellipse]
+	x26 [label=x26 shape=ellipse]
+	tbj_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y26 -> tbj_XOR
+	x26 -> tbj_XOR
+	tbj [label=tbj shape=ellipse]
+	tbj_XOR -> tbj
+	y34 [label=y34 shape=ellipse]
+	x34 [label=x34 shape=ellipse]
+	fhv_AND [label=AND color=lightgrey shape=box style=filled]
+	y34 -> fhv_AND
+	x34 -> fhv_AND
+	fhv [label=fhv shape=ellipse]
+	fhv_AND -> fhv
+	x28 [label=x28 shape=ellipse]
+	y28 [label=y28 shape=ellipse]
+	rqt_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x28 -> rqt_XOR
+	y28 -> rqt_XOR
+	rqt [label=rqt shape=ellipse]
+	rqt_XOR -> rqt
+	ppm [label=ppm shape=ellipse]
+	dds [label=dds shape=ellipse]
+	z22_XOR [label=XOR color=lightgrey shape=box style=filled]
+	ppm -> z22_XOR
+	dds -> z22_XOR
+	z22 [label=z22 shape=ellipse]
+	z22_XOR -> z22
+	whw [label=whw shape=ellipse]
+	grc [label=grc shape=ellipse]
+	spr_AND [label=AND color=lightgrey shape=box style=filled]
+	whw -> spr_AND
+	grc -> spr_AND
+	spr [label=spr shape=ellipse]
+	spr_AND -> spr
+	jjs [label=jjs shape=ellipse]
+	cfp [label=cfp shape=ellipse]
+	z36_XOR [label=XOR color=lightgrey shape=box style=filled]
+	jjs -> z36_XOR
+	cfp -> z36_XOR
+	z36 [label=z36 shape=ellipse]
+	z36_XOR -> z36
+	x19 [label=x19 shape=ellipse]
+	y19 [label=y19 shape=ellipse]
+	dnq_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x19 -> dnq_XOR
+	y19 -> dnq_XOR
+	dnq [label=dnq shape=ellipse]
+	dnq_XOR -> dnq
+	qjh [label=qjh shape=ellipse]
+	qns [label=qns shape=ellipse]
+	msm_OR [label=OR color=lightgrey shape=box style=filled]
+	qjh -> msm_OR
+	qns -> msm_OR
+	msm [label=msm shape=ellipse]
+	msm_OR -> msm
+	tmp [label=tmp shape=ellipse]
+	pvn [label=pvn shape=ellipse]
+	z16_XOR [label=XOR color=lightgrey shape=box style=filled]
+	tmp -> z16_XOR
+	pvn -> z16_XOR
+	z16 [label=z16 shape=ellipse]
+	z16_XOR -> z16
+	x08 [label=x08 shape=ellipse]
+	y08 [label=y08 shape=ellipse]
+	tpb_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x08 -> tpb_XOR
+	y08 -> tpb_XOR
+	tpb [label=tpb shape=ellipse]
+	tpb_XOR -> tpb
+	fkr [label=fkr shape=ellipse]
+	pvg [label=pvg shape=ellipse]
+	z04_XOR [label=XOR color=lightgrey shape=box style=filled]
+	fkr -> z04_XOR
+	pvg -> z04_XOR
+	z04 [label=z04 shape=ellipse]
+	z04_XOR -> z04
+	tpb [label=tpb shape=ellipse]
+	rgt [label=rgt shape=ellipse]
+	wvn_AND [label=AND color=lightgrey shape=box style=filled]
+	tpb -> wvn_AND
+	rgt -> wvn_AND
+	wvn [label=wvn shape=ellipse]
+	wvn_AND -> wvn
+	x21 [label=x21 shape=ellipse]
+	y21 [label=y21 shape=ellipse]
+	tvs_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x21 -> tvs_XOR
+	y21 -> tvs_XOR
+	tvs [label=tvs shape=ellipse]
+	tvs_XOR -> tvs
+	x03 [label=x03 shape=ellipse]
+	y03 [label=y03 shape=ellipse]
+	jqs_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x03 -> jqs_XOR
+	y03 -> jqs_XOR
+	jqs [label=jqs shape=ellipse]
+	jqs_XOR -> jqs
+	x02 [label=x02 shape=ellipse]
+	y02 [label=y02 shape=ellipse]
+	vjh_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x02 -> vjh_XOR
+	y02 -> vjh_XOR
+	vjh [label=vjh shape=ellipse]
+	vjh_XOR -> vjh
+	x25 [label=x25 shape=ellipse]
+	y25 [label=y25 shape=ellipse]
+	vgk_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x25 -> vgk_XOR
+	y25 -> vgk_XOR
+	vgk [label=vgk shape=ellipse]
+	vgk_XOR -> vgk
+	hqk [label=hqk shape=ellipse]
+	bvg [label=bvg shape=ellipse]
+	cfp_OR [label=OR color=lightgrey shape=box style=filled]
+	hqk -> cfp_OR
+	bvg -> cfp_OR
+	cfp [label=cfp shape=ellipse]
+	cfp_OR -> cfp
+	x42 [label=x42 shape=ellipse]
+	y42 [label=y42 shape=ellipse]
+	gwf_AND [label=AND color=lightgrey shape=box style=filled]
+	x42 -> gwf_AND
+	y42 -> gwf_AND
+	gwf [label=gwf shape=ellipse]
+	gwf_AND -> gwf
+	x30 [label=x30 shape=ellipse]
+	y30 [label=y30 shape=ellipse]
+	ftr_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x30 -> ftr_XOR
+	y30 -> ftr_XOR
+	ftr [label=ftr shape=ellipse]
+	ftr_XOR -> ftr
+	jrg [label=jrg shape=ellipse]
+	kgg [label=kgg shape=ellipse]
+	z27_XOR [label=XOR color=lightgrey shape=box style=filled]
+	jrg -> z27_XOR
+	kgg -> z27_XOR
+	z27 [label=z27 shape=ellipse]
+	z27_XOR -> z27
+	x17 [label=x17 shape=ellipse]
+	y17 [label=y17 shape=ellipse]
+	qch_AND [label=AND color=lightgrey shape=box style=filled]
+	x17 -> qch_AND
+	y17 -> qch_AND
+	qch [label=qch shape=ellipse]
+	qch_AND -> qch
+	tvs [label=tvs shape=ellipse]
+	dtm [label=dtm shape=ellipse]
+	rkj_AND [label=AND color=lightgrey shape=box style=filled]
+	tvs -> rkj_AND
+	dtm -> rkj_AND
+	rkj [label=rkj shape=ellipse]
+	rkj_AND -> rkj
+	rqt [label=rqt shape=ellipse]
+	cgr [label=cgr shape=ellipse]
+	z28_XOR [label=XOR color=lightgrey shape=box style=filled]
+	rqt -> z28_XOR
+	cgr -> z28_XOR
+	z28 [label=z28 shape=ellipse]
+	z28_XOR -> z28
+	y41 [label=y41 shape=ellipse]
+	x41 [label=x41 shape=ellipse]
+	jvt_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y41 -> jvt_XOR
+	x41 -> jvt_XOR
+	jvt [label=jvt shape=ellipse]
+	jvt_XOR -> jvt
+	y12 [label=y12 shape=ellipse]
+	x12 [label=x12 shape=ellipse]
+	sfq_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y12 -> sfq_XOR
+	x12 -> sfq_XOR
+	sfq [label=sfq shape=ellipse]
+	sfq_XOR -> sfq
+	gnf [label=gnf shape=ellipse]
+	gjb [label=gjb shape=ellipse]
+	rpv_OR [label=OR color=lightgrey shape=box style=filled]
+	gnf -> rpv_OR
+	gjb -> rpv_OR
+	rpv [label=rpv shape=ellipse]
+	rpv_OR -> rpv
+	y29 [label=y29 shape=ellipse]
+	x29 [label=x29 shape=ellipse]
+	grc_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y29 -> grc_XOR
+	x29 -> grc_XOR
+	grc [label=grc shape=ellipse]
+	grc_XOR -> grc
+	bck [label=bck shape=ellipse]
+	rdm [label=rdm shape=ellipse]
+	z01_XOR [label=XOR color=lightgrey shape=box style=filled]
+	bck -> z01_XOR
+	rdm -> z01_XOR
+	z01 [label=z01 shape=ellipse]
+	z01_XOR -> z01
+	y26 [label=y26 shape=ellipse]
+	x26 [label=x26 shape=ellipse]
+	jtr_AND [label=AND color=lightgrey shape=box style=filled]
+	y26 -> jtr_AND
+	x26 -> jtr_AND
+	jtr [label=jtr shape=ellipse]
+	jtr_AND -> jtr
+	x15 [label=x15 shape=ellipse]
+	y15 [label=y15 shape=ellipse]
+	prg_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x15 -> prg_XOR
+	y15 -> prg_XOR
+	prg [label=prg shape=ellipse]
+	prg_XOR -> prg
+	hwc [label=hwc shape=ellipse]
+	hsn [label=hsn shape=ellipse]
+	rnc_OR [label=OR color=lightgrey shape=box style=filled]
+	hwc -> rnc_OR
+	hsn -> rnc_OR
+	rnc [label=rnc shape=ellipse]
+	rnc_OR -> rnc
+	y36 [label=y36 shape=ellipse]
+	x36 [label=x36 shape=ellipse]
+	jjs_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y36 -> jjs_XOR
+	x36 -> jjs_XOR
+	jjs [label=jjs shape=ellipse]
+	jjs_XOR -> jjs
+	rgq [label=rgq shape=ellipse]
+	rfb [label=rfb shape=ellipse]
+	mwg_OR [label=OR color=lightgrey shape=box style=filled]
+	rgq -> mwg_OR
+	rfb -> mwg_OR
+	mwg [label=mwg shape=ellipse]
+	mwg_OR -> mwg
+	y27 [label=y27 shape=ellipse]
+	x27 [label=x27 shape=ellipse]
+	kgg_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y27 -> kgg_XOR
+	x27 -> kgg_XOR
+	kgg [label=kgg shape=ellipse]
+	kgg_XOR -> kgg
+	sdm [label=sdm shape=ellipse]
+	wfs [label=wfs shape=ellipse]
+	z38_XOR [label=XOR color=lightgrey shape=box style=filled]
+	sdm -> z38_XOR
+	wfs -> z38_XOR
+	z38 [label=z38 shape=ellipse]
+	z38_XOR -> z38
+	dgb [label=dgb shape=ellipse]
+	cgn [label=cgn shape=ellipse]
+	wbd_OR [label=OR color=lightgrey shape=box style=filled]
+	dgb -> wbd_OR
+	cgn -> wbd_OR
+	wbd [label=wbd shape=ellipse]
+	wbd_OR -> wbd
+	jrh [label=jrh shape=ellipse]
+	rnj [label=rnj shape=ellipse]
+	rmd_OR [label=OR color=lightgrey shape=box style=filled]
+	jrh -> rmd_OR
+	rnj -> rmd_OR
+	rmd [label=rmd shape=ellipse]
+	rmd_OR -> rmd
+	tcd [label=tcd shape=ellipse]
+	qkm [label=qkm shape=ellipse]
+	qwd_OR [label=OR color=lightgrey shape=box style=filled]
+	tcd -> qwd_OR
+	qkm -> qwd_OR
+	qwd [label=qwd shape=ellipse]
+	qwd_OR -> qwd
+	x37 [label=x37 shape=ellipse]
+	y37 [label=y37 shape=ellipse]
+	hmp_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x37 -> hmp_XOR
+	y37 -> hmp_XOR
+	hmp [label=hmp shape=ellipse]
+	hmp_XOR -> hmp
+	rmd [label=rmd shape=ellipse]
+	nmm [label=nmm shape=ellipse]
+	qhj_AND [label=AND color=lightgrey shape=box style=filled]
+	rmd -> qhj_AND
+	nmm -> qhj_AND
+	qhj [label=qhj shape=ellipse]
+	qhj_AND -> qhj
+	cjr [label=cjr shape=ellipse]
+	dsn [label=dsn shape=ellipse]
+	rpn_OR [label=OR color=lightgrey shape=box style=filled]
+	cjr -> rpn_OR
+	dsn -> rpn_OR
+	rpn [label=rpn shape=ellipse]
+	rpn_OR -> rpn
+	x09 [label=x09 shape=ellipse]
+	y09 [label=y09 shape=ellipse]
+	hwc_AND [label=AND color=lightgrey shape=box style=filled]
+	x09 -> hwc_AND
+	y09 -> hwc_AND
+	hwc [label=hwc shape=ellipse]
+	hwc_AND -> hwc
+	y14 [label=y14 shape=ellipse]
+	x14 [label=x14 shape=ellipse]
+	ghf_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y14 -> ghf_XOR
+	x14 -> ghf_XOR
+	ghf [label=ghf shape=ellipse]
+	ghf_XOR -> ghf
+	htt [label=htt shape=ellipse]
+	jvt [label=jvt shape=ellipse]
+	hkj_AND [label=AND color=lightgrey shape=box style=filled]
+	htt -> hkj_AND
+	jvt -> hkj_AND
+	hkj [label=hkj shape=ellipse]
+	hkj_AND -> hkj
+	x00 [label=x00 shape=ellipse]
+	y00 [label=y00 shape=ellipse]
+	z00_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x00 -> z00_XOR
+	y00 -> z00_XOR
+	z00 [label=z00 shape=ellipse]
+	z00_XOR -> z00
+	gdb [label=gdb shape=ellipse]
+	tgc [label=tgc shape=ellipse]
+	z05_XOR [label=XOR color=lightgrey shape=box style=filled]
+	gdb -> z05_XOR
+	tgc -> z05_XOR
+	z05 [label=z05 shape=ellipse]
+	z05_XOR -> z05
+	dhb [label=dhb shape=ellipse]
+	hmp [label=hmp shape=ellipse]
+	z37_XOR [label=XOR color=lightgrey shape=box style=filled]
+	dhb -> z37_XOR
+	hmp -> z37_XOR
+	z37 [label=z37 shape=ellipse]
+	z37_XOR -> z37
+	gdb [label=gdb shape=ellipse]
+	tgc [label=tgc shape=ellipse]
+	pws_AND [label=AND color=lightgrey shape=box style=filled]
+	gdb -> pws_AND
+	tgc -> pws_AND
+	pws [label=pws shape=ellipse]
+	pws_AND -> pws
+	qwd [label=qwd shape=ellipse]
+	scq [label=scq shape=ellipse]
+	z13_XOR [label=XOR color=lightgrey shape=box style=filled]
+	qwd -> z13_XOR
+	scq -> z13_XOR
+	z13 [label=z13 shape=ellipse]
+	z13_XOR -> z13
+	sfq [label=sfq shape=ellipse]
+	crn [label=crn shape=ellipse]
+	qkm_AND [label=AND color=lightgrey shape=box style=filled]
+	sfq -> qkm_AND
+	crn -> qkm_AND
+	qkm [label=qkm shape=ellipse]
+	qkm_AND -> qkm
+	y21 [label=y21 shape=ellipse]
+	x21 [label=x21 shape=ellipse]
+	gsd_AND [label=AND color=lightgrey shape=box style=filled]
+	y21 -> gsd_AND
+	x21 -> gsd_AND
+	gsd [label=gsd shape=ellipse]
+	gsd_AND -> gsd
+	wvp [label=wvp shape=ellipse]
+	pck [label=pck shape=ellipse]
+	hsn_AND [label=AND color=lightgrey shape=box style=filled]
+	wvp -> hsn_AND
+	pck -> hsn_AND
+	hsn [label=hsn shape=ellipse]
+	hsn_AND -> hsn
+	x06 [label=x06 shape=ellipse]
+	y06 [label=y06 shape=ellipse]
+	jnt_AND [label=AND color=lightgrey shape=box style=filled]
+	x06 -> jnt_AND
+	y06 -> jnt_AND
+	jnt [label=jnt shape=ellipse]
+	jnt_AND -> jnt
+	btb [label=btb shape=ellipse]
+	kvq [label=kvq shape=ellipse]
+	z33_XOR [label=XOR color=lightgrey shape=box style=filled]
+	btb -> z33_XOR
+	kvq -> z33_XOR
+	z33 [label=z33 shape=ellipse]
+	z33_XOR -> z33
+	x31 [label=x31 shape=ellipse]
+	y31 [label=y31 shape=ellipse]
+	bcb_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x31 -> bcb_XOR
+	y31 -> bcb_XOR
+	bcb [label=bcb shape=ellipse]
+	bcb_XOR -> bcb
+	y13 [label=y13 shape=ellipse]
+	x13 [label=x13 shape=ellipse]
+	fpf_AND [label=AND color=lightgrey shape=box style=filled]
+	y13 -> fpf_AND
+	x13 -> fpf_AND
+	fpf [label=fpf shape=ellipse]
+	fpf_AND -> fpf
+	kgm [label=kgm shape=ellipse]
+	mwn [label=mwn shape=ellipse]
+	qfr_AND [label=AND color=lightgrey shape=box style=filled]
+	kgm -> qfr_AND
+	mwn -> qfr_AND
+	qfr [label=qfr shape=ellipse]
+	qfr_AND -> qfr
+	cff [label=cff shape=ellipse]
+	fhv [label=fhv shape=ellipse]
+	kwj_OR [label=OR color=lightgrey shape=box style=filled]
+	cff -> kwj_OR
+	fhv -> kwj_OR
+	kwj [label=kwj shape=ellipse]
+	kwj_OR -> kwj
+	cmv [label=cmv shape=ellipse]
+	qch [label=qch shape=ellipse]
+	kjh_OR [label=OR color=lightgrey shape=box style=filled]
+	cmv -> kjh_OR
+	qch -> kjh_OR
+	kjh [label=kjh shape=ellipse]
+	kjh_OR -> kjh
+	y41 [label=y41 shape=ellipse]
+	x41 [label=x41 shape=ellipse]
+	fjp_AND [label=AND color=lightgrey shape=box style=filled]
+	y41 -> fjp_AND
+	x41 -> fjp_AND
+	fjp [label=fjp shape=ellipse]
+	fjp_AND -> fjp
+	rdm [label=rdm shape=ellipse]
+	bck [label=bck shape=ellipse]
+	dsn_AND [label=AND color=lightgrey shape=box style=filled]
+	rdm -> dsn_AND
+	bck -> dsn_AND
+	dsn [label=dsn shape=ellipse]
+	dsn_AND -> dsn
+	rmm [label=rmm shape=ellipse]
+	npc [label=npc shape=ellipse]
+	sdm_OR [label=OR color=lightgrey shape=box style=filled]
+	rmm -> sdm_OR
+	npc -> sdm_OR
+	sdm [label=sdm shape=ellipse]
+	sdm_OR -> sdm
+	y03 [label=y03 shape=ellipse]
+	x03 [label=x03 shape=ellipse]
+	nmv_AND [label=AND color=lightgrey shape=box style=filled]
+	y03 -> nmv_AND
+	x03 -> nmv_AND
+	nmv [label=nmv shape=ellipse]
+	nmv_AND -> nmv
+	fhf [label=fhf shape=ellipse]
+	trb [label=trb shape=ellipse]
+	z32_XOR [label=XOR color=lightgrey shape=box style=filled]
+	fhf -> z32_XOR
+	trb -> z32_XOR
+	z32 [label=z32 shape=ellipse]
+	z32_XOR -> z32
+	y40 [label=y40 shape=ellipse]
+	x40 [label=x40 shape=ellipse]
+	ktm_AND [label=AND color=lightgrey shape=box style=filled]
+	y40 -> ktm_AND
+	x40 -> ktm_AND
+	ktm [label=ktm shape=ellipse]
+	ktm_AND -> ktm
+	x11 [label=x11 shape=ellipse]
+	y11 [label=y11 shape=ellipse]
+	ghk_AND [label=AND color=lightgrey shape=box style=filled]
+	x11 -> ghk_AND
+	y11 -> ghk_AND
+	ghk [label=ghk shape=ellipse]
+	ghk_AND -> ghk
+	jdd [label=jdd shape=ellipse]
+	spr [label=spr shape=ellipse]
+	mqt_OR [label=OR color=lightgrey shape=box style=filled]
+	jdd -> mqt_OR
+	spr -> mqt_OR
+	mqt [label=mqt shape=ellipse]
+	mqt_OR -> mqt
+	dtm [label=dtm shape=ellipse]
+	tvs [label=tvs shape=ellipse]
+	z21_XOR [label=XOR color=lightgrey shape=box style=filled]
+	dtm -> z21_XOR
+	tvs -> z21_XOR
+	z21 [label=z21 shape=ellipse]
+	z21_XOR -> z21
+	msm [label=msm shape=ellipse]
+	tbj [label=tbj shape=ellipse]
+	z26_XOR [label=XOR color=lightgrey shape=box style=filled]
+	msm -> z26_XOR
+	tbj -> z26_XOR
+	z26 [label=z26 shape=ellipse]
+	z26_XOR -> z26
+	hkg [label=hkg shape=ellipse]
+	mtb [label=mtb shape=ellipse]
+	fsb_AND [label=AND color=lightgrey shape=box style=filled]
+	hkg -> fsb_AND
+	mtb -> fsb_AND
+	fsb [label=fsb shape=ellipse]
+	fsb_AND -> fsb
+	wpp [label=wpp shape=ellipse]
+	fpf [label=fpf shape=ellipse]
+	rvj_OR [label=OR color=lightgrey shape=box style=filled]
+	wpp -> rvj_OR
+	fpf -> rvj_OR
+	rvj [label=rvj shape=ellipse]
+	rvj_OR -> rvj
+	vgk [label=vgk shape=ellipse]
+	sjq [label=sjq shape=ellipse]
+	z25_XOR [label=XOR color=lightgrey shape=box style=filled]
+	vgk -> z25_XOR
+	sjq -> z25_XOR
+	z25 [label=z25 shape=ellipse]
+	z25_XOR -> z25
+	x01 [label=x01 shape=ellipse]
+	y01 [label=y01 shape=ellipse]
+	bck_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x01 -> bck_XOR
+	y01 -> bck_XOR
+	bck [label=bck shape=ellipse]
+	bck_XOR -> bck
+	nkh [label=nkh shape=ellipse]
+	kfb [label=kfb shape=ellipse]
+	z43_XOR [label=XOR color=lightgrey shape=box style=filled]
+	nkh -> z43_XOR
+	kfb -> z43_XOR
+	z43 [label=z43 shape=ellipse]
+	z43_XOR -> z43
+	hfd [label=hfd shape=ellipse]
+	bmn [label=bmn shape=ellipse]
+	qpp_OR [label=OR color=lightgrey shape=box style=filled]
+	hfd -> qpp_OR
+	bmn -> qpp_OR
+	qpp [label=qpp shape=ellipse]
+	qpp_OR -> qpp
+	x16 [label=x16 shape=ellipse]
+	y16 [label=y16 shape=ellipse]
+	pvn_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x16 -> pvn_XOR
+	y16 -> pvn_XOR
+	pvn [label=pvn shape=ellipse]
+	pvn_XOR -> pvn
+	x01 [label=x01 shape=ellipse]
+	y01 [label=y01 shape=ellipse]
+	cjr_AND [label=AND color=lightgrey shape=box style=filled]
+	x01 -> cjr_AND
+	y01 -> cjr_AND
+	cjr [label=cjr shape=ellipse]
+	cjr_AND -> cjr
+	scp [label=scp shape=ellipse]
+	vkd [label=vkd shape=ellipse]
+	vsv_AND [label=AND color=lightgrey shape=box style=filled]
+	scp -> vsv_AND
+	vkd -> vsv_AND
+	vsv [label=vsv shape=ellipse]
+	vsv_AND -> vsv
+	pns [label=pns shape=ellipse]
+	fhc [label=fhc shape=ellipse]
+	dbr_AND [label=AND color=lightgrey shape=box style=filled]
+	pns -> dbr_AND
+	fhc -> dbr_AND
+	dbr [label=dbr shape=ellipse]
+	dbr_AND -> dbr
+	msm [label=msm shape=ellipse]
+	tbj [label=tbj shape=ellipse]
+	dtr_AND [label=AND color=lightgrey shape=box style=filled]
+	msm -> dtr_AND
+	tbj -> dtr_AND
+	dtr [label=dtr shape=ellipse]
+	dtr_AND -> dtr
+	nrv [label=nrv shape=ellipse]
+	kjh [label=kjh shape=ellipse]
+	gjb_AND [label=AND color=lightgrey shape=box style=filled]
+	nrv -> gjb_AND
+	kjh -> gjb_AND
+	gjb [label=gjb shape=ellipse]
+	gjb_AND -> gjb
+	ggt [label=ggt shape=ellipse]
+	ftg [label=ftg shape=ellipse]
+	pdp_AND [label=AND color=lightgrey shape=box style=filled]
+	ggt -> pdp_AND
+	ftg -> pdp_AND
+	pdp [label=pdp shape=ellipse]
+	pdp_AND -> pdp
+	y38 [label=y38 shape=ellipse]
+	x38 [label=x38 shape=ellipse]
+	rgq_AND [label=AND color=lightgrey shape=box style=filled]
+	y38 -> rgq_AND
+	x38 -> rgq_AND
+	rgq [label=rgq shape=ellipse]
+	rgq_AND -> rgq
+	rnc [label=rnc shape=ellipse]
+	vms [label=vms shape=ellipse]
+	z10_XOR [label=XOR color=lightgrey shape=box style=filled]
+	rnc -> z10_XOR
+	vms -> z10_XOR
+	z10 [label=z10 shape=ellipse]
+	z10_XOR -> z10
+	y44 [label=y44 shape=ellipse]
+	x44 [label=x44 shape=ellipse]
+	cdk_AND [label=AND color=lightgrey shape=box style=filled]
+	y44 -> cdk_AND
+	x44 -> cdk_AND
+	cdk [label=cdk shape=ellipse]
+	cdk_AND -> cdk
+	y10 [label=y10 shape=ellipse]
+	x10 [label=x10 shape=ellipse]
+	rnj_AND [label=AND color=lightgrey shape=box style=filled]
+	y10 -> rnj_AND
+	x10 -> rnj_AND
+	rnj [label=rnj shape=ellipse]
+	rnj_AND -> rnj
+	ggp [label=ggp shape=ellipse]
+	wgc [label=wgc shape=ellipse]
+	gdb_OR [label=OR color=lightgrey shape=box style=filled]
+	ggp -> gdb_OR
+	wgc -> gdb_OR
+	gdb [label=gdb shape=ellipse]
+	gdb_OR -> gdb
+	vnb [label=vnb shape=ellipse]
+	qnd [label=qnd shape=ellipse]
+	ftg_OR [label=OR color=lightgrey shape=box style=filled]
+	vnb -> ftg_OR
+	qnd -> ftg_OR
+	ftg [label=ftg shape=ellipse]
+	ftg_OR -> ftg
+	y37 [label=y37 shape=ellipse]
+	x37 [label=x37 shape=ellipse]
+	npc_AND [label=AND color=lightgrey shape=box style=filled]
+	y37 -> npc_AND
+	x37 -> npc_AND
+	npc [label=npc shape=ellipse]
+	npc_AND -> npc
+	dds [label=dds shape=ellipse]
+	ppm [label=ppm shape=ellipse]
+	vnb_AND [label=AND color=lightgrey shape=box style=filled]
+	dds -> vnb_AND
+	ppm -> vnb_AND
+	vnb [label=vnb shape=ellipse]
+	vnb_AND -> vnb
+	cfp [label=cfp shape=ellipse]
+	jjs [label=jjs shape=ellipse]
+	krr_AND [label=AND color=lightgrey shape=box style=filled]
+	cfp -> krr_AND
+	jjs -> krr_AND
+	krr [label=krr shape=ellipse]
+	krr_AND -> krr
+	y32 [label=y32 shape=ellipse]
+	x32 [label=x32 shape=ellipse]
+	fsh_AND [label=AND color=lightgrey shape=box style=filled]
+	y32 -> fsh_AND
+	x32 -> fsh_AND
+	fsh [label=fsh shape=ellipse]
+	fsh_AND -> fsh
+	mqt [label=mqt shape=ellipse]
+	ftr [label=ftr shape=ellipse]
+	qhr_AND [label=AND color=lightgrey shape=box style=filled]
+	mqt -> qhr_AND
+	ftr -> qhr_AND
+	qhr [label=qhr shape=ellipse]
+	qhr_AND -> qhr
+	y23 [label=y23 shape=ellipse]
+	x23 [label=x23 shape=ellipse]
+	ggt_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y23 -> ggt_XOR
+	x23 -> ggt_XOR
+	ggt [label=ggt shape=ellipse]
+	ggt_XOR -> ggt
+	y18 [label=y18 shape=ellipse]
+	x18 [label=x18 shape=ellipse]
+	nrv_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y18 -> nrv_XOR
+	x18 -> nrv_XOR
+	nrv [label=nrv shape=ellipse]
+	nrv_XOR -> nrv
+	sjq [label=sjq shape=ellipse]
+	vgk [label=vgk shape=ellipse]
+	qns_AND [label=AND color=lightgrey shape=box style=filled]
+	sjq -> qns_AND
+	vgk -> qns_AND
+	qns [label=qns shape=ellipse]
+	qns_AND -> qns
+	y19 [label=y19 shape=ellipse]
+	x19 [label=x19 shape=ellipse]
+	sqv_AND [label=AND color=lightgrey shape=box style=filled]
+	y19 -> sqv_AND
+	x19 -> sqv_AND
+	sqv [label=sqv shape=ellipse]
+	sqv_AND -> sqv
+	gwf [label=gwf shape=ellipse]
+	vrf [label=vrf shape=ellipse]
+	nkh_OR [label=OR color=lightgrey shape=box style=filled]
+	gwf -> nkh_OR
+	vrf -> nkh_OR
+	nkh [label=nkh shape=ellipse]
+	nkh_OR -> nkh
+	x39 [label=x39 shape=ellipse]
+	y39 [label=y39 shape=ellipse]
+	prq_AND [label=AND color=lightgrey shape=box style=filled]
+	x39 -> prq_AND
+	y39 -> prq_AND
+	prq [label=prq shape=ellipse]
+	prq_AND -> prq
+	y09 [label=y09 shape=ellipse]
+	x09 [label=x09 shape=ellipse]
+	wvp_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y09 -> wvp_XOR
+	x09 -> wvp_XOR
+	wvp [label=wvp shape=ellipse]
+	wvp_XOR -> wvp
+	mtb [label=mtb shape=ellipse]
+	hkg [label=hkg shape=ellipse]
+	z40_XOR [label=XOR color=lightgrey shape=box style=filled]
+	mtb -> z40_XOR
+	hkg -> z40_XOR
+	z40 [label=z40 shape=ellipse]
+	z40_XOR -> z40
+	rmd [label=rmd shape=ellipse]
+	nmm [label=nmm shape=ellipse]
+	z11_XOR [label=XOR color=lightgrey shape=box style=filled]
+	rmd -> z11_XOR
+	nmm -> z11_XOR
+	z11 [label=z11 shape=ellipse]
+	z11_XOR -> z11
+	x06 [label=x06 shape=ellipse]
+	y06 [label=y06 shape=ellipse]
+	vkd_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x06 -> vkd_XOR
+	y06 -> vkd_XOR
+	vkd [label=vkd shape=ellipse]
+	vkd_XOR -> vkd
+	gvs [label=gvs shape=ellipse]
+	cwj [label=cwj shape=ellipse]
+	cmv_AND [label=AND color=lightgrey shape=box style=filled]
+	gvs -> cmv_AND
+	cwj -> cmv_AND
+	cmv [label=cmv shape=ellipse]
+	cmv_AND -> cmv
+	nrv [label=nrv shape=ellipse]
+	kjh [label=kjh shape=ellipse]
+	z18_XOR [label=XOR color=lightgrey shape=box style=filled]
+	nrv -> z18_XOR
+	kjh -> z18_XOR
+	z18 [label=z18 shape=ellipse]
+	z18_XOR -> z18
+	y29 [label=y29 shape=ellipse]
+	x29 [label=x29 shape=ellipse]
+	jdd_AND [label=AND color=lightgrey shape=box style=filled]
+	y29 -> jdd_AND
+	x29 -> jdd_AND
+	jdd [label=jdd shape=ellipse]
+	jdd_AND -> jdd
+	rgt [label=rgt shape=ellipse]
+	tpb [label=tpb shape=ellipse]
+	z08_XOR [label=XOR color=lightgrey shape=box style=filled]
+	rgt -> z08_XOR
+	tpb -> z08_XOR
+	z08 [label=z08 shape=ellipse]
+	z08_XOR -> z08
+	qpp [label=qpp shape=ellipse]
+	jqs [label=jqs shape=ellipse]
+	shn_AND [label=AND color=lightgrey shape=box style=filled]
+	qpp -> shn_AND
+	jqs -> shn_AND
+	shn [label=shn shape=ellipse]
+	shn_AND -> shn
+	htt [label=htt shape=ellipse]
+	jvt [label=jvt shape=ellipse]
+	z41_XOR [label=XOR color=lightgrey shape=box style=filled]
+	htt -> z41_XOR
+	jvt -> z41_XOR
+	z41 [label=z41 shape=ellipse]
+	z41_XOR -> z41
+	dfp [label=dfp shape=ellipse]
+	rvd [label=rvd shape=ellipse]
+	z44_XOR [label=XOR color=lightgrey shape=box style=filled]
+	dfp -> z44_XOR
+	rvd -> z44_XOR
+	z44 [label=z44 shape=ellipse]
+	z44_XOR -> z44
+	y43 [label=y43 shape=ellipse]
+	x43 [label=x43 shape=ellipse]
+	ftw_AND [label=AND color=lightgrey shape=box style=filled]
+	y43 -> ftw_AND
+	x43 -> ftw_AND
+	ftw [label=ftw shape=ellipse]
+	ftw_AND -> ftw
+	y30 [label=y30 shape=ellipse]
+	x30 [label=x30 shape=ellipse]
+	sjd_AND [label=AND color=lightgrey shape=box style=filled]
+	y30 -> sjd_AND
+	x30 -> sjd_AND
+	sjd [label=sjd shape=ellipse]
+	sjd_AND -> sjd
+	qrh [label=qrh shape=ellipse]
+	mbg [label=mbg shape=ellipse]
+	z24_XOR [label=XOR color=lightgrey shape=box style=filled]
+	qrh -> z24_XOR
+	mbg -> z24_XOR
+	z24 [label=z24 shape=ellipse]
+	z24_XOR -> z24
+	pck [label=pck shape=ellipse]
+	wvp [label=wvp shape=ellipse]
+	z09_XOR [label=XOR color=lightgrey shape=box style=filled]
+	pck -> z09_XOR
+	wvp -> z09_XOR
+	z09 [label=z09 shape=ellipse]
+	z09_XOR -> z09
+	grc [label=grc shape=ellipse]
+	whw [label=whw shape=ellipse]
+	z29_XOR [label=XOR color=lightgrey shape=box style=filled]
+	grc -> z29_XOR
+	whw -> z29_XOR
+	z29 [label=z29 shape=ellipse]
+	z29_XOR -> z29
+	x27 [label=x27 shape=ellipse]
+	y27 [label=y27 shape=ellipse]
+	dbk_AND [label=AND color=lightgrey shape=box style=filled]
+	x27 -> dbk_AND
+	y27 -> dbk_AND
+	dbk [label=dbk shape=ellipse]
+	dbk_AND -> dbk
+	mmd [label=mmd shape=ellipse]
+	krr [label=krr shape=ellipse]
+	dhb_OR [label=OR color=lightgrey shape=box style=filled]
+	mmd -> dhb_OR
+	krr -> dhb_OR
+	dhb [label=dhb shape=ellipse]
+	dhb_OR -> dhb
+	sfq [label=sfq shape=ellipse]
+	crn [label=crn shape=ellipse]
+	z12_XOR [label=XOR color=lightgrey shape=box style=filled]
+	sfq -> z12_XOR
+	crn -> z12_XOR
+	z12 [label=z12 shape=ellipse]
+	z12_XOR -> z12
+	y04 [label=y04 shape=ellipse]
+	x04 [label=x04 shape=ellipse]
+	wgc_AND [label=AND color=lightgrey shape=box style=filled]
+	y04 -> wgc_AND
+	x04 -> wgc_AND
+	wgc [label=wgc shape=ellipse]
+	wgc_AND -> wgc
+	y38 [label=y38 shape=ellipse]
+	x38 [label=x38 shape=ellipse]
+	wfs_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y38 -> wfs_XOR
+	x38 -> wfs_XOR
+	wfs [label=wfs shape=ellipse]
+	wfs_XOR -> wfs
+	y04 [label=y04 shape=ellipse]
+	x04 [label=x04 shape=ellipse]
+	fkr_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y04 -> fkr_XOR
+	x04 -> fkr_XOR
+	fkr [label=fkr shape=ellipse]
+	fkr_XOR -> fkr
+	sjd [label=sjd shape=ellipse]
+	qhr [label=qhr shape=ellipse]
+	bmp_OR [label=OR color=lightgrey shape=box style=filled]
+	sjd -> bmp_OR
+	qhr -> bmp_OR
+	bmp [label=bmp shape=ellipse]
+	bmp_OR -> bmp
+	ggt [label=ggt shape=ellipse]
+	ftg [label=ftg shape=ellipse]
+	z23_XOR [label=XOR color=lightgrey shape=box style=filled]
+	ggt -> z23_XOR
+	ftg -> z23_XOR
+	z23 [label=z23 shape=ellipse]
+	z23_XOR -> z23
+	x05 [label=x05 shape=ellipse]
+	y05 [label=y05 shape=ellipse]
+	tgc_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x05 -> tgc_XOR
+	y05 -> tgc_XOR
+	tgc [label=tgc shape=ellipse]
+	tgc_XOR -> tgc
+	y02 [label=y02 shape=ellipse]
+	x02 [label=x02 shape=ellipse]
+	hfd_AND [label=AND color=lightgrey shape=box style=filled]
+	y02 -> hfd_AND
+	x02 -> hfd_AND
+	hfd [label=hfd shape=ellipse]
+	hfd_AND -> hfd
+	mwn [label=mwn shape=ellipse]
+	kgm [label=kgm shape=ellipse]
+	z20_XOR [label=XOR color=lightgrey shape=box style=filled]
+	mwn -> z20_XOR
+	kgm -> z20_XOR
+	z20 [label=z20 shape=ellipse]
+	z20_XOR -> z20
+	dbr [label=dbr shape=ellipse]
+	tsr [label=tsr shape=ellipse]
+	rgt_OR [label=OR color=lightgrey shape=box style=filled]
+	dbr -> rgt_OR
+	tsr -> rgt_OR
+	rgt [label=rgt shape=ellipse]
+	rgt_OR -> rgt
+	x07 [label=x07 shape=ellipse]
+	y07 [label=y07 shape=ellipse]
+	pns_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x07 -> pns_XOR
+	y07 -> pns_XOR
+	pns [label=pns shape=ellipse]
+	pns_XOR -> pns
+	qfr [label=qfr shape=ellipse]
+	vgd [label=vgd shape=ellipse]
+	dtm_OR [label=OR color=lightgrey shape=box style=filled]
+	qfr -> dtm_OR
+	vgd -> dtm_OR
+	dtm [label=dtm shape=ellipse]
+	dtm_OR -> dtm
+	y18 [label=y18 shape=ellipse]
+	x18 [label=x18 shape=ellipse]
+	gnf_AND [label=AND color=lightgrey shape=box style=filled]
+	y18 -> gnf_AND
+	x18 -> gnf_AND
+	gnf [label=gnf shape=ellipse]
+	gnf_AND -> gnf
+	x15 [label=x15 shape=ellipse]
+	y15 [label=y15 shape=ellipse]
+	rtq_AND [label=AND color=lightgrey shape=box style=filled]
+	x15 -> rtq_AND
+	y15 -> rtq_AND
+	rtq [label=rtq shape=ellipse]
+	rtq_AND -> rtq
+	dnq [label=dnq shape=ellipse]
+	rpv [label=rpv shape=ellipse]
+	wmm_AND [label=AND color=lightgrey shape=box style=filled]
+	dnq -> wmm_AND
+	rpv -> wmm_AND
+	wmm [label=wmm shape=ellipse]
+	wmm_AND -> wmm
+	gnk [label=gnk shape=ellipse]
+	rtq [label=rtq shape=ellipse]
+	tmp_OR [label=OR color=lightgrey shape=box style=filled]
+	gnk -> tmp_OR
+	rtq -> tmp_OR
+	tmp [label=tmp shape=ellipse]
+	tmp_OR -> tmp
+	y35 [label=y35 shape=ellipse]
+	x35 [label=x35 shape=ellipse]
+	hqk_AND [label=AND color=lightgrey shape=box style=filled]
+	y35 -> hqk_AND
+	x35 -> hqk_AND
+	hqk [label=hqk shape=ellipse]
+	hqk_AND -> hqk
+	x07 [label=x07 shape=ellipse]
+	y07 [label=y07 shape=ellipse]
+	tsr_AND [label=AND color=lightgrey shape=box style=filled]
+	x07 -> tsr_AND
+	y07 -> tsr_AND
+	tsr [label=tsr shape=ellipse]
+	tsr_AND -> tsr
+	rvj [label=rvj shape=ellipse]
+	ghf [label=ghf shape=ellipse]
+	dgm_AND [label=AND color=lightgrey shape=box style=filled]
+	rvj -> dgm_AND
+	ghf -> dgm_AND
+	dgm [label=dgm shape=ellipse]
+	dgm_AND -> dgm
+	x25 [label=x25 shape=ellipse]
+	y25 [label=y25 shape=ellipse]
+	qjh_AND [label=AND color=lightgrey shape=box style=filled]
+	x25 -> qjh_AND
+	y25 -> qjh_AND
+	qjh [label=qjh shape=ellipse]
+	qjh_AND -> qjh
+	kvq [label=kvq shape=ellipse]
+	btb [label=btb shape=ellipse]
+	cgn_AND [label=AND color=lightgrey shape=box style=filled]
+	kvq -> cgn_AND
+	btb -> cgn_AND
+	cgn [label=cgn shape=ellipse]
+	cgn_AND -> cgn
+	kwj [label=kwj shape=ellipse]
+	bhv [label=bhv shape=ellipse]
+	z35_XOR [label=XOR color=lightgrey shape=box style=filled]
+	kwj -> z35_XOR
+	bhv -> z35_XOR
+	z35 [label=z35 shape=ellipse]
+	z35_XOR -> z35
+	jkn [label=jkn shape=ellipse]
+	prq [label=prq shape=ellipse]
+	mtb_OR [label=OR color=lightgrey shape=box style=filled]
+	jkn -> mtb_OR
+	prq -> mtb_OR
+	mtb [label=mtb shape=ellipse]
+	mtb_OR -> mtb
+	qwd [label=qwd shape=ellipse]
+	scq [label=scq shape=ellipse]
+	wpp_AND [label=AND color=lightgrey shape=box style=filled]
+	qwd -> wpp_AND
+	scq -> wpp_AND
+	wpp [label=wpp shape=ellipse]
+	wpp_AND -> wpp
+	y24 [label=y24 shape=ellipse]
+	x24 [label=x24 shape=ellipse]
+	qrh_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y24 -> qrh_XOR
+	x24 -> qrh_XOR
+	qrh [label=qrh shape=ellipse]
+	qrh_XOR -> qrh
+	prg [label=prg shape=ellipse]
+	kvn [label=kvn shape=ellipse]
+	gnk_AND [label=AND color=lightgrey shape=box style=filled]
+	prg -> gnk_AND
+	kvn -> gnk_AND
+	gnk [label=gnk shape=ellipse]
+	gnk_AND -> gnk
+	y28 [label=y28 shape=ellipse]
+	x28 [label=x28 shape=ellipse]
+	cnw_AND [label=AND color=lightgrey shape=box style=filled]
+	y28 -> cnw_AND
+	x28 -> cnw_AND
+	cnw [label=cnw shape=ellipse]
+	cnw_AND -> cnw
+	x13 [label=x13 shape=ellipse]
+	y13 [label=y13 shape=ellipse]
+	scq_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x13 -> scq_XOR
+	y13 -> scq_XOR
+	scq [label=scq shape=ellipse]
+	scq_XOR -> scq
+	wrp [label=wrp shape=ellipse]
+	dgv [label=dgv shape=ellipse]
+	sjq_OR [label=OR color=lightgrey shape=box style=filled]
+	wrp -> sjq_OR
+	dgv -> sjq_OR
+	sjq [label=sjq shape=ellipse]
+	sjq_OR -> sjq
+	vkd [label=vkd shape=ellipse]
+	scp [label=scp shape=ellipse]
+	z06_XOR [label=XOR color=lightgrey shape=box style=filled]
+	vkd -> z06_XOR
+	scp -> z06_XOR
+	z06 [label=z06 shape=ellipse]
+	z06_XOR -> z06
+	mwh [label=mwh shape=ellipse]
+	pdp [label=pdp shape=ellipse]
+	mbg_OR [label=OR color=lightgrey shape=box style=filled]
+	mwh -> mbg_OR
+	pdp -> mbg_OR
+	mbg [label=mbg shape=ellipse]
+	mbg_OR -> mbg
+	y00 [label=y00 shape=ellipse]
+	x00 [label=x00 shape=ellipse]
+	rdm_AND [label=AND color=lightgrey shape=box style=filled]
+	y00 -> rdm_AND
+	x00 -> rdm_AND
+	rdm [label=rdm shape=ellipse]
+	rdm_AND -> rdm
+	ghf [label=ghf shape=ellipse]
+	rvj [label=rvj shape=ellipse]
+	z14_XOR [label=XOR color=lightgrey shape=box style=filled]
+	ghf -> z14_XOR
+	rvj -> z14_XOR
+	z14 [label=z14 shape=ellipse]
+	z14_XOR -> z14
+	y11 [label=y11 shape=ellipse]
+	x11 [label=x11 shape=ellipse]
+	nmm_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y11 -> nmm_XOR
+	x11 -> nmm_XOR
+	nmm [label=nmm shape=ellipse]
+	nmm_XOR -> nmm
+	bhv [label=bhv shape=ellipse]
+	kwj [label=kwj shape=ellipse]
+	bvg_AND [label=AND color=lightgrey shape=box style=filled]
+	bhv -> bvg_AND
+	kwj -> bvg_AND
+	bvg [label=bvg shape=ellipse]
+	bvg_AND -> bvg
+	dbk [label=dbk shape=ellipse]
+	bwq [label=bwq shape=ellipse]
+	cgr_OR [label=OR color=lightgrey shape=box style=filled]
+	dbk -> cgr_OR
+	bwq -> cgr_OR
+	cgr [label=cgr shape=ellipse]
+	cgr_OR -> cgr
+	bmp [label=bmp shape=ellipse]
+	bcb [label=bcb shape=ellipse]
+	vvs_AND [label=AND color=lightgrey shape=box style=filled]
+	bmp -> vvs_AND
+	bcb -> vvs_AND
+	vvs [label=vvs shape=ellipse]
+	vvs_AND -> vvs
+	fhc [label=fhc shape=ellipse]
+	pns [label=pns shape=ellipse]
+	z07_XOR [label=XOR color=lightgrey shape=box style=filled]
+	fhc -> z07_XOR
+	pns -> z07_XOR
+	z07 [label=z07 shape=ellipse]
+	z07_XOR -> z07
+	y10 [label=y10 shape=ellipse]
+	x10 [label=x10 shape=ellipse]
+	vms_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y10 -> vms_XOR
+	x10 -> vms_XOR
+	vms [label=vms shape=ellipse]
+	vms_XOR -> vms
+	y16 [label=y16 shape=ellipse]
+	x16 [label=x16 shape=ellipse]
+	kbq_AND [label=AND color=lightgrey shape=box style=filled]
+	y16 -> kbq_AND
+	x16 -> kbq_AND
+	kbq [label=kbq shape=ellipse]
+	kbq_AND -> kbq
+	y42 [label=y42 shape=ellipse]
+	x42 [label=x42 shape=ellipse]
+	hgv_XOR [label=XOR color=lightgrey shape=box style=filled]
+	y42 -> hgv_XOR
+	x42 -> hgv_XOR
+	hgv [label=hgv shape=ellipse]
+	hgv_XOR -> hgv
+	rnc [label=rnc shape=ellipse]
+	vms [label=vms shape=ellipse]
+	jrh_AND [label=AND color=lightgrey shape=box style=filled]
+	rnc -> jrh_AND
+	vms -> jrh_AND
+	jrh [label=jrh shape=ellipse]
+	jrh_AND -> jrh
+	x36 [label=x36 shape=ellipse]
+	y36 [label=y36 shape=ellipse]
+	mmd_AND [label=AND color=lightgrey shape=box style=filled]
+	x36 -> mmd_AND
+	y36 -> mmd_AND
+	mmd [label=mmd shape=ellipse]
+	mmd_AND -> mmd
+	wfs [label=wfs shape=ellipse]
+	sdm [label=sdm shape=ellipse]
+	rfb_AND [label=AND color=lightgrey shape=box style=filled]
+	wfs -> rfb_AND
+	sdm -> rfb_AND
+	rfb [label=rfb shape=ellipse]
+	rfb_AND -> rfb
+	x43 [label=x43 shape=ellipse]
+	y43 [label=y43 shape=ellipse]
+	kfb_XOR [label=XOR color=lightgrey shape=box style=filled]
+	x43 -> kfb_XOR
+	y43 -> kfb_XOR
+	kfb [label=kfb shape=ellipse]
+	kfb_XOR -> kfb
+	rqt [label=rqt shape=ellipse]
+	cgr [label=cgr shape=ellipse]
+	mph_AND [label=AND color=lightgrey shape=box style=filled]
+	rqt -> mph_AND
+	cgr -> mph_AND
+	mph [label=mph shape=ellipse]
+	mph_AND -> mph
+	y31 [label=y31 shape=ellipse]
+	x31 [label=x31 shape=ellipse]
+	kkq_AND [label=AND color=lightgrey shape=box style=filled]
+	y31 -> kkq_AND
+	x31 -> kkq_AND
+	kkq [label=kkq shape=ellipse]
+	kkq_AND -> kkq
+	x12 [label=x12 shape=ellipse]
+	y12 [label=y12 shape=ellipse]
+	tcd_AND [label=AND color=lightgrey shape=box style=filled]
+	x12 -> tcd_AND
+	y12 -> tcd_AND
+	tcd [label=tcd shape=ellipse]
+	tcd_AND -> tcd
+	x24 [label=x24 shape=ellipse]
+	y24 [label=y24 shape=ellipse]
+	wrp_AND [label=AND color=lightgrey shape=box style=filled]
+	x24 -> wrp_AND
+	y24 -> wrp_AND
+	wrp [label=wrp shape=ellipse]
+	wrp_AND -> wrp
+	ptv [label=ptv shape=ellipse]
+	pws [label=pws shape=ellipse]
+	scp_OR [label=OR color=lightgrey shape=box style=filled]
+	ptv -> scp_OR
+	pws -> scp_OR
+	scp [label=scp shape=ellipse]
+	scp_OR -> scp
+	mbg [label=mbg shape=ellipse]
+	qrh [label=qrh shape=ellipse]
+	dgv_AND [label=AND color=lightgrey shape=box style=filled]
+	mbg -> dgv_AND
+	qrh -> dgv_AND
+	dgv [label=dgv shape=ellipse]
+	dgv_AND -> dgv
+	hmp [label=hmp shape=ellipse]
+	dhb [label=dhb shape=ellipse]
+	rmm_AND [label=AND color=lightgrey shape=box style=filled]
+	hmp -> rmm_AND
+	dhb -> rmm_AND
+	rmm [label=rmm shape=ellipse]
+	rmm_AND -> rmm
+	wvn [label=wvn shape=ellipse]
+	rmf [label=rmf shape=ellipse]
+	pck_OR [label=OR color=lightgrey shape=box style=filled]
+	wvn -> pck_OR
+	rmf -> pck_OR
+	pck [label=pck shape=ellipse]
+	pck_OR -> pck
+	cnw [label=cnw shape=ellipse]
+	mph [label=mph shape=ellipse]
+	whw_OR [label=OR color=lightgrey shape=box style=filled]
+	cnw -> whw_OR
+	mph -> whw_OR
+	whw [label=whw shape=ellipse]
+	whw_OR -> whw
+	wbd [label=wbd shape=ellipse]
+	mbr [label=mbr shape=ellipse]
+	cff_AND [label=AND color=lightgrey shape=box style=filled]
+	wbd -> cff_AND
+	mbr -> cff_AND
+	cff [label=cff shape=ellipse]
+	cff_AND -> cff
+	jqs [label=jqs shape=ellipse]
+	qpp [label=qpp shape=ellipse]
+	z03_XOR [label=XOR color=lightgrey shape=box style=filled]
+	jqs -> z03_XOR
+	qpp -> z03_XOR
+	z03 [label=z03 shape=ellipse]
+	z03_XOR -> z03
+}

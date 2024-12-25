@@ -184,7 +184,8 @@ def solve_part2(
             print(f"Difference at {idx+1}")
             break
 
-    for shift in range(22, 25):
+    # for shift in range(22, 25):
+    for shift in range(45):
         test = values.copy()
         test_x_in = 1 << shift
         test_y_in = 1 << shift
@@ -213,9 +214,10 @@ def solve_part2(
             print(f"  {test_z}")
 
     dp_tree = build_dependency_tree(operations)
-    # visualize_dependency_tree(dp_tree, "day24")
+    visualize_dependency_tree(dp_tree, "day24")
 
     # suspect = {}
+    print(f"\n=== Suspects ===")
     for k, (a, op, b) in dp_tree.items():
         if k.startswith("z") and op != "XOR":
             # suspect[k] = (a, op, b)
