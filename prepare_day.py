@@ -8,10 +8,10 @@ Usage:
 If no year or day are provided, defaults to the current year and day.
 """
 
-import os
 import argparse
-from datetime import datetime
 import logging
+import os
+from datetime import datetime
 
 __TEMPLATE__ = '''"""Solve Advent of Code {year}, day {day}
 
@@ -28,21 +28,37 @@ def get_data(filename: str) -> list[str]:
     return content
 
 
-def solve():
+def solve_part1(the_data: list[str]) -> int:
     """Solve the puzzle."""
-    solution1 = 0
-    solution2 = 0
+    solution = 0
 
-    # the_data = get_data("{data_dir}day{day:02}.data")
-    the_data = get_data("{data_dir}day{day:02}.test")
 
-    return solution1, solution2
+    return solution
+
+
+def solve_part2(the_data: list[str]) -> int:
+    """Solve the puzzle."""
+    solution = 0
+
+
+    return solution
 
 
 if __name__ == "__main__":
+    # the_data = get_data("{data_dir}day{day:02}.data")
+    the_data = get_data("{data_dir}day{day:02}.test")
+
+    # Solve part 1
     time_start = time.perf_counter()
-    solution1, solution2 = solve()
-    print(f"Solved in {{time.perf_counter()-time_start:.5f}} Sec.")
+    solution1 = solve_part1(the_data)
+    print(f"Part 1 ({{solution1}}) solved in {{time.perf_counter()-time_start:.5f}} Sec.")
+
+    # solve part 1
+    time_start = time.perf_counter()
+    solution2 = solve_part2(the_data)
+    print(f"Part 2 ({{solution2}}) solved in {{time.perf_counter()-time_start:.5f}} Sec.")
+
+    # Finally
     print(f"{{solution1=}} | {{solution2=}}")
 '''
 
