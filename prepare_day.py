@@ -43,10 +43,12 @@ def solve_part2(the_data: list[str]) -> int:
 
     return solution
 
-
-if __name__ == "__main__":
-    # the_data = get_data("{data_dir}day{day:02}.data")
-    the_data = get_data("{data_dir}day{day:02}.test")
+def main(test=False):
+    """Use main function to avoid global variables"""
+    if test:
+        the_data = get_data("{data_dir}day{day:02}.test")
+    else:
+        the_data = get_data("{data_dir}day{day:02}.data")
 
     # Solve part 1
     time_start = time.perf_counter()
@@ -60,6 +62,9 @@ if __name__ == "__main__":
 
     # Finally
     print(f"{{solution1=}} | {{solution2=}}")
+
+if __name__ == "__main__":
+    main(test=True)
 '''
 
 
