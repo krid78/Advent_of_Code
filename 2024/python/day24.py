@@ -5,6 +5,7 @@ https://adventofcode.com/2024/day/24
 
 import re
 import time
+from typing import Dict, List, Tuple, Set
 
 
 def get_data(filename: str) -> list[str]:
@@ -64,7 +65,7 @@ def name_to_binstr(values: dict[str, int], letter: str) -> str:
     for k in sorted(values):
         if k.startswith(letter):
             binary = str(values[k]) + binary
-    print(f"{binary=}")
+    print(f"{letter=}: {binary=}")
     return binary
 
 
@@ -96,6 +97,65 @@ def solve_part1(
     return solution
 
 
+def build_dependency_tree(
+    gates: List[Tuple[str, str, str]]
+) -> Dict[str, List[Tuple[str, str, str]]]:
+    """
+    Build a dependency tree for each output wire.
+
+    Args:
+        gates (List[Tuple[str, str, str]]): List of gate operations.
+
+    Returns:
+        Dict[str, List[Tuple[str, str, str]]]: Dependency tree mapping each output wire to its inputs.
+    """
+    dependency_tree = {}
+    for a, op, b, output in gates:
+        dependency_tree[output] = [(a, op, b)]
+    return dependency_tree
+
+
+from graphviz import Digraph
+from typing import Dict, List, Tuple
+
+def visualize_dependency_tree(
+    dependency_tree: Dict[str, List[Tuple[str, str, str]]],
+    output_file: str = "dependency_tree"
+):
+    """
+    Visualize the dependency tree using Graphviz.
+
+    Args:
+        dependency_tree (Dict[str, List[Tuple[str, str, str]]]):
+            The dependency tree mapping output wires to their input wires and operations.
+        output_file (str): The name of the output file (without extension).
+
+    Returns:
+        None
+    """
+    dot = Digraph(format="png")
+    dot.attr(rankdir="LR")
+
+    # Add nodes and edges
+    for output, dependencies in dependency_tree.items():
+        for input_a, operation, input_b in dependencies:
+            # Add nodes for the inputs and operation
+            dot.node(input_a, input_a, shape="ellipse")
+            dot.node(input_b, input_b, shape="ellipse")
+            op_node = f"{output}_{operation}"
+            dot.node(op_node, operation, shape="box", style="filled", color="lightgrey")
+
+            # Connect inputs to the operation
+            dot.edge(input_a, op_node)
+            dot.edge(input_b, op_node)
+
+            # Connect the operation to the output
+            dot.node(output, output, shape="ellipse")
+            dot.edge(op_node, output)
+
+    # Save and render the graph
+    dot.render(output_file, view=True)
+
 def solve_part2(
     values: dict[str, int], operations: list[tuple[str, str, str, str]]
 ) -> int:
@@ -105,27 +165,26 @@ def solve_part2(
     x = dez_of_letter(values, "x")
     y = dez_of_letter(values, "y")
     solution = x + y
-    print(f"{x} + {y} = {solution}")
-
     correct_z = dez_to_binstr(solution)
     wrong_z = name_to_binstr(values, "z")
-
+    print(f"{x} + {y} = {solution}")
     print(f"correct z: {correct_z}")
     print(f"wrong   z: {wrong_z}")
+    correct_outputs = {
+        f"z{str(i).zfill(2)}": int(bit) for i, bit in enumerate(reversed(correct_z))
+    }
 
-    op_d = {}
-    for operand1, operation, operand2, result in operations:
-        assert result not in op_d
-        op_d[result] = (operand1, operation, operand2)
+    dp_tree = build_dependency_tree(operations)
+    visualize_dependency_tree(dp_tree, "day24")
 
-    print(op_d)
-
-    return solution
+    return correct_outputs
 
 
 if __name__ == "__main__":
+    the_data = get_data("2024/data/day24.data.cor")
     # the_data = get_data("2024/data/day24.data")
-    the_data = get_data("2024/data/day24.test")
+    # the_data = get_data("2024/data/day24.0.test")
+    # the_data = get_data("2024/data/day24.1.test")
 
     values, operations = parse_data(the_data)
 
