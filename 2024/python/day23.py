@@ -4,8 +4,7 @@ https://adventofcode.com/2024/day/23
 """
 
 import time
-from collections import defaultdict
-from collections import deque
+from collections import defaultdict, deque
 from itertools import combinations
 
 
@@ -112,7 +111,7 @@ if __name__ == "__main__":
     solution1 = solution2 = 0
     the_data = get_data("2024/data/day23.data")
     # the_data = get_data("2024/data/day23.test")
-    
+
     graph = parse_data(the_data=the_data)
 
     time_start = time.perf_counter()
