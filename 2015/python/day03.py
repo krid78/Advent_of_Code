@@ -41,28 +41,16 @@ def solve_part1(the_data: list[str], row: int = 0) -> int:
     """Solve the puzzle."""
 
     moves = the_data[row]
-
     visited = move(moves)
-
     return len(visited)
 
 
 def solve_part2(the_data: list[str], row: int = 0) -> int:
     """Solve the puzzle."""
     moves = the_data[row]
-    smoves = "".join([moves[m] for m in range(0, len(moves), 2)])
-    rmoves = "".join([moves[m] for m in range(1, len(moves), 2)])
-    rmoves = rmoves
-
-    print(f"{moves=}")
-    print(f"{smoves=}")
-    print(f"{rmoves=}")
-
-    svisited = move(smoves)
-    rvisited = move(rmoves)
-
+    svisited = move(moves[::2])
+    rvisited = move(moves[1::2])
     together = svisited | rvisited
-
     return len(together)
 
 
